@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://blog.mrzhenggang.comm').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    comments: {"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="什么是DFTDFT（Discrete Fourier Transform），即离散傅里叶变换，是傅里叶变换在时域和频域上都呈离散的形式,将信号的时域采样变换为其DTFT的频域采样。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fftw 编译安装教程">
+<meta property="og:url" content="https://blog.mrzhenggang.comm/fftw-install/index.html">
+<meta property="og:site_name" content="Mr.ZhengGang">
+<meta property="og:description" content="什么是DFTDFT（Discrete Fourier Transform），即离散傅里叶变换，是傅里叶变换在时域和频域上都呈离散的形式,将信号的时域采样变换为其DTFT的频域采样。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-10-10T00:00:00.000Z">
+<meta property="article:modified_time" content="2020-01-03T13:21:08.372Z">
+<meta property="article:author" content="mrzhenggang">
+<meta property="article:tag" content="fftw">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.mrzhenggang.comm/fftw-install/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>fftw 编译安装教程 | Mr.ZhengGang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.ZhengGang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">构建HPC生态</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home" >
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about" >
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags" >
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories" >
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-course" >
+
+    <a href="/course/" rel="section"><i class="fa fa-fw fa-bookmark"></i>课程</a>
+
+  </li>
+        <li class="menu-item menu-item-archives" >
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-trial" >
+
+    <a href="/trial/" rel="section"><i class="with-love fa fa-fw fa-heart"></i>试用</a>
+
+  </li>
+	
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.mrzhenggang.comm/fftw-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="//cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/avatar/avatar.png">
+      <meta itemprop="name" content="mrzhenggang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.ZhengGang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          fftw 编译安装教程
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-10-10 08:00:00" itemprop="dateCreated datePublished" datetime="2017-10-10T08:00:00+08:00">2017-10-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-03 21:21:08" itemprop="dateModified" datetime="2020-01-03T21:21:08+08:00">2020-01-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B6%85%E7%AE%97/" itemprop="url" rel="index">
+                    <span itemprop="name">超算</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B6%85%E7%AE%97/%E6%95%B0%E5%AD%A6%E5%BA%93/" itemprop="url" rel="index">
+                    <span itemprop="name">数学库</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/fftw-install/" class="post-meta-item leancloud_visitors" data-flag-title="fftw 编译安装教程" title="热度">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">热度：</span>
+              <span class="leancloud-visitors-count"></span><span>℃</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/fftw-install/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/fftw-install/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="什么是DFT"><a href="#什么是DFT" class="headerlink" title="什么是DFT"></a>什么是DFT</h2><p>DFT（Discrete Fourier Transform），即离散傅里叶变换，是傅里叶变换在时域和频域上都呈离散的形式,将信号的时域采样变换为其DTFT的频域采样。</p>
+<a id="more"></a>
+
+<h2 id="什么是FFT"><a href="#什么是FFT" class="headerlink" title="什么是FFT"></a>什么是FFT</h2><p>FFT（Fast Fourier Transformation），即为快速傅氏变换，是离散傅氏变换（DFT）的快速算法，它是根据离散傅氏变换的奇、偶、虚、实等特性，对离散傅立叶变换的算法进行改进获得的。</p>
+<h2 id="什么是FFTW"><a href="#什么是FFTW" class="headerlink" title="什么是FFTW"></a>什么是FFTW</h2><p>FFTW ( the Faster Fourier Transform in the West)是一个快速计算离散傅里叶变换的标准C语言程序集，其由MIT的M.Frigo和S. Johnson开发。可计算一维或多维实和复数据以及任意规模的DFT。</p>
+<p>官网地址：<a href="http://www.fftw.org/" target="_blank" rel="noopener">传送门</a>，下载地址：<a href="http://www.fftw.org/download.html" target="_blank" rel="noopener">传送门</a>。</p>
+<p>目前最新版本为<br>Version 3.3.6 is the latest stable release of FFTW ( 截止2017-04-30）</p>
+<h2 id="FTW库所需的编译环境"><a href="#FTW库所需的编译环境" class="headerlink" title="FTW库所需的编译环境"></a>FTW库所需的编译环境</h2><p>Intel Compiler /GNU Compiler + MPI Compiler （如果编译mpi版的fftw）</p>
+<h2 id="默认编译"><a href="#默认编译" class="headerlink" title="默认编译"></a>默认编译</h2><p>安装fftw仅需要遵循常见的三步骤即可（configure+make+make install），在这里先介绍一下默认安装，再然着重介绍一些configure的配置选项。</p>
+<p>以fftw-3.3.6-pl2.tar.gz为例，先从官网下载该压缩包。解压缩，并进入源码目录进行编译即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf fftw-3.3.6-pl2.tar.gz  </span><br><span class="line"><span class="built_in">cd</span> fftw-3.3.6-pl2  </span><br><span class="line">./configure  </span><br><span class="line">make  </span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以把fftw库按照默认配置，安装到默认的路径下。<br>使用的是GNU的编译器，安装到的是/usr/local下面。</p>
+<h2 id="优化编译参数介绍"><a href="#优化编译参数介绍" class="headerlink" title="优化编译参数介绍"></a>优化编译参数介绍</h2><p>但是，我们通常会依据./configure -help得到的信息来添加一些参数来达到优化编译的目录。<br>接下来我们使用命令查看一些常用配置参数：</p>
+<p>设定安装目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Installation directories:</span><br><span class="line">--prefix=PREFIX    install architecture-independent files <span class="keyword">in</span> PREFIX[/usr/<span class="built_in">local</span>]</span><br></pre></td></tr></table></figure>
+
+<p>是否编译动态库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Optional Features:</span><br><span class="line">--<span class="built_in">enable</span>-shared[=PKGS]    build shared libraries [default=no]</span><br></pre></td></tr></table></figure>
+
+<p>是否编译静态库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-static[=PKGS]    build static libraries [default=yes]</span><br></pre></td></tr></table></figure>
+
+<p>是否编译单精度版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-single         compile fftw <span class="keyword">in</span> single precision</span><br><span class="line">--<span class="built_in">enable</span>-float          synonym <span class="keyword">for</span> --<span class="built_in">enable</span>-single</span><br></pre></td></tr></table></figure>
+
+<p>开启针对特定机器架构的优化，这个取决于机器CPU（下面有介绍）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-sse            <span class="built_in">enable</span> SSE optimizations</span><br><span class="line">--<span class="built_in">enable</span>-sse2           <span class="built_in">enable</span> SSE/SSE2 optimizations</span><br><span class="line">--<span class="built_in">enable</span>-avx            <span class="built_in">enable</span> AVX optimizations</span><br><span class="line">--<span class="built_in">enable</span>-avx2           <span class="built_in">enable</span> AVX2 optimizations</span><br><span class="line">--<span class="built_in">enable</span>-neon           <span class="built_in">enable</span> ARM NEON optimizations</span><br></pre></td></tr></table></figure>
+
+<p>开启积和熔加运算(Fused Multiply-Add/FMA)的优化</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-fma            <span class="built_in">enable</span> optimizations <span class="keyword">for</span> machineswith fused multiply-add</span><br></pre></td></tr></table></figure>
+
+<p>是否编译mpi版的fftw库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-mpi            compile FFTW MPI library</span><br></pre></td></tr></table></figure>
+
+<p>是否使用OpenMP指令进行并行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-openmp         use OpenMP directives <span class="keyword">for</span> parallelism</span><br></pre></td></tr></table></figure>
+
+<p>是否编译FFTW SMP线程库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--enable-threads        compile FFTW SMP threads library</span><br></pre></td></tr></table></figure>
+
+<p>这部分是指定编译器及编译参数，默认是用GNU的编译器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Some influential environment variables:</span><br><span class="line">  CC          C compiler <span class="built_in">command</span></span><br><span class="line">  CFLAGS      C compiler flags</span><br><span class="line">  CPP         C preprocessor</span><br><span class="line">  MPICC       MPI C compiler <span class="built_in">command</span></span><br><span class="line">  F77         Fortran 77 compiler <span class="built_in">command</span></span><br><span class="line">  FFLAGS      Fortran 77 compiler flags</span><br></pre></td></tr></table></figure>
+
+<p>为了用intel的编译器，我们需要特别指定一下：CC=icc F77=ifort，相关的参数通常保持默认即可。</p>
+<p>备注：<br>1）如何查看CPU是否支持某个指令集呢？使用如下命令可以列出支持的指令集名称</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep flags | uniq</span><br></pre></td></tr></table></figure>
+
+<p>2）SIMD<br>SIMD单指令流多数据流(SingleInstructionMultiple Data,SIMD)是一种采用一个控制器来控制多个处理器，同时对一组数据（又称“数据向量”）中的每一个分别执行相同的操作从而实现空间上的并行性的技术。</p>
+<p>MMX是由英特尔开发的一种SIMD多媒体指令集，SSE（Streaming SIMDExtensions）是MMX的扩充指令集，AVX（Advanced VectorExtensions）是Intel的SSE延伸架构，FMA（Fused MultiplyAccumulate）是Intel的AVX扩充指令集。</p>
+<p>NEON实际上是ARM的SIMD（Single InstructionMultiple Data）技术的延续，它是一个结合64和128 bit的SIMD（Single InstructionMultiple Data 单指令多重数据）指令集。</p>
+<h2 id="优化编译单精度版本"><a href="#优化编译单精度版本" class="headerlink" title="优化编译单精度版本"></a>优化编译单精度版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=<span class="variable">$HOME</span>/software/fftw/3.3.6-pl2-icc13 \  </span><br><span class="line">  CC=icc F77=ifort \  </span><br><span class="line">  --<span class="built_in">enable</span>-shared --<span class="built_in">enable</span>-static \  </span><br><span class="line">  --<span class="built_in">enable</span>-float \  </span><br><span class="line">  --<span class="built_in">enable</span>-sse --<span class="built_in">enable</span>-sse2 \  </span><br><span class="line">  --<span class="built_in">enable</span>-avx --<span class="built_in">enable</span>-avx2 --<span class="built_in">enable</span>-fma \  </span><br><span class="line">  --<span class="built_in">enable</span>-mpi \  </span><br><span class="line">  --<span class="built_in">enable</span>-threads--<span class="built_in">enable</span>-openmp  </span><br><span class="line">make  </span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<h2 id="优化编译双精度版本"><a href="#优化编译双精度版本" class="headerlink" title="优化编译双精度版本"></a>优化编译双精度版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=<span class="variable">$HOME</span>/software/fftw/3.3.6-pl2-icc13 \  </span><br><span class="line">  CC=icc F77=ifort \  </span><br><span class="line">  --<span class="built_in">enable</span>-shared --<span class="built_in">enable</span>-static \  </span><br><span class="line">  --<span class="built_in">enable</span>-sse2 --<span class="built_in">enable</span>-avx --<span class="built_in">enable</span>-avx2 --<span class="built_in">enable</span>-fma \  </span><br><span class="line">  --<span class="built_in">enable</span>-mpi \  </span><br><span class="line">  --<span class="built_in">enable</span>-threads--<span class="built_in">enable</span>-openmp  </span><br><span class="line">make  </span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<h2 id="编译一些需要fftw的软件"><a href="#编译一些需要fftw的软件" class="headerlink" title="编译一些需要fftw的软件"></a>编译一些需要fftw的软件</h2><p>通常会用到的是libfftw.a以及一些头文件，在编译或链接的时候，给出它的路径即可。</p>
+<p>比如：<br>gromacs软件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-DFFTWF_LIBRARY=<span class="string">"<span class="variable">$HOME</span>/software/fftw/3.3.6-pl2-icc13"</span> </span><br><span class="line">-DFFTWF_INCLUDE_DIR=<span class="string">"<span class="variable">$HOME</span>/fftw/include/"</span></span><br></pre></td></tr></table></figure>
+
+<p>这里介绍的是官网题的fftw库，我们还可以使用Intel MKL库中的fftw接口。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat-reward-240X240.jpg" alt="mrzhenggang 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay-reward-240X240.jpg" alt="mrzhenggang 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/fftw/" rel="tag"><i class="fa fa-tag"></i> fftw</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/how-to-use-slurm/" rel="prev" title="slurm作业管理系统怎么用？">
+      <i class="fa fa-chevron-left"></i> slurm作业管理系统怎么用？
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/vasp-install/" rel="next" title="VASP编译安装教程">
+      VASP编译安装教程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是DFT"><span class="nav-number">1.</span> <span class="nav-text">什么是DFT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是FFT"><span class="nav-number">2.</span> <span class="nav-text">什么是FFT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是FFTW"><span class="nav-number">3.</span> <span class="nav-text">什么是FFTW</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FTW库所需的编译环境"><span class="nav-number">4.</span> <span class="nav-text">FTW库所需的编译环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#默认编译"><span class="nav-number">5.</span> <span class="nav-text">默认编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化编译参数介绍"><span class="nav-number">6.</span> <span class="nav-text">优化编译参数介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化编译单精度版本"><span class="nav-number">7.</span> <span class="nav-text">优化编译单精度版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化编译双精度版本"><span class="nav-number">8.</span> <span class="nav-text">优化编译双精度版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译一些需要fftw的软件"><span class="nav-number">9.</span> <span class="nav-text">编译一些需要fftw的软件</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mrzhenggang"
+      src="//cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/avatar/avatar.png">
+  <p class="site-author-name" itemprop="name">mrzhenggang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <center>
+
+<div class="copyright">
+  
+  &copy; 1988 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mrzhenggang</span>
+</div>
+</center>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: true,
+      notify: false,
+      appId: '4u4f84yNrhYg676LJ1VqmKWR-gzGzoHsz',
+      appKey: 'SBiBXOh5SaWLfgb33OCTLXnc',
+      placeholder: "快来留言吧!",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: 'zh-cn' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

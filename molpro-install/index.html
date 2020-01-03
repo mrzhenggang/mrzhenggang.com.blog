@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://blog.mrzhenggang.comm').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    comments: {"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="简介MOLPRO是国际上广泛使用的专业级电子结构量化计算软件，由H.-J. Werner和P. J. Knowles负责设计和维护。不同于其它的量子化学软件包，MOLPRO的重点是高精度计算，通过多参考CI，耦合簇和有关的方法，广泛处理电子相关问题。使用最近开发的直接积分局域电子相关方法，可以极大地减少随分子尺寸增加的计算量，能够对更大的分子体系进行准确的从头计算。程序的核心是MCSCF，MR-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MOLPRO安装使用说明">
+<meta property="og:url" content="https://blog.mrzhenggang.comm/molpro-install/index.html">
+<meta property="og:site_name" content="Mr.ZhengGang">
+<meta property="og:description" content="简介MOLPRO是国际上广泛使用的专业级电子结构量化计算软件，由H.-J. Werner和P. J. Knowles负责设计和维护。不同于其它的量子化学软件包，MOLPRO的重点是高精度计算，通过多参考CI，耦合簇和有关的方法，广泛处理电子相关问题。使用最近开发的直接积分局域电子相关方法，可以极大地减少随分子尺寸增加的计算量，能够对更大的分子体系进行准确的从头计算。程序的核心是MCSCF，MR-C">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-12-13T00:00:00.000Z">
+<meta property="article:modified_time" content="2020-01-03T13:22:31.277Z">
+<meta property="article:author" content="mrzhenggang">
+<meta property="article:tag" content="molpro">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.mrzhenggang.comm/molpro-install/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>MOLPRO安装使用说明 | Mr.ZhengGang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.ZhengGang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">构建HPC生态</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home" >
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about" >
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags" >
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories" >
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-course" >
+
+    <a href="/course/" rel="section"><i class="fa fa-fw fa-bookmark"></i>课程</a>
+
+  </li>
+        <li class="menu-item menu-item-archives" >
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-trial" >
+
+    <a href="/trial/" rel="section"><i class="with-love fa fa-fw fa-heart"></i>试用</a>
+
+  </li>
+	
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.mrzhenggang.comm/molpro-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="//cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/avatar/avatar.png">
+      <meta itemprop="name" content="mrzhenggang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.ZhengGang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          MOLPRO安装使用说明
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-13 08:00:00" itemprop="dateCreated datePublished" datetime="2017-12-13T08:00:00+08:00">2017-12-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-03 21:22:31" itemprop="dateModified" datetime="2020-01-03T21:22:31+08:00">2020-01-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B6%85%E7%AE%97/" itemprop="url" rel="index">
+                    <span itemprop="name">超算</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B6%85%E7%AE%97/%E5%95%86%E4%B8%9A%E8%BD%AF%E4%BB%B6/" itemprop="url" rel="index">
+                    <span itemprop="name">商业软件</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/molpro-install/" class="post-meta-item leancloud_visitors" data-flag-title="MOLPRO安装使用说明" title="热度">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">热度：</span>
+              <span class="leancloud-visitors-count"></span><span>℃</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/molpro-install/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/molpro-install/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>MOLPRO是国际上广泛使用的专业级电子结构量化计算软件，由H.-J. Werner和P. J. Knowles负责设计和维护。不同于其它的量子化学软件包，MOLPRO的重点是高精度计算，通过多参考CI，耦合簇和有关的方法，广泛处理电子相关问题。使用最近开发的直接积分局域电子相关方法，可以极大地减少随分子尺寸增加的计算量，能够对更大的分子体系进行准确的从头计算。程序的核心是MCSCF，MR-CI，和耦合簇程序，以及一系列附加功能。 主页可以申请试用版。</p>
+<a id="more"></a>
+
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p><a href="https://www.molpro.net/download" target="_blank" rel="noopener">官方下载地址</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>将下载到预先编译的脚本文件molpro-mpp-2015.1.20.ompi.sh上传到系统上，添加可执行权限，直接执行即可安装。</p>
+<h3 id="创建目录（如果不存在则创建，否则安装过程报错找不到）"><a href="#创建目录（如果不存在则创建，否则安装过程报错找不到）" class="headerlink" title="创建目录（如果不存在则创建，否则安装过程报错找不到）"></a>创建目录（如果不存在则创建，否则安装过程报错找不到）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p <span class="variable">$HOME</span>/software/molpro/2015/bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加脚本可执行权限"><a href="#添加脚本可执行权限" class="headerlink" title="添加脚本可执行权限"></a>添加脚本可执行权限</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x molpro-mpp-2015.1.20.ompi.sh <span class="comment"># 下载到预先编译好的脚本文件</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="执行脚本"><a href="#执行脚本" class="headerlink" title="执行脚本"></a>执行脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">./molpro-mpp-2015.1.20.ompi.sh</span><br><span class="line"></span><br><span class="line">Enter bin directory to link Molpro (optional) []</span><br><span class="line"><span class="variable">$HOME</span>/software/molpro/2015/bin</span><br><span class="line">Enter installation directory <span class="keyword">for</span> Molpro files </span><br><span class="line">[/usr/<span class="built_in">local</span>/molpro/molprop_2015_1_linux_x86_64_i8]</span><br><span class="line"><span class="variable">$HOME</span>/software/molpro/2015/molprop_2015_1_linux_x86_64_i8</span><br><span class="line">Installation of Molpro files complete</span><br><span class="line">Please give your username <span class="keyword">for</span> accessing molpro</span><br><span class="line">    <span class="comment"># 直接回车</span></span><br><span class="line">Please give your password <span class="keyword">for</span> accessing molpro</span><br><span class="line">    <span class="comment"># 直接回车</span></span><br><span class="line">Token download unsuccessful - please install manually</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置Token"><a href="#配置Token" class="headerlink" title="配置Token"></a>配置Token</h2><p>配置Token可以在对应的lib文件夹添加.token文件，例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span>/software/molpro/2015/molprop_2015_1_linux_x86_64_i8/lib</span><br><span class="line">vim .token</span><br><span class="line">	id=***,date=:2025/02/05,version=:2015,mpp=32767,modules=mpp,password=******</span><br></pre></td></tr></table></figure>
+
+<p>然后写入你的账户密码信息，保存即可。<br>也可以声明环境变量，如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> MOLPRO_KEY=<span class="string">"id=***,date=:2025/02/05,version=:2015,\</span></span><br><span class="line"><span class="string">    mpp=32767,modules=mpp,password=******"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="额外配置"><a href="#额外配置" class="headerlink" title="额外配置*"></a>额外配置*</h2><p>在实际测试过程中，发现有时候会缺少lscpu命令，所以我们从登陆节点拷贝一份到bin目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/bin/lscpu <span class="variable">$HOME</span>/software/molpro/2015/molprop_2015_1_linux_x86_64_i8/bin</span><br></pre></td></tr></table></figure>
+
+<h2 id="默认提交"><a href="#默认提交" class="headerlink" title="默认提交"></a>默认提交</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认输出文件明.out</span></span><br><span class="line">molpro h2o.inp </span><br><span class="line"><span class="comment"># 不保存已有.out文件，而是重写</span></span><br><span class="line">molpro -s h2o.inp</span><br><span class="line"><span class="comment"># 指定输出文件名</span></span><br><span class="line">molpro -o water.output h2o.inp </span><br><span class="line"><span class="comment"># 设置使用内存</span></span><br><span class="line">molpro -m 4M h2o.inp</span><br><span class="line"><span class="comment"># 8核并行</span></span><br><span class="line">molpro -n 8 h2o.inp</span><br><span class="line"><span class="comment"># 设置临时目录，默认为/tmp/$USER;设置TMPDIR变量，或-d 参数指定</span></span><br><span class="line">molpro -d /scratch/<span class="variable">$USER</span> h2o.inp</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用slurm作业管理系统提交"><a href="#使用slurm作业管理系统提交" class="headerlink" title="使用slurm作业管理系统提交"></a>使用slurm作业管理系统提交</h2><p>因为使用作业管理系统提交任务的时候，它会自动将 <code>-n</code> 给定的值为环境变量允许的最大值的上限，并且跨节点并行有些问题，这并不是我们想要的，所以我就写了一个脚本，如果想要，欢迎给我留言。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat-reward-240X240.jpg" alt="mrzhenggang 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay-reward-240X240.jpg" alt="mrzhenggang 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/molpro/" rel="tag"><i class="fa fa-tag"></i> molpro</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/the-most-basic-introduction-to-compilation/" rel="prev" title="编译程序的四个过程简介">
+      <i class="fa fa-chevron-left"></i> 编译程序的四个过程简介
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/how-to-add-a-new-potential-function-form-to-lammps/" rel="next" title="如何在lammps里加入新的势函数形式?">
+      如何在lammps里加入新的势函数形式? <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">2.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建目录（如果不存在则创建，否则安装过程报错找不到）"><span class="nav-number">3.1.</span> <span class="nav-text">创建目录（如果不存在则创建，否则安装过程报错找不到）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加脚本可执行权限"><span class="nav-number">3.2.</span> <span class="nav-text">添加脚本可执行权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行脚本"><span class="nav-number">3.3.</span> <span class="nav-text">执行脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Token"><span class="nav-number">4.</span> <span class="nav-text">配置Token</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#额外配置"><span class="nav-number">5.</span> <span class="nav-text">额外配置*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#默认提交"><span class="nav-number">6.</span> <span class="nav-text">默认提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用slurm作业管理系统提交"><span class="nav-number">7.</span> <span class="nav-text">使用slurm作业管理系统提交</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mrzhenggang"
+      src="//cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/avatar/avatar.png">
+  <p class="site-author-name" itemprop="name">mrzhenggang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <center>
+
+<div class="copyright">
+  
+  &copy; 1988 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mrzhenggang</span>
+</div>
+</center>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: true,
+      notify: false,
+      appId: '4u4f84yNrhYg676LJ1VqmKWR-gzGzoHsz',
+      appKey: 'SBiBXOh5SaWLfgb33OCTLXnc',
+      placeholder: "快来留言吧!",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: 'zh-cn' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
