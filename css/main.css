@@ -1129,11 +1129,6 @@ pre .javascript .function {
   border-bottom-color: #eee;
   color: #eee;
 }
-@media (max-width: 991px) {
-  .sidebar {
-    display: none;
-  }
-}
 .sidebar-inner {
   color: #999;
   padding: 18px 10px;
@@ -1191,7 +1186,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #d11ca4;
+  background: #d41462;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1314,7 +1309,6 @@ pre .javascript .function {
   .sidebar-toggle {
     left: 20px;
     opacity: 0.8;
-    display: none;
   }
 }
 .sidebar-toggle:hover .toggle-line {
@@ -1528,11 +1522,11 @@ pre .javascript .function {
 @media (max-width: 991px) {
   .back-to-top {
     left: 20px;
-    opacity: 0.8;
+    opacity: 0;
   }
 }
 .back-to-top {
-  right: 30px;
+  right: 5vw;
   width: 70px;
   height: 900px;
   top: -900px;
