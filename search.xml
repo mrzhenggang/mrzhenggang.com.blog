@@ -1305,6 +1305,309 @@
       </tags>
   </entry>
   <entry>
+    <title>超算入门课程5 文本编辑器vim的使用教学</title>
+    <url>/supercomputer-courses-vim/</url>
+    <content><![CDATA[<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-logo.png" alt="vim-logo"></p>
+<div class="note info">
+            <p>如果不会在<code>linux</code>下查看、修改文件（算例输入文件/配置文件/提交脚本），还要从<code>windows</code>下改完了上传，效率太低了！因此，让我们一起用10分钟来学习一下<code>vim</code>编辑器吧，能够大大提高工作效率。</p>
+          </div>
+
+<a id="more"></a>
+
+<h2 id="什么是vi-vim"><a href="#什么是vi-vim" class="headerlink" title="什么是vi/vim"></a>什么是vi/vim</h2><p><code>linux</code>下我们经常需要编辑一些文本文件，比如提交任务的脚本文件，或者打开文件修改一些内容。</p>
+<p>可是经常使用<code>windows</code>的用户第一次面对一个<code>linux</code>的<code>terminal</code>一脸懵，<code>WHAT??</code>，文件在哪？怎么打开？怎么编辑？啥都不知道。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/linux-terminal.png" alt="linux-terminal"></p>
+<p>虽然，常用的linux也是带了一些图形化的文本编辑器的，比如LibreOffice，就类似一个记事本软件或者word软件。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/libreoffice.png" alt="图形文本软件"></p>
+<p>但对于超算平台的用户，最为常用的还是推荐<code>vim</code>文本编辑器。在命令行输入<code>vim</code> 即可打开如下的界面：</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-interface.png" alt="vim-interface"></p>
+<p><code>vi</code> 编辑器是所有 <code>Unix</code> 及 <code>Linux</code> 系统下标准的编辑器，它就相当于windows系统中的记事本一样，它的强大不逊色于任何最新的文本编辑器。它是我们使用Linux系统不能缺少的工具。</p>
+<hr>
+<h2 id="vim使用初级"><a href="#vim使用初级" class="headerlink" title="vim使用初级"></a>vim使用初级</h2><p>比如，我们希望新建一个名为 <code>hello.txt</code> 的文件，里面记录一些内容，只需要：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim hello.txt</span><br></pre></td></tr></table></figure>
+
+<p>此时，我们在当前目录下新建并打开了一个名为 <code>hello.txt</code> 的文件，里面是空的，什么都还没写呢。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-1.png" alt=""></p>
+<p>此时，<code>vim</code> 编辑器处于 <code>command mode</code> ，称作命令行模式吧。</p>
+<p>我们按键盘上的小写字母 <code>i</code>，我们发现最地下出现了<code>-- INSERT --</code>，这表明我们进入了 <code>Insert mode</code>（插入模式），可以开始输入内容了。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-2.png" alt=""></p>
+<p>此时，我们按键盘上的按键，就可以自由的输入了，比如输入一个<code>hello world</code>字符串吧。</p>
+<p>输入完成后，我们按键盘上的 <code>Esc</code> 键，从插入模式退回到命令行模式。</p>
+<p>然后我们用键盘输入 <code>:</code> 字符（就是<code>shift键+;</code>），可以发现最低端出现了一个<code>:</code>，此时我们从命令行模式进入了<code>last line mode</code>（称作末行模式吧）。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-3.png" alt=""></p>
+<p>然后输入字符<code>wq!</code> ，表示<code>w</code>保存+<code>q</code>退出+<code>!</code>强制，我们就把文件保存好了。此时我们用<code>cat</code>命令查看一下文件的内容吧：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat hello.txt</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+
+<p>到此为止，我们就初步学会了<code>vim</code>编辑器的使用。</p>
+<p>小节：</p>
+<p>1) <code>vim</code>的三种模式</p>
+<ul>
+<li>命令模式（command mode）：<ul>
+<li>控制屏幕光标的移动，字符、字或行的删除，移动复制某区段及进入插入模式下，或者到末行模式。</li>
+</ul>
+</li>
+<li>插入模式（Insert mode）<ul>
+<li>只有在插入下，才可以做文字输入，按<code>Esc</code>键可回到命令行模式。</li>
+</ul>
+</li>
+<li>底行模式（last line mode）<ul>
+<li>将文件保存或退出vi；也可以设置编辑环境，如寻找字符串、列出行号……等。</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-mode.png" alt=""></p>
+<p>2) 打开-编辑-退出</p>
+<ul>
+<li>打开文件：<code>vim 文件名</code></li>
+<li>插入内容：按<code>i</code>进入插入模式，插入完成后，按<code>Esc</code>退出插入模式。</li>
+<li>保存文件：按<code>:</code>进入末行模式，输入<code>wq!</code>，然后回车，是强制保存并退出。</li>
+</ul>
+<hr>
+<h2 id="vim使用中级"><a href="#vim使用中级" class="headerlink" title="vim使用中级"></a>vim使用中级</h2><p><code>vim</code>之所以强大，是因为它有非常非常多的快捷键和插件，非常厉害！我们一步一步来，此处介绍一小部分最为常用的快捷键。</p>
+<h3 id="进入与退出"><a href="#进入与退出" class="headerlink" title="进入与退出"></a>进入与退出</h3><ul>
+<li>进入 vi 命令格式：<code>$ vi filename</code></li>
+<li>退出文件：<code>:q!</code> 退出不保存；<code>wq</code> 保存退出</li>
+</ul>
+<h3 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h3><blockquote>
+<p>要是想直接用方向键向下左右我也不拦着哈！</p>
+</blockquote>
+<p>我们可以通过如下快捷键来快速移动光标，熟练之后，你会觉得鼠标弱爆了。非常建议练习个10分钟把下面的掌握一下，收益终身。</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>↑或 k 键</td>
+<td>把当前光标向上移动一行，保持光标的列位置。</td>
+</tr>
+<tr>
+<td>↓或 j 键</td>
+<td>把当前光标向下移动一行，保持光标的列位置。</td>
+</tr>
+<tr>
+<td>→或 l 键</td>
+<td>把当前光标向右移动一个字符。</td>
+</tr>
+<tr>
+<td>←或 h 键</td>
+<td>把当前光标向左移动一个字符。</td>
+</tr>
+<tr>
+<td>$键</td>
+<td>把当前光标移动到该行行末。</td>
+</tr>
+<tr>
+<td>^键</td>
+<td>把当前光标移动到该行行首。</td>
+</tr>
+<tr>
+<td>w 键</td>
+<td>把当前光标移动到该行的下一个字的首字符上。</td>
+</tr>
+<tr>
+<td>b 键</td>
+<td>把当前光标移动到该行的上一个字的首字符上。</td>
+</tr>
+<tr>
+<td>e 键</td>
+<td>把当前光标移动到该行的该字的末尾字符上。</td>
+</tr>
+<tr>
+<td>ctrl+F</td>
+<td>向前滚动一整屏正文。</td>
+</tr>
+<tr>
+<td>ctrl+D</td>
+<td>向下滚动半个屏正文。</td>
+</tr>
+<tr>
+<td>ctrl+B</td>
+<td>向后滚动一整屏正文。</td>
+</tr>
+<tr>
+<td>ctrl+U</td>
+<td>向上滚动半个屏正文。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>友情提示：<br/> 1.在用 <code>k、j、h、l</code> 四个键时，可以在它们的前面加一个数字，这样在需要多次移动光标时不必多次按移动命令。<br/> 2.记住 <code>k、j、h、l</code>是上下左右，比方向键快一些。</p>
+</blockquote>
+<h3 id="正文常用命令"><a href="#正文常用命令" class="headerlink" title="正文常用命令"></a>正文常用命令</h3><p>在命令模式下，我们可以按一些键（如<code>a A i I o O</code>）来进入插入模式，然后输入一些内容。待输入完成，按<code>Esc</code>退出。</p>
+<h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a</td>
+<td>在光标的后面开始插入正文。</td>
+</tr>
+<tr>
+<td>A</td>
+<td>在光标所在行的行首插入正文。</td>
+</tr>
+<tr>
+<td>i</td>
+<td>在光标的前面开始插入正文。</td>
+</tr>
+<tr>
+<td>I</td>
+<td>在光标所在行的行首插入正文。</td>
+</tr>
+<tr>
+<td>o</td>
+<td>在光标所在行（当前行）的下一行的行首开始插入正文。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>在光标所在行（当前行）的上一行的行首开始插入正文。</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>退出插入模式。</td>
+</tr>
+</tbody></table>
+<p>这一部分，建议记住一个<code>i</code>插入就行了，然后用上一节介绍的快捷键移动光标。当然，全会更好。</p>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p>在插入模式下，按<code>Backspace</code>键就是删除。在命令模式下，有如下快捷键：</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x</td>
+<td>x 删除当前光标所在的字符。<br/>nx 删除n个字符</td>
+</tr>
+<tr>
+<td>dw</td>
+<td>删除当前光标所在的字。<br/>ndw 删除n个字</td>
+</tr>
+<tr>
+<td>dd</td>
+<td>删除当前光标所在行。<br/>ndd删除n行</td>
+</tr>
+</tbody></table>
+<h4 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h4><table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rx</td>
+<td>用 x 替代当前光标所在的字符。<br/>nrx 替换n个</td>
+</tr>
+</tbody></table>
+<h4 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h4><blockquote>
+<p>这个太有用了！就是撤销，就是上一步。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u</td>
+<td>废除最近的命令，恢复被修改或删除的内容。</td>
+</tr>
+<tr>
+<td>U</td>
+<td>把当前行恢复到修改它之前的状态。</td>
+</tr>
+</tbody></table>
+<h4 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h4><blockquote>
+<p>这个也太有用了，类似windows下的<code>ctrl+f</code>的感觉。</p>
+</blockquote>
+<p> 按键 | 功能 |<br>| — | — |<br>| /pattern | 在缓冲区中向下查找指定的字符串 pattern。|<br>| ?pattern | 在缓冲区中向上查找指定的字符串 pattern。|<br>| n | 重复上一次查找命令。|<br>| N | 以相反的查找方向重复上一次查找命令。|</p>
+<h3 id="行编辑命令"><a href="#行编辑命令" class="headerlink" title="行编辑命令"></a>行编辑命令</h3><p>键入<code>:</code>，进入末行模式，并在屏幕底部的<code>:</code>号提示符下输入行编辑命令。</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>set nu</td>
+<td>显示正文的行号。</td>
+</tr>
+<tr>
+<td>set nonu</td>
+<td>取消行号。</td>
+</tr>
+<tr>
+<td>1,$p</td>
+<td>显示缓冲区的整个内容。</td>
+</tr>
+<tr>
+<td>r wqb</td>
+<td>将文件 wqb 中的内容读入缓冲区，插入当前光标下。</td>
+</tr>
+<tr>
+<td>1,5w clh</td>
+<td>将正文中 1 到 5 行的内容写到名为 clh 的文件中去。</td>
+</tr>
+<tr>
+<td>2,5d</td>
+<td>将正文中 2 到 5 行删除。</td>
+</tr>
+<tr>
+<td>2,5t8</td>
+<td>将正文中 2 到 5 行复制到第 8 行的后面。</td>
+</tr>
+<tr>
+<td>! ls</td>
+<td>暂时转出 vi 编辑器，执行 shell 命令 ls。</td>
+</tr>
+<tr>
+<td>sh</td>
+<td>暂时转出 vi 编辑器, 执行 shell 命令,键入ctrl+D 或 exit 返回正文。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="vim使用高级"><a href="#vim使用高级" class="headerlink" title="vim使用高级"></a>vim使用高级</h2><h3 id="vim配置文件"><a href="#vim配置文件" class="headerlink" title="vim配置文件"></a>vim配置文件</h3><p>我们可以通过修改<code>vim</code>的默认配置文件，来修改用<code>vim</code>打开文件时候的默认配置，举一个例子：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim ~/.vimrc</span><br></pre></td></tr></table></figure>
+
+<p>打开配置文件，写入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> nu</span><br></pre></td></tr></table></figure>
+
+<p>如下图所示，然后保存退出。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-4.png" alt=""></p>
+<p>再次用<code>vim</code>打开<code>hello.txt</code>文件，我们可以看到这次默认带了行号。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim hello.txt</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-5.png" alt=""></p>
+<p>因此，我们可以依据它的常用配置文件，来修改成自己喜欢的默认打开样式，喜欢的样式自行百度搜索吧，我举一个例子：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> nocompatible</span><br><span class="line"><span class="built_in">set</span> nu</span><br><span class="line">filetype on </span><br><span class="line"><span class="built_in">set</span> <span class="built_in">history</span>=1000 </span><br><span class="line"><span class="built_in">set</span> background=dark </span><br><span class="line">syntax on </span><br><span class="line"><span class="built_in">set</span> autoindent</span><br><span class="line"><span class="built_in">set</span> smartindent</span><br><span class="line"><span class="built_in">set</span> tabstop=4</span><br><span class="line"><span class="built_in">set</span> shiftwidth=4</span><br><span class="line"><span class="built_in">set</span> showmatch</span><br><span class="line"><span class="built_in">set</span> guioptions-=T</span><br><span class="line"><span class="built_in">set</span> vb t_vb=</span><br><span class="line"><span class="built_in">set</span> ruler</span><br><span class="line"><span class="built_in">set</span> nohls</span><br><span class="line"><span class="built_in">set</span> incsearch</span><br><span class="line"><span class="keyword">if</span> has(<span class="string">"vms"</span>)</span><br><span class="line"><span class="built_in">set</span> nobackup</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="built_in">set</span> backup</span><br><span class="line"></span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个配置文件来自：<a href="https://www.cnblogs.com/wuyudong/p/3981410.html" target="_blank" rel="noopener">https://www.cnblogs.com/wuyudong/p/3981410.html</a></p>
+</blockquote>
+<h3 id="vim插件"><a href="#vim插件" class="headerlink" title="vim插件"></a>vim插件</h3><p><code>vim</code>可以安装非常多的插件，来打造成一个强大的<code>IDE</code>，自己百度吧。</p>
+<p>推荐阅读：</p>
+<ol>
+<li><a href="http://www.open-open.com/lib/view/open1414227253419.html" target="_blank" rel="noopener">Vim十大必备插件</a></li>
+<li><a href="https://www.cnblogs.com/linuxprobe/p/5926821.html" target="_blank" rel="noopener">10款优秀Vim插件帮你打造完美IDE</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>超算</category>
+        <category>超算课程</category>
+      </categories>
+      <tags>
+        <tag>vim</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>超算入门课程4 module命令使用教学</title>
     <url>/supercomputer-courses-module/</url>
     <content><![CDATA[<h2 id="1-什么是module"><a href="#1-什么是module" class="headerlink" title="1. 什么是module"></a>1. 什么是module</h2><p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/module/module-logo.png" alt=""></p>
@@ -1613,309 +1916,6 @@
       </categories>
       <tags>
         <tag>module</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>超算入门课程5 文本编辑器vim的使用教学</title>
-    <url>/supercomputer-courses-vim/</url>
-    <content><![CDATA[<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-logo.png" alt="vim-logo"></p>
-<div class="note info">
-            <p>如果不会在<code>linux</code>下查看、修改文件（算例输入文件/配置文件/提交脚本），还要从<code>windows</code>下改完了上传，效率太低了！因此，让我们一起用10分钟来学习一下<code>vim</code>编辑器吧，能够大大提高工作效率。</p>
-          </div>
-
-<a id="more"></a>
-
-<h2 id="什么是vi-vim"><a href="#什么是vi-vim" class="headerlink" title="什么是vi/vim"></a>什么是vi/vim</h2><p><code>linux</code>下我们经常需要编辑一些文本文件，比如提交任务的脚本文件，或者打开文件修改一些内容。</p>
-<p>可是经常使用<code>windows</code>的用户第一次面对一个<code>linux</code>的<code>terminal</code>一脸懵，<code>WHAT??</code>，文件在哪？怎么打开？怎么编辑？啥都不知道。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/linux-terminal.png" alt="linux-terminal"></p>
-<p>虽然，常用的linux也是带了一些图形化的文本编辑器的，比如LibreOffice，就类似一个记事本软件或者word软件。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/libreoffice.png" alt="图形文本软件"></p>
-<p>但对于超算平台的用户，最为常用的还是推荐<code>vim</code>文本编辑器。在命令行输入<code>vim</code> 即可打开如下的界面：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-interface.png" alt="vim-interface"></p>
-<p><code>vi</code> 编辑器是所有 <code>Unix</code> 及 <code>Linux</code> 系统下标准的编辑器，它就相当于windows系统中的记事本一样，它的强大不逊色于任何最新的文本编辑器。它是我们使用Linux系统不能缺少的工具。</p>
-<hr>
-<h2 id="vim使用初级"><a href="#vim使用初级" class="headerlink" title="vim使用初级"></a>vim使用初级</h2><p>比如，我们希望新建一个名为 <code>hello.txt</code> 的文件，里面记录一些内容，只需要：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim hello.txt</span><br></pre></td></tr></table></figure>
-
-<p>此时，我们在当前目录下新建并打开了一个名为 <code>hello.txt</code> 的文件，里面是空的，什么都还没写呢。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-1.png" alt=""></p>
-<p>此时，<code>vim</code> 编辑器处于 <code>command mode</code> ，称作命令行模式吧。</p>
-<p>我们按键盘上的小写字母 <code>i</code>，我们发现最地下出现了<code>-- INSERT --</code>，这表明我们进入了 <code>Insert mode</code>（插入模式），可以开始输入内容了。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-2.png" alt=""></p>
-<p>此时，我们按键盘上的按键，就可以自由的输入了，比如输入一个<code>hello world</code>字符串吧。</p>
-<p>输入完成后，我们按键盘上的 <code>Esc</code> 键，从插入模式退回到命令行模式。</p>
-<p>然后我们用键盘输入 <code>:</code> 字符（就是<code>shift键+;</code>），可以发现最低端出现了一个<code>:</code>，此时我们从命令行模式进入了<code>last line mode</code>（称作末行模式吧）。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-3.png" alt=""></p>
-<p>然后输入字符<code>wq!</code> ，表示<code>w</code>保存+<code>q</code>退出+<code>!</code>强制，我们就把文件保存好了。此时我们用<code>cat</code>命令查看一下文件的内容吧：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat hello.txt</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
-
-<p>到此为止，我们就初步学会了<code>vim</code>编辑器的使用。</p>
-<p>小节：</p>
-<p>1) <code>vim</code>的三种模式</p>
-<ul>
-<li>命令模式（command mode）：<ul>
-<li>控制屏幕光标的移动，字符、字或行的删除，移动复制某区段及进入插入模式下，或者到末行模式。</li>
-</ul>
-</li>
-<li>插入模式（Insert mode）<ul>
-<li>只有在插入下，才可以做文字输入，按<code>Esc</code>键可回到命令行模式。</li>
-</ul>
-</li>
-<li>底行模式（last line mode）<ul>
-<li>将文件保存或退出vi；也可以设置编辑环境，如寻找字符串、列出行号……等。</li>
-</ul>
-</li>
-</ul>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-mode.png" alt=""></p>
-<p>2) 打开-编辑-退出</p>
-<ul>
-<li>打开文件：<code>vim 文件名</code></li>
-<li>插入内容：按<code>i</code>进入插入模式，插入完成后，按<code>Esc</code>退出插入模式。</li>
-<li>保存文件：按<code>:</code>进入末行模式，输入<code>wq!</code>，然后回车，是强制保存并退出。</li>
-</ul>
-<hr>
-<h2 id="vim使用中级"><a href="#vim使用中级" class="headerlink" title="vim使用中级"></a>vim使用中级</h2><p><code>vim</code>之所以强大，是因为它有非常非常多的快捷键和插件，非常厉害！我们一步一步来，此处介绍一小部分最为常用的快捷键。</p>
-<h3 id="进入与退出"><a href="#进入与退出" class="headerlink" title="进入与退出"></a>进入与退出</h3><ul>
-<li>进入 vi 命令格式：<code>$ vi filename</code></li>
-<li>退出文件：<code>:q!</code> 退出不保存；<code>wq</code> 保存退出</li>
-</ul>
-<h3 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h3><blockquote>
-<p>要是想直接用方向键向下左右我也不拦着哈！</p>
-</blockquote>
-<p>我们可以通过如下快捷键来快速移动光标，熟练之后，你会觉得鼠标弱爆了。非常建议练习个10分钟把下面的掌握一下，收益终身。</p>
-<table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>↑或 k 键</td>
-<td>把当前光标向上移动一行，保持光标的列位置。</td>
-</tr>
-<tr>
-<td>↓或 j 键</td>
-<td>把当前光标向下移动一行，保持光标的列位置。</td>
-</tr>
-<tr>
-<td>→或 l 键</td>
-<td>把当前光标向右移动一个字符。</td>
-</tr>
-<tr>
-<td>←或 h 键</td>
-<td>把当前光标向左移动一个字符。</td>
-</tr>
-<tr>
-<td>$键</td>
-<td>把当前光标移动到该行行末。</td>
-</tr>
-<tr>
-<td>^键</td>
-<td>把当前光标移动到该行行首。</td>
-</tr>
-<tr>
-<td>w 键</td>
-<td>把当前光标移动到该行的下一个字的首字符上。</td>
-</tr>
-<tr>
-<td>b 键</td>
-<td>把当前光标移动到该行的上一个字的首字符上。</td>
-</tr>
-<tr>
-<td>e 键</td>
-<td>把当前光标移动到该行的该字的末尾字符上。</td>
-</tr>
-<tr>
-<td>ctrl+F</td>
-<td>向前滚动一整屏正文。</td>
-</tr>
-<tr>
-<td>ctrl+D</td>
-<td>向下滚动半个屏正文。</td>
-</tr>
-<tr>
-<td>ctrl+B</td>
-<td>向后滚动一整屏正文。</td>
-</tr>
-<tr>
-<td>ctrl+U</td>
-<td>向上滚动半个屏正文。</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>友情提示：<br/> 1.在用 <code>k、j、h、l</code> 四个键时，可以在它们的前面加一个数字，这样在需要多次移动光标时不必多次按移动命令。<br/> 2.记住 <code>k、j、h、l</code>是上下左右，比方向键快一些。</p>
-</blockquote>
-<h3 id="正文常用命令"><a href="#正文常用命令" class="headerlink" title="正文常用命令"></a>正文常用命令</h3><p>在命令模式下，我们可以按一些键（如<code>a A i I o O</code>）来进入插入模式，然后输入一些内容。待输入完成，按<code>Esc</code>退出。</p>
-<h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>a</td>
-<td>在光标的后面开始插入正文。</td>
-</tr>
-<tr>
-<td>A</td>
-<td>在光标所在行的行首插入正文。</td>
-</tr>
-<tr>
-<td>i</td>
-<td>在光标的前面开始插入正文。</td>
-</tr>
-<tr>
-<td>I</td>
-<td>在光标所在行的行首插入正文。</td>
-</tr>
-<tr>
-<td>o</td>
-<td>在光标所在行（当前行）的下一行的行首开始插入正文。</td>
-</tr>
-<tr>
-<td>O</td>
-<td>在光标所在行（当前行）的上一行的行首开始插入正文。</td>
-</tr>
-<tr>
-<td>Esc</td>
-<td>退出插入模式。</td>
-</tr>
-</tbody></table>
-<p>这一部分，建议记住一个<code>i</code>插入就行了，然后用上一节介绍的快捷键移动光标。当然，全会更好。</p>
-<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p>在插入模式下，按<code>Backspace</code>键就是删除。在命令模式下，有如下快捷键：</p>
-<table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>x</td>
-<td>x 删除当前光标所在的字符。<br/>nx 删除n个字符</td>
-</tr>
-<tr>
-<td>dw</td>
-<td>删除当前光标所在的字。<br/>ndw 删除n个字</td>
-</tr>
-<tr>
-<td>dd</td>
-<td>删除当前光标所在行。<br/>ndd删除n行</td>
-</tr>
-</tbody></table>
-<h4 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h4><table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>rx</td>
-<td>用 x 替代当前光标所在的字符。<br/>nrx 替换n个</td>
-</tr>
-</tbody></table>
-<h4 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h4><blockquote>
-<p>这个太有用了！就是撤销，就是上一步。</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>u</td>
-<td>废除最近的命令，恢复被修改或删除的内容。</td>
-</tr>
-<tr>
-<td>U</td>
-<td>把当前行恢复到修改它之前的状态。</td>
-</tr>
-</tbody></table>
-<h4 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h4><blockquote>
-<p>这个也太有用了，类似windows下的<code>ctrl+f</code>的感觉。</p>
-</blockquote>
-<p> 按键 | 功能 |<br>| — | — |<br>| /pattern | 在缓冲区中向下查找指定的字符串 pattern。|<br>| ?pattern | 在缓冲区中向上查找指定的字符串 pattern。|<br>| n | 重复上一次查找命令。|<br>| N | 以相反的查找方向重复上一次查找命令。|</p>
-<h3 id="行编辑命令"><a href="#行编辑命令" class="headerlink" title="行编辑命令"></a>行编辑命令</h3><p>键入<code>:</code>，进入末行模式，并在屏幕底部的<code>:</code>号提示符下输入行编辑命令。</p>
-<table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>set nu</td>
-<td>显示正文的行号。</td>
-</tr>
-<tr>
-<td>set nonu</td>
-<td>取消行号。</td>
-</tr>
-<tr>
-<td>1,$p</td>
-<td>显示缓冲区的整个内容。</td>
-</tr>
-<tr>
-<td>r wqb</td>
-<td>将文件 wqb 中的内容读入缓冲区，插入当前光标下。</td>
-</tr>
-<tr>
-<td>1,5w clh</td>
-<td>将正文中 1 到 5 行的内容写到名为 clh 的文件中去。</td>
-</tr>
-<tr>
-<td>2,5d</td>
-<td>将正文中 2 到 5 行删除。</td>
-</tr>
-<tr>
-<td>2,5t8</td>
-<td>将正文中 2 到 5 行复制到第 8 行的后面。</td>
-</tr>
-<tr>
-<td>! ls</td>
-<td>暂时转出 vi 编辑器，执行 shell 命令 ls。</td>
-</tr>
-<tr>
-<td>sh</td>
-<td>暂时转出 vi 编辑器, 执行 shell 命令,键入ctrl+D 或 exit 返回正文。</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="vim使用高级"><a href="#vim使用高级" class="headerlink" title="vim使用高级"></a>vim使用高级</h2><h3 id="vim配置文件"><a href="#vim配置文件" class="headerlink" title="vim配置文件"></a>vim配置文件</h3><p>我们可以通过修改<code>vim</code>的默认配置文件，来修改用<code>vim</code>打开文件时候的默认配置，举一个例子：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim ~/.vimrc</span><br></pre></td></tr></table></figure>
-
-<p>打开配置文件，写入：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> nu</span><br></pre></td></tr></table></figure>
-
-<p>如下图所示，然后保存退出。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-4.png" alt=""></p>
-<p>再次用<code>vim</code>打开<code>hello.txt</code>文件，我们可以看到这次默认带了行号。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim hello.txt</span><br></pre></td></tr></table></figure>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-5.png" alt=""></p>
-<p>因此，我们可以依据它的常用配置文件，来修改成自己喜欢的默认打开样式，喜欢的样式自行百度搜索吧，我举一个例子：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> nocompatible</span><br><span class="line"><span class="built_in">set</span> nu</span><br><span class="line">filetype on </span><br><span class="line"><span class="built_in">set</span> <span class="built_in">history</span>=1000 </span><br><span class="line"><span class="built_in">set</span> background=dark </span><br><span class="line">syntax on </span><br><span class="line"><span class="built_in">set</span> autoindent</span><br><span class="line"><span class="built_in">set</span> smartindent</span><br><span class="line"><span class="built_in">set</span> tabstop=4</span><br><span class="line"><span class="built_in">set</span> shiftwidth=4</span><br><span class="line"><span class="built_in">set</span> showmatch</span><br><span class="line"><span class="built_in">set</span> guioptions-=T</span><br><span class="line"><span class="built_in">set</span> vb t_vb=</span><br><span class="line"><span class="built_in">set</span> ruler</span><br><span class="line"><span class="built_in">set</span> nohls</span><br><span class="line"><span class="built_in">set</span> incsearch</span><br><span class="line"><span class="keyword">if</span> has(<span class="string">"vms"</span>)</span><br><span class="line"><span class="built_in">set</span> nobackup</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="built_in">set</span> backup</span><br><span class="line"></span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>这个配置文件来自：<a href="https://www.cnblogs.com/wuyudong/p/3981410.html" target="_blank" rel="noopener">https://www.cnblogs.com/wuyudong/p/3981410.html</a></p>
-</blockquote>
-<h3 id="vim插件"><a href="#vim插件" class="headerlink" title="vim插件"></a>vim插件</h3><p><code>vim</code>可以安装非常多的插件，来打造成一个强大的<code>IDE</code>，自己百度吧。</p>
-<p>推荐阅读：</p>
-<ol>
-<li><a href="http://www.open-open.com/lib/view/open1414227253419.html" target="_blank" rel="noopener">Vim十大必备插件</a></li>
-<li><a href="https://www.cnblogs.com/linuxprobe/p/5926821.html" target="_blank" rel="noopener">10款优秀Vim插件帮你打造完美IDE</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>超算</category>
-        <category>超算课程</category>
-      </categories>
-      <tags>
-        <tag>vim</tag>
       </tags>
   </entry>
   <entry>
@@ -2692,27 +2692,6 @@
       </tags>
   </entry>
   <entry>
-    <title>VASP 固定晶胞方向不优化</title>
-    <url>/vasp-fixed-cell-direction-no-optimize/</url>
-    <content><![CDATA[<p>在优化表面，二维或一维体系时，必须固定某个或某几个晶胞方向不优化。VASP本身没有这个功能，但是提供了 <code>constr_cell_relax.F</code> 文件来设置。根据文件中的提示，添加几行代码后，就可以任意固定晶胞方向了。</p>
-<p>使用方法：在目录下建立文件 <code>OPTCELL</code> ，第一行输入三个数字（比如 <code>110</code> ），数字 <code>1</code> 表示优化，数字 <code>0</code> 表示不优化；三个数字依次对应于xyz方向。比如 <code>110</code> 表示z轴不优化；<code>001</code> 表示x和y轴都不优化。</p>
-<a id="more"></a>
-
-<div class="note info">
-            <p>注1. 无OPTCELL文件则完全是原版软件的功能；<br>注2. 只适用与正交晶胞，所有角都是直角。</p>
-          </div>
-
-<p>附：修改后的 <code>constr_cell_relax.F</code> 文件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">      SUBROUTINE CONSTR_CELL_RELAX(FCELL)</span><br><span class="line">      USE PREC</span><br><span class="line">      REAL(Q) FCELL(3,3), SAVE(3)</span><br><span class="line">      LOGICAL FILFLG</span><br><span class="line">      INTEGER ICELL(3)</span><br><span class="line"></span><br><span class="line">      INQUIRE(FILE&#x3D;&#39;OPTCELL&#39;,EXIST&#x3D;FILFLG)</span><br><span class="line">      IF (FILFLG) THEN</span><br><span class="line">        OPEN(67,FILE&#x3D;&#39;OPTCELL&#39;,FORM&#x3D;&#39;FORMATTED&#39;,STATUS&#x3D;&#39;OLD&#39;)</span><br><span class="line">          READ(67,&quot;(3I1)&quot;) (ICELL(I),I&#x3D;1,3)</span><br><span class="line">        CLOSE(67)</span><br><span class="line">        DO I&#x3D;1,3</span><br><span class="line">          SAVE(I)&#x3D;FCELL(I,I)</span><br><span class="line">        ENDDO</span><br><span class="line">        FCELL&#x3D;0.0d0</span><br><span class="line">        DO I&#x3D;1,3</span><br><span class="line">          IF (ICELL(I)&#x3D;&#x3D;1) FCELL(I,I)&#x3D;SAVE(I)</span><br><span class="line">        ENDDO</span><br><span class="line">      ENDIF</span><br><span class="line"></span><br><span class="line">!     just one simple example</span><br><span class="line">!     relaxation in x directions only</span><br><span class="line">!      SAVE&#x3D;FCELL(1,1)</span><br><span class="line">!      FCELL&#x3D;0   ! F90 style: set the whole array to zero</span><br><span class="line">!      FCELL(1,1)&#x3D;SAVE</span><br><span class="line"></span><br><span class="line">      RETURN</span><br><span class="line">      END SUBROUTINE</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>超算</category>
-        <category>应用软件</category>
-      </categories>
-      <tags>
-        <tag>vasp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>slurm作业管理：一行yhrun命令加载多个作业步</title>
     <url>/slurm-multi-program/</url>
     <content><![CDATA[<p>我们希望运行一行 <code>yhrun</code> 命令加载多个作业步，该怎么办呢？可以使用 <code>yhrun</code> 命令的 <code>--multi-prog</code> 参数来实现。</p>
@@ -2739,6 +2718,27 @@
       </categories>
       <tags>
         <tag>slurm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VASP 固定晶胞方向不优化</title>
+    <url>/vasp-fixed-cell-direction-no-optimize/</url>
+    <content><![CDATA[<p>在优化表面，二维或一维体系时，必须固定某个或某几个晶胞方向不优化。VASP本身没有这个功能，但是提供了 <code>constr_cell_relax.F</code> 文件来设置。根据文件中的提示，添加几行代码后，就可以任意固定晶胞方向了。</p>
+<p>使用方法：在目录下建立文件 <code>OPTCELL</code> ，第一行输入三个数字（比如 <code>110</code> ），数字 <code>1</code> 表示优化，数字 <code>0</code> 表示不优化；三个数字依次对应于xyz方向。比如 <code>110</code> 表示z轴不优化；<code>001</code> 表示x和y轴都不优化。</p>
+<a id="more"></a>
+
+<div class="note info">
+            <p>注1. 无OPTCELL文件则完全是原版软件的功能；<br>注2. 只适用与正交晶胞，所有角都是直角。</p>
+          </div>
+
+<p>附：修改后的 <code>constr_cell_relax.F</code> 文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">      SUBROUTINE CONSTR_CELL_RELAX(FCELL)</span><br><span class="line">      USE PREC</span><br><span class="line">      REAL(Q) FCELL(3,3), SAVE(3)</span><br><span class="line">      LOGICAL FILFLG</span><br><span class="line">      INTEGER ICELL(3)</span><br><span class="line"></span><br><span class="line">      INQUIRE(FILE&#x3D;&#39;OPTCELL&#39;,EXIST&#x3D;FILFLG)</span><br><span class="line">      IF (FILFLG) THEN</span><br><span class="line">        OPEN(67,FILE&#x3D;&#39;OPTCELL&#39;,FORM&#x3D;&#39;FORMATTED&#39;,STATUS&#x3D;&#39;OLD&#39;)</span><br><span class="line">          READ(67,&quot;(3I1)&quot;) (ICELL(I),I&#x3D;1,3)</span><br><span class="line">        CLOSE(67)</span><br><span class="line">        DO I&#x3D;1,3</span><br><span class="line">          SAVE(I)&#x3D;FCELL(I,I)</span><br><span class="line">        ENDDO</span><br><span class="line">        FCELL&#x3D;0.0d0</span><br><span class="line">        DO I&#x3D;1,3</span><br><span class="line">          IF (ICELL(I)&#x3D;&#x3D;1) FCELL(I,I)&#x3D;SAVE(I)</span><br><span class="line">        ENDDO</span><br><span class="line">      ENDIF</span><br><span class="line"></span><br><span class="line">!     just one simple example</span><br><span class="line">!     relaxation in x directions only</span><br><span class="line">!      SAVE&#x3D;FCELL(1,1)</span><br><span class="line">!      FCELL&#x3D;0   ! F90 style: set the whole array to zero</span><br><span class="line">!      FCELL(1,1)&#x3D;SAVE</span><br><span class="line"></span><br><span class="line">      RETURN</span><br><span class="line">      END SUBROUTINE</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>超算</category>
+        <category>应用软件</category>
+      </categories>
+      <tags>
+        <tag>vasp</tag>
       </tags>
   </entry>
   <entry>
