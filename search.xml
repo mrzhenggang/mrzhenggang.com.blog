@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>如何修改系统密码</title>
+    <url>/how-to-change-password/</url>
+    <content><![CDATA[<h2 id="用户密码管理"><a href="#用户密码管理" class="headerlink" title="用户密码管理"></a>用户密码管理</h2><ol>
+<li>用户在使用天河系统的时候，需要使用SSH工具连接到系统的登陆节点，输入系统账号和登录密码。</li>
+<li>登陆密码建议定期更换（系统每过一段时间会强制要求更换，快到期时登陆系统后会有英文提示）。</li>
+<li>用户可以使用<code>password</code>密码修改密码。</li>
+</ol>
+<a id="more"></a>
+
+
+
+<h2 id="如何修改密码"><a href="#如何修改密码" class="headerlink" title="如何修改密码"></a>如何修改密码</h2><h3 id="能够正常登陆，主动修改密码"><a href="#能够正常登陆，主动修改密码" class="headerlink" title="能够正常登陆，主动修改密码"></a>能够正常登陆，主动修改密码</h3><p>当出现用户密码快要过期的提示时，建议用户主动修改密码。修改密码的方法很简单，只需要以下几步：</p>
+<ol>
+<li>登陆系统</li>
+<li>输入修改密码命令：<code>password</code></li>
+<li>输入一次旧密码（注意：输入密码时，并没有显示已经输入的内容，这是一种保护机制，不是输不进去）</li>
+<li>然后再输入两次新密码（注意：密码要求一定的安全强度，比如数字、字母、符号都要有，要满足一定的长度，不能和用户名太相似等等，如果输入后未通过，请阅读英文提示即可）</li>
+<li>重新用新密码登录</li>
+</ol>
+<p>举例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[zhenggang@ln2 ~]$ passwd </span><br><span class="line">Changing password <span class="keyword">for</span> user zhenggang. </span><br><span class="line">Enter login(LDAP) password:    <span class="comment"># 注意：在输入原始账号密码或新密码时，系统都不会显示输入的字符</span></span><br><span class="line">New password:   </span><br><span class="line">Re-enter new password:   </span><br><span class="line">LDAP password information changed <span class="keyword">for</span> ncps </span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="已经过期无法登陆，强制修改密码"><a href="#已经过期无法登陆，强制修改密码" class="headerlink" title="已经过期无法登陆，强制修改密码"></a>已经过期无法登陆，强制修改密码</h3><p>如果用户长期<strong>无视</strong>密码快要过期的提示警告，那么一旦密码过期用户将无法正常登陆系统。这时也不用担心，用户可以依据提示，完成修改密码的步骤，即可重新登录系统。</p>
+<ol>
+<li>登陆系统</li>
+<li>系统提示密码过期，请修改密码</li>
+<li>输入一次旧密码（注意：输入密码时，并没有显示已经输入的内容，这是一种保护机制，不是输不进去）</li>
+<li>然后再输入两次新密码</li>
+<li>重新用新密码登录</li>
+</ol>
+<p>举例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">WARNING: Your password has expired.</span><br><span class="line">You must change your password now and login again!</span><br><span class="line">更改用户 zhenggang 的密码 。</span><br><span class="line">(current) LDAP Password:</span><br><span class="line">新的 密码：</span><br><span class="line">新的 密码：</span><br><span class="line">重新输入新的 密码：</span><br><span class="line">passwd：所有的身份验证令牌已经成功更新。</span><br></pre></td></tr></table></figure>
+
+
+
+<p>注意：如果出现了乱码，或者显示异常等情况，很有可能是由于您使用的SSH登陆工具对 <strong>中文</strong> 支持不好，请尝试使用其他登陆工具。在这里我们推荐使用 <code>mobaxterm</code> 工具免费版。</p>
+<p>关于该工具的详细介绍可以参考：<a href="https://blog.mrzhenggang.com/supercomputer-courses-ssh-sftp-mobaxterm/" target="_blank" rel="noopener">超算入门课程2 ssh和sftp工具的使用之mobaxterm软件教学</a></p>
+<h2 id="长期未使用用户锁定"><a href="#长期未使用用户锁定" class="headerlink" title="长期未使用用户锁定"></a>长期未使用用户锁定</h2><p>如果一个系统账号长期未登录，系统会将该账号<strong>锁定</strong>。用户登录时会提示<strong>账号已过期</strong>。</p>
+<p>此时，只需要联系中心技术人员，让管理员协助修改即可。</p>
+<h2 id="VPN登陆密码修改"><a href="#VPN登陆密码修改" class="headerlink" title="VPN登陆密码修改"></a>VPN登陆密码修改</h2><p>如需更换 VPN 账号密码，请告知中心技术人员，我们帮您更换。 普通用户无法自行修改。</p>
+]]></content>
+      <categories>
+        <category>超算</category>
+        <category>密码</category>
+      </categories>
+      <tags>
+        <tag>密码</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>新型冠状肺炎公众防护指南分享</title>
     <url>/virus-2019nCoV/</url>
     <content><![CDATA[<p>新型冠状肺炎公众防护指南，大小约10MB。</p>
@@ -377,60 +429,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Collectl在TH-1A上的使用</title>
-    <url>/collectl-on-th1a/</url>
-    <content><![CDATA[<p>系统登录使用方法请参考：</p>
-<h2 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">module add collectl</span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
-
-<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><h3 id="拷贝脚本"><a href="#拷贝脚本" class="headerlink" title="拷贝脚本"></a>拷贝脚本</h3><p>拷贝脚本到算例的目录</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp <span class="variable">$COLLECTL_HOME</span>/scripts/v1.0/* .</span><br></pre></td></tr></table></figure>
-
-<h3 id="修改相关参数"><a href="#修改相关参数" class="headerlink" title="修改相关参数"></a>修改相关参数</h3><p>依据不同任务，修改<code>collectl-run.sh</code>脚本参数，包括：</p>
-<ul>
-<li>partition 计算分区，可用<code>yhi</code>查看可用分区。</li>
-<li>nodes 运行节点数</li>
-<li>cores 运行总核数</li>
-<li>exe 运行命令及相关参数，例如<code>lmp &lt; in.lj &gt; out.log</code>。（写的是实际运行的命令，而不是提交脚本或类似 <code>yhrun -N1 exe</code>)</li>
-<li>OMP_NUM_THREADS 设置线程数</li>
-</ul>
-<h3 id="提交任务"><a href="#提交任务" class="headerlink" title="提交任务"></a>提交任务</h3><p>直接执行该脚本</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./collectl-run.sh</span><br></pre></td></tr></table></figure>
-
-<p>会获得<code>jobid</code>号，例如：14570273。</p>
-<p>使用 <code>yhq</code> 查看任务状态， <code>PD</code> 为等待， <code>R</code> 为运行， 如果任务消失则表示结束。</p>
-<h2 id="分析数据"><a href="#分析数据" class="headerlink" title="分析数据"></a>分析数据</h2><p>等待任务结束后，分析数据，运行脚本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./collectl-analysis.sh nodesfile-14570273</span><br></pre></td></tr></table></figure>
-
-<p>说明：</p>
-<ul>
-<li><code>nodesfile-14570273</code> 为运行得到的节点编号文件，请依据实际 <code>jobid</code> 进行修改。</li>
-</ul>
-<p>分析结果类似：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">This is collectl script --- analysis calculate node messages.</span><br><span class="line">Analyzing nodesfile-14570273 cn2021</span><br><span class="line">         Operation          Max        Min       Mean</span><br><span class="line">         CPU USAGE(%)     33.00       0.00       5.43</span><br><span class="line">          MEMORY(MB)    6144.00    5120.00    5266.29</span><br><span class="line">     NetworkIn(KB/s)       0.00       0.00       0.00</span><br><span class="line">  NetworkIn(count/s)       0.00       0.00       0.00</span><br><span class="line">    NetworkOut(KB/s)       0.00       0.00       0.00</span><br><span class="line"> NetworkOut(count/s)       0.00       0.00       0.00</span><br><span class="line">        IORead(KB/s)    5075.00      12.00    2179.29</span><br><span class="line">     IORead(count/s)    1394.00      46.00     632.29</span><br><span class="line">       IOWrite(KB/s)     372.00       4.00     178.86</span><br><span class="line">    IOWrite(count/s)    1256.00      44.00     548.43</span><br><span class="line">Plt cn2021.log_cpuuse.png</span><br></pre></td></tr></table></figure>
-
-<p>说明：</p>
-<ol>
-<li><code>CPU USAGE(%)</code> 为CPU 使用率</li>
-<li><code>MEMORY(MB)</code> 为内存使用量</li>
-<li><code>Network</code> 为网络通信数据, <code>KB/s</code> 每秒通信量, <code>count/s</code> 每秒通信次数</li>
-<li><code>IORead</code>, <code>IOWrite</code> 为IO读写情况</li>
-<li>程序会生成<code>png</code>图片用于分析</li>
-</ol>
-<h2 id="视频教学"><a href="#视频教学" class="headerlink" title="视频教学"></a>视频教学</h2><center><video src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/collectl/collectl-th1a.mp4" controls="controls" height="400" weight="700" >
-您的浏览器不支持 video 标签。
-</video></center>]]></content>
-      <categories>
-        <category>超算</category>
-        <category>性能分析</category>
-      </categories>
-      <tags>
-        <tag>collectl</tag>
-        <tag>性能分析</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>BerkeleyGW-2.1 安装教程</title>
     <url>/berkeleygw-install/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>这是一个免费开源的大规模并行的电子激发态属性计算包，它基于采用ab initio GW和GW加Bethe-Salpeter方程方法的多体扰动理论。</p>
@@ -482,6 +480,60 @@
       </categories>
       <tags>
         <tag>berkeleygw</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Collectl在TH-1A上的使用</title>
+    <url>/collectl-on-th1a/</url>
+    <content><![CDATA[<p>系统登录使用方法请参考：</p>
+<h2 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">module add collectl</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><h3 id="拷贝脚本"><a href="#拷贝脚本" class="headerlink" title="拷贝脚本"></a>拷贝脚本</h3><p>拷贝脚本到算例的目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp <span class="variable">$COLLECTL_HOME</span>/scripts/v1.0/* .</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改相关参数"><a href="#修改相关参数" class="headerlink" title="修改相关参数"></a>修改相关参数</h3><p>依据不同任务，修改<code>collectl-run.sh</code>脚本参数，包括：</p>
+<ul>
+<li>partition 计算分区，可用<code>yhi</code>查看可用分区。</li>
+<li>nodes 运行节点数</li>
+<li>cores 运行总核数</li>
+<li>exe 运行命令及相关参数，例如<code>lmp &lt; in.lj &gt; out.log</code>。（写的是实际运行的命令，而不是提交脚本或类似 <code>yhrun -N1 exe</code>)</li>
+<li>OMP_NUM_THREADS 设置线程数</li>
+</ul>
+<h3 id="提交任务"><a href="#提交任务" class="headerlink" title="提交任务"></a>提交任务</h3><p>直接执行该脚本</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./collectl-run.sh</span><br></pre></td></tr></table></figure>
+
+<p>会获得<code>jobid</code>号，例如：14570273。</p>
+<p>使用 <code>yhq</code> 查看任务状态， <code>PD</code> 为等待， <code>R</code> 为运行， 如果任务消失则表示结束。</p>
+<h2 id="分析数据"><a href="#分析数据" class="headerlink" title="分析数据"></a>分析数据</h2><p>等待任务结束后，分析数据，运行脚本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./collectl-analysis.sh nodesfile-14570273</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li><code>nodesfile-14570273</code> 为运行得到的节点编号文件，请依据实际 <code>jobid</code> 进行修改。</li>
+</ul>
+<p>分析结果类似：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">This is collectl script --- analysis calculate node messages.</span><br><span class="line">Analyzing nodesfile-14570273 cn2021</span><br><span class="line">         Operation          Max        Min       Mean</span><br><span class="line">         CPU USAGE(%)     33.00       0.00       5.43</span><br><span class="line">          MEMORY(MB)    6144.00    5120.00    5266.29</span><br><span class="line">     NetworkIn(KB/s)       0.00       0.00       0.00</span><br><span class="line">  NetworkIn(count/s)       0.00       0.00       0.00</span><br><span class="line">    NetworkOut(KB/s)       0.00       0.00       0.00</span><br><span class="line"> NetworkOut(count/s)       0.00       0.00       0.00</span><br><span class="line">        IORead(KB/s)    5075.00      12.00    2179.29</span><br><span class="line">     IORead(count/s)    1394.00      46.00     632.29</span><br><span class="line">       IOWrite(KB/s)     372.00       4.00     178.86</span><br><span class="line">    IOWrite(count/s)    1256.00      44.00     548.43</span><br><span class="line">Plt cn2021.log_cpuuse.png</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ol>
+<li><code>CPU USAGE(%)</code> 为CPU 使用率</li>
+<li><code>MEMORY(MB)</code> 为内存使用量</li>
+<li><code>Network</code> 为网络通信数据, <code>KB/s</code> 每秒通信量, <code>count/s</code> 每秒通信次数</li>
+<li><code>IORead</code>, <code>IOWrite</code> 为IO读写情况</li>
+<li>程序会生成<code>png</code>图片用于分析</li>
+</ol>
+<h2 id="视频教学"><a href="#视频教学" class="headerlink" title="视频教学"></a>视频教学</h2><center><video src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/collectl/collectl-th1a.mp4" controls="controls" height="400" weight="700" >
+您的浏览器不支持 video 标签。
+</video></center>]]></content>
+      <categories>
+        <category>超算</category>
+        <category>性能分析</category>
+      </categories>
+      <tags>
+        <tag>collectl</tag>
+        <tag>性能分析</tag>
       </tags>
   </entry>
   <entry>
@@ -647,220 +699,6 @@
         <tag>配额</tag>
         <tag>storage</tag>
         <tag>quota</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>超算入门课程2 ssh和sftp工具的使用之mobaxterm软件教学</title>
-    <url>/supercomputer-courses-ssh-sftp-mobaxterm/</url>
-    <content><![CDATA[<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/mobaxterm-logo.png" alt=""></p>
-<p>本文将通过mobaxterm软件，介绍如何登陆超算以及如何传输数据。</p>
-<a id="more"></a>
-
-<h2 id="什么是SSH"><a href="#什么是SSH" class="headerlink" title="什么是SSH"></a>什么是<code>SSH</code></h2><p>官方的说法是这样子的：</p>
-<ol>
-<li><code>SSH</code> 为 <code>Secure Shell</code> 的缩写，</li>
-<li><code>SSH</code> 为建立在应用层基础上的安全协议。</li>
-<li><code>SSH</code> 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。利用 <code>SSH</code> 协议可以有效防止远程管理过程中的信息泄露问题。</li>
-</ol>
-<p>我们的理解：</p>
-<ul>
-<li><code>SSH</code> 就是远程的命令行，敲命令的，通过它来使用登陆使用超算机器。</li>
-</ul>
-<p>常用的软件有：</p>
-<ul>
-<li><code>mobaxterm</code></li>
-<li><code>ssh secure shell</code></li>
-<li><code>xshell</code></li>
-<li><code>putty</code></li>
-<li><code>SecureCRT</code></li>
-<li>…</li>
-</ul>
-<hr>
-<h2 id="什么是FTP-SFTP"><a href="#什么是FTP-SFTP" class="headerlink" title="什么是FTP/SFTP"></a>什么是<code>FTP/SFTP</code></h2><p>官方的说法是这样子的：</p>
-<ol>
-<li><code>sftp</code>是<code>Secure File Transfer Protocol</code>的缩写</li>
-<li><code>sftp</code>是安全文件传送协议。可以为传输文件提供一种安全的网络的加密方法。</li>
-<li><code>sftp</code> 与 <code>ftp</code> 有着几乎一样的语法和功能。</li>
-</ol>
-<p>我们的理解：</p>
-<ul>
-<li>就是传文件的工具，用来实现自己的电脑和远程服务器之间文件的上传下载。</li>
-</ul>
-<p>常用的软件有：</p>
-<ul>
-<li><code>mobaxterm</code></li>
-<li><code>Xftp</code></li>
-<li><code>winscp</code></li>
-<li><code>FileZilla</code></li>
-<li>…</li>
-</ul>
-<hr>
-<h2 id="什么是mobaxterm"><a href="#什么是mobaxterm" class="headerlink" title="什么是mobaxterm"></a>什么是<code>mobaxterm</code></h2><p><code>MobaXterm</code> 又名 <code>MobaXVT</code>，是一款增强型终端、X 服务器和 Unix 命令集（GNU/ cygwin）工具箱。</p>
-<ul>
-<li>支持各种连接 SSH，X11，RDP，VNC，FTP，MOSH</li>
-<li>支持 Unix 命令（bash，ls，cat，sed，grep，awk，rsync，…）</li>
-<li>连接 SSH 终端后支持 SFTP 传输文件</li>
-<li>各种丰富的插件（git/dig/aria2…）</li>
-<li>可运行 Windows 或软件</li>
-</ul>
-<p>总之，一句话：<strong>它是一个工具箱，非常强大</strong>。</p>
-<hr>
-<h2 id="为什么选择mobaxterm"><a href="#为什么选择mobaxterm" class="headerlink" title="为什么选择mobaxterm"></a>为什么选择<code>mobaxterm</code></h2><p>使用其他的<code>ssh</code>和<code>sftp</code>工具，经常遇到各种各样稀奇古怪的<code>bug</code>问题，不好解决，但我们发现这个软件竟然都解决了，堪称完美！</p>
-<h3 id="每次都需要输入密码，记不住"><a href="#每次都需要输入密码，记不住" class="headerlink" title="每次都需要输入密码，记不住"></a>每次都需要输入密码，记不住</h3><p>很多ssh工具不提供记录密码的功能，所以每次都需要输入密码。有时候会忘记密码，有时候密码太长记不住，就写在一个<code>txt</code>文本文档里面，不安全。</p>
-<p>但是mobaxterm可以自动记录密码，成功登陆后，选择<code>yes</code>即可，如下图：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/save-key.png" alt=""></p>
-<h3 id="图形界面打不开"><a href="#图形界面打不开" class="headerlink" title="图形界面打不开"></a>图形界面打不开</h3><p>这是因为有些<code>ssh</code>工具不会自动加载图形界面所需的头文件和库的路径，所以导致error。这个软件会自动加载，如下图：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/graphic-interface.png" alt=""></p>
-<h3 id="字符串出现乱码了，看不懂"><a href="#字符串出现乱码了，看不懂" class="headerlink" title="字符串出现乱码了，看不懂"></a>字符串出现乱码了，看不懂</h3><p>这是因为有些<code>ssh</code>工具对中文支持的并不好，所以遇到中文的时候就出现乱码了。</p>
-<p>mobaxterm对于中文支持的很好，所以由于出现乱码，进而导致的各类问题都可以避免。</p>
-<h3 id="修改密码时候自动退出"><a href="#修改密码时候自动退出" class="headerlink" title="修改密码时候自动退出"></a>修改密码时候自动退出</h3><p>这是因为有些<code>ssh</code>工具在修改登陆密码时候出现的bug，导致用户无法自己修改密码。只能说<code>mobaxterm</code>又可以完美支持。</p>
-<p>说了这么多好处（其实就是以前遇到的各种坑），下面介绍一下如何安装和使用它的常用功能。</p>
-<hr>
-<h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>非常简单，直接下载解压缩双击即可使用。</p>
-<p>官网：<a href="https://mobaxterm.mobatek.net" target="_blank" rel="noopener">https://mobaxterm.mobatek.net</a></p>
-<p>下载地址：<a href="https://mobaxterm.mobatek.net/download.html" target="_blank" rel="noopener">https://mobaxterm.mobatek.net/download.html</a></p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/download-link.png" alt=""></p>
-<p>直接点击免费版。</p>
-<blockquote>
-<p>付费版有兴趣的可以付一下，一般情况下免费版就足够了</p>
-</blockquote>
-<p>然后选择左侧的<code>Portable</code>版本。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/download-link-2.png" alt=""></p>
-<blockquote>
-<p><code>Portable</code>版本下载即用，无需安装；<code>Installer</code>版本是<code>msi</code>文件，需要安装。推荐前者。</p>
-</blockquote>
-<p>然后点击下载zip压缩包。</p>
-<p>用解压缩工具（如winrar 7zip等工具）将下载好的<code>MobaXterm_Portable_v11.0.zip</code>压缩包解压缩。</p>
-<p>我们双击<code>MobaXterm_Personal_11.0.exe</code>，就可以打开它，如图所示：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/interface.png" alt=""></p>
-<hr>
-<h2 id="ssh登陆使用"><a href="#ssh登陆使用" class="headerlink" title="ssh登陆使用"></a>ssh登陆使用</h2><h3 id="方法1-新建ssh连接"><a href="#方法1-新建ssh连接" class="headerlink" title="方法1-新建ssh连接"></a>方法1-新建<code>ssh</code>连接</h3><center><video src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/mobaxterm-ssh-1080p.mp4" controls="controls" height="400" weight="700" >
-您的浏览器不支持 video 标签。
-</video></center>
-
-<p>我们点击 <code>Session</code> 。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/new-session.png" alt=""></p>
-<p>新建一个 <code>ssh</code> 连接。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/ssh-session.png" alt=""></p>
-<p>输入远程服务器的ip地址（如192.168.2.5)，点击 <code>ok</code>。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/ssh-1.png" alt=""></p>
-<p>然后输入登陆远程服务器所需的帐户名，然后输入密码。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/input-username-and-key.png" alt=""></p>
-<p>如果选择 <code>ok</code> ，就会自动保存密码，下次登陆无需输入，否则下次仍需要输入密码。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/save-key.png" alt=""></p>
-<p>登陆成功：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/login-success.png" alt=""></p>
-<p>进阶：</p>
-<ul>
-<li>可以在建立<code>ssh session</code>连接的时候，勾选 <code>Specify username</code> ，输入用户名，以后每次就无需输入了。</li>
-<li>可以在建立<code>ssh session</code>连接的时候，选择下方 <code>Bookmark settings</code> 选项卡，然后给这个新建的连接起一个名字，方便识别。</li>
-</ul>
-<hr>
-<h3 id="方法2-打开已有的ssh连接"><a href="#方法2-打开已有的ssh连接" class="headerlink" title="方法2-打开已有的ssh连接"></a>方法2-打开已有的<code>ssh</code>连接</h3><p>以后再次连接，只需要<strong>双击</strong>左侧的任意一个ssh连接即可。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/ssh-3.png" alt=""></p>
-<p>这个ssh连接已经保存了<code>ip</code>地址。</p>
-<ul>
-<li>如果这个ssh连接，没有保存帐户名和密码，那么输入登陆远程服务器的帐户名和密码即可。</li>
-<li>如果这个ssh连接，保存了帐户名，没有保存密码，那么会自动登陆该账户，然后输入密码即可。</li>
-<li>如果这个ssh连接，保存了帐户名和密码，那么直接就可以登陆成功。</li>
-</ul>
-<hr>
-<h3 id="方法3-通过ssh命令建立连接"><a href="#方法3-通过ssh命令建立连接" class="headerlink" title="方法3-通过ssh命令建立连接"></a>方法3-通过ssh命令建立连接</h3><p>首先我们打开本地的命令行终端：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-session.png" alt=""></p>
-<p>然后使用<code>ssh</code>命令进行系统登陆，举例如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh zhenggang@192.168.2.5</span><br></pre></td></tr></table></figure>
-
-<p>然后输入帐户密码即可。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/ssh-connect.png" alt=""></p>
-<p>ssh命令说明：</p>
-<ul>
-<li><code>ssh</code> 同步命令</li>
-<li><code>zhenggang@192.168.2.5:</code>  格式为：<code>用户名@ip</code><ul>
-<li><code>zhenggang</code>为用户名</li>
-<li><code>192.168.2.5</code>为远程服务器的<code>ip</code>地址</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="sftp数据传输"><a href="#sftp数据传输" class="headerlink" title="sftp数据传输"></a>sftp数据传输</h2><h3 id="方法1-建立ssh连接后直接拖拽"><a href="#方法1-建立ssh连接后直接拖拽" class="headerlink" title="方法1-建立ssh连接后直接拖拽"></a>方法1-建立<code>ssh</code>连接后直接拖拽</h3><p>我们在建立ssh后，可以直接通过拖拽的方式，将本地的文件拖拽到远程服务器。</p>
-<blockquote>
-<p>特别提示：可以将<code>mobaxterm</code>软件的窗口从最大化退出，就可以同时显示文件夹和<code>mobaxterm</code>了，方便拖拽。</p>
-</blockquote>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/copy.png" alt=""></p>
-<blockquote>
-<p>特别提示：如果希望拖拽到的目标目录为<code>ssh</code>连接所在的当前目录，可以勾选下方的 <code>Follow ternimal folder</code> 这样就会自动跟随文件夹的切换了。</p>
-</blockquote>
-<hr>
-<h3 id="方法2-建立sftp连接再拖拽"><a href="#方法2-建立sftp连接再拖拽" class="headerlink" title="方法2-建立sftp连接再拖拽"></a>方法2-建立<code>sftp</code>连接再拖拽</h3><center><video src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/mobaxterm-sftp-1080p.mp4" controls="controls" height="425" weight="720" >
-您的浏览器不支持 video 标签。
-</video></center>
-
-
-<p>建立<code>sftp</code>连接的方式与建立<code>ssh</code>连接的方式非常相似，简述如下：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/new-session.png" alt=""></p>
-<p>新建一个 <code>sftp</code> 连接。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/ssh-session.png" alt=""></p>
-<p>输入远程服务器的ip地址（如192.168.2.5)，以及帐户名（必须输入），然后点击 <code>ok</code>。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/sftp-1.png" alt=""></p>
-<p>然后输入密码。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/sftp-key.png" alt=""></p>
-<p>同样可以选择保存密码。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/save-key.png" alt=""></p>
-<p>登陆成功，然后我们就可以通过窗口，鼠标拖拽的方式，上传或下载文件了。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/sftp-2.png" alt=""></p>
-<hr>
-<h3 id="方法3-直接使用rsync同步"><a href="#方法3-直接使用rsync同步" class="headerlink" title="方法3-直接使用rsync同步"></a>方法3-直接使用rsync同步</h3><p>此方法无需建立<code>ssh</code>或<code>sftp</code>连接，在本地的命令行终端，使用同步命令<code>rsync</code>，即可实现数据的同步。</p>
-<p>同步到远程服务器即为上传，从远程服务器同步到本地即为下载。</p>
-<p>首先我们打开本地的命令行终端：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-session.png" alt=""></p>
-<p>然后使用同步命令进行同步，举例如下：</p>
-<p>我们将本地的d盘下的文件夹<code>directory</code>下的<code>1.txt</code>文件，同步到远程服务器，在命令行终端输入：</p>
-<p>1）进入文件夹</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /media/d/directory</span><br></pre></td></tr></table></figure>
-
-<p>2）同步命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rsync -ltvP 1.txt zhenggang@192.168.2.5:/vol-th/home/zhenggang</span><br></pre></td></tr></table></figure>
-
-<p>3）输入远程服务器密码</p>
-<p>rsync命令说明：</p>
-<ul>
-<li><code>rsync</code> 同步命令</li>
-<li><code>-ltvP</code> 同步参数</li>
-<li><code>1.txt</code> 待同步的文件名，也可以是文件夹的名字</li>
-<li><code>zhenggang@192.168.2.5:/vol-th/home/zhenggang</code>  格式为：<code>用户名@ip:目录</code><ul>
-<li><code>zhenggang</code>为用户名</li>
-<li><code>192.168.2.5</code>为远程服务器的<code>ip</code>地址</li>
-<li><code>/vol-th/home/zhenggang</code>为远程服务器的目标目录</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>请依据自己的同步需求自行修改相关参数，切记完全照抄，你会遇到报错的哦</p>
-</blockquote>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/rsync.png" alt=""></p>
-<hr>
-<h2 id="修改账户密码"><a href="#修改账户密码" class="headerlink" title="修改账户密码"></a>修改账户密码</h2><p>修改密码使用的命令叫做 <code>passwd</code> ， 我们只需要输入一次旧密码，再输入两次新密码即可。注意密码不要太简单。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/change-passwd.png" alt=""></p>
-<hr>
-<h2 id="当作linux使用"><a href="#当作linux使用" class="headerlink" title="当作linux使用"></a>当作linux使用</h2><p>mobaxterm相当于一个类linux的子系统，支持各种 Unix 命令（bash，ls，cat，sed，grep，awk，rsync，…），非常好用，熟悉<code>linux</code>的朋友可以用它做一些批量操作。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/linux.png" alt=""></p>
-<hr>
-<h2 id="建立开发编译环境"><a href="#建立开发编译环境" class="headerlink" title="建立开发编译环境"></a>建立开发编译环境</h2><p>比如<code>gcc</code>编译器<code>python</code>环境等，默认是没有的，但是我们可以通过操作来安装它们，并像<code>linux</code>一样使用。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-env-1.png" alt=""></p>
-<p>如下图所示，里面有各种各样的包，可以直接选择并<code>install</code> ，非常简单。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-env-2.png" alt=""></p>
-<p>如果发现本次配置的环境，下次登陆找不到了，可以修改一下slash的位置：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-env-3.png" alt=""></p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-env-4.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>超算</category>
-        <category>超算课程</category>
-      </categories>
-      <tags>
-        <tag>ssh</tag>
-        <tag>sftp</tag>
-        <tag>mobaxerm</tag>
       </tags>
   </entry>
   <entry>
@@ -1175,306 +1013,217 @@
       </tags>
   </entry>
   <entry>
-    <title>超算入门课程5 文本编辑器vim的使用教学</title>
-    <url>/supercomputer-courses-vim/</url>
-    <content><![CDATA[<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-logo.png" alt="vim-logo"></p>
-<div class="note info">
-            <p>如果不会在<code>linux</code>下查看、修改文件（算例输入文件/配置文件/提交脚本），还要从<code>windows</code>下改完了上传，效率太低了！因此，让我们一起用10分钟来学习一下<code>vim</code>编辑器吧，能够大大提高工作效率。</p>
-          </div>
-
+    <title>超算入门课程2 ssh和sftp工具的使用之mobaxterm软件教学</title>
+    <url>/supercomputer-courses-ssh-sftp-mobaxterm/</url>
+    <content><![CDATA[<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/mobaxterm-logo.png" alt=""></p>
+<p>本文将通过mobaxterm软件，介绍如何登陆超算以及如何传输数据。</p>
 <a id="more"></a>
 
-<h2 id="什么是vi-vim"><a href="#什么是vi-vim" class="headerlink" title="什么是vi/vim"></a>什么是vi/vim</h2><p><code>linux</code>下我们经常需要编辑一些文本文件，比如提交任务的脚本文件，或者打开文件修改一些内容。</p>
-<p>可是经常使用<code>windows</code>的用户第一次面对一个<code>linux</code>的<code>terminal</code>一脸懵，<code>WHAT??</code>，文件在哪？怎么打开？怎么编辑？啥都不知道。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/linux-terminal.png" alt="linux-terminal"></p>
-<p>虽然，常用的linux也是带了一些图形化的文本编辑器的，比如LibreOffice，就类似一个记事本软件或者word软件。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/libreoffice.png" alt="图形文本软件"></p>
-<p>但对于超算平台的用户，最为常用的还是推荐<code>vim</code>文本编辑器。在命令行输入<code>vim</code> 即可打开如下的界面：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-interface.png" alt="vim-interface"></p>
-<p><code>vi</code> 编辑器是所有 <code>Unix</code> 及 <code>Linux</code> 系统下标准的编辑器，它就相当于windows系统中的记事本一样，它的强大不逊色于任何最新的文本编辑器。它是我们使用Linux系统不能缺少的工具。</p>
-<hr>
-<h2 id="vim使用初级"><a href="#vim使用初级" class="headerlink" title="vim使用初级"></a>vim使用初级</h2><p>比如，我们希望新建一个名为 <code>hello.txt</code> 的文件，里面记录一些内容，只需要：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim hello.txt</span><br></pre></td></tr></table></figure>
-
-<p>此时，我们在当前目录下新建并打开了一个名为 <code>hello.txt</code> 的文件，里面是空的，什么都还没写呢。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-1.png" alt=""></p>
-<p>此时，<code>vim</code> 编辑器处于 <code>command mode</code> ，称作命令行模式吧。</p>
-<p>我们按键盘上的小写字母 <code>i</code>，我们发现最地下出现了<code>-- INSERT --</code>，这表明我们进入了 <code>Insert mode</code>（插入模式），可以开始输入内容了。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-2.png" alt=""></p>
-<p>此时，我们按键盘上的按键，就可以自由的输入了，比如输入一个<code>hello world</code>字符串吧。</p>
-<p>输入完成后，我们按键盘上的 <code>Esc</code> 键，从插入模式退回到命令行模式。</p>
-<p>然后我们用键盘输入 <code>:</code> 字符（就是<code>shift键+;</code>），可以发现最低端出现了一个<code>:</code>，此时我们从命令行模式进入了<code>last line mode</code>（称作末行模式吧）。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-3.png" alt=""></p>
-<p>然后输入字符<code>wq!</code> ，表示<code>w</code>保存+<code>q</code>退出+<code>!</code>强制，我们就把文件保存好了。此时我们用<code>cat</code>命令查看一下文件的内容吧：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat hello.txt</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
-
-<p>到此为止，我们就初步学会了<code>vim</code>编辑器的使用。</p>
-<p>小节：</p>
-<p>1) <code>vim</code>的三种模式</p>
-<ul>
-<li>命令模式（command mode）：<ul>
-<li>控制屏幕光标的移动，字符、字或行的删除，移动复制某区段及进入插入模式下，或者到末行模式。</li>
-</ul>
-</li>
-<li>插入模式（Insert mode）<ul>
-<li>只有在插入下，才可以做文字输入，按<code>Esc</code>键可回到命令行模式。</li>
-</ul>
-</li>
-<li>底行模式（last line mode）<ul>
-<li>将文件保存或退出vi；也可以设置编辑环境，如寻找字符串、列出行号……等。</li>
-</ul>
-</li>
-</ul>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-mode.png" alt=""></p>
-<p>2) 打开-编辑-退出</p>
-<ul>
-<li>打开文件：<code>vim 文件名</code></li>
-<li>插入内容：按<code>i</code>进入插入模式，插入完成后，按<code>Esc</code>退出插入模式。</li>
-<li>保存文件：按<code>:</code>进入末行模式，输入<code>wq!</code>，然后回车，是强制保存并退出。</li>
-</ul>
-<hr>
-<h2 id="vim使用中级"><a href="#vim使用中级" class="headerlink" title="vim使用中级"></a>vim使用中级</h2><p><code>vim</code>之所以强大，是因为它有非常非常多的快捷键和插件，非常厉害！我们一步一步来，此处介绍一小部分最为常用的快捷键。</p>
-<h3 id="进入与退出"><a href="#进入与退出" class="headerlink" title="进入与退出"></a>进入与退出</h3><ul>
-<li>进入 vi 命令格式：<code>$ vi filename</code></li>
-<li>退出文件：<code>:q!</code> 退出不保存；<code>wq</code> 保存退出</li>
-</ul>
-<h3 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h3><blockquote>
-<p>要是想直接用方向键向下左右我也不拦着哈！</p>
-</blockquote>
-<p>我们可以通过如下快捷键来快速移动光标，熟练之后，你会觉得鼠标弱爆了。非常建议练习个10分钟把下面的掌握一下，收益终身。</p>
-<table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>↑或 k 键</td>
-<td>把当前光标向上移动一行，保持光标的列位置。</td>
-</tr>
-<tr>
-<td>↓或 j 键</td>
-<td>把当前光标向下移动一行，保持光标的列位置。</td>
-</tr>
-<tr>
-<td>→或 l 键</td>
-<td>把当前光标向右移动一个字符。</td>
-</tr>
-<tr>
-<td>←或 h 键</td>
-<td>把当前光标向左移动一个字符。</td>
-</tr>
-<tr>
-<td>$键</td>
-<td>把当前光标移动到该行行末。</td>
-</tr>
-<tr>
-<td>^键</td>
-<td>把当前光标移动到该行行首。</td>
-</tr>
-<tr>
-<td>w 键</td>
-<td>把当前光标移动到该行的下一个字的首字符上。</td>
-</tr>
-<tr>
-<td>b 键</td>
-<td>把当前光标移动到该行的上一个字的首字符上。</td>
-</tr>
-<tr>
-<td>e 键</td>
-<td>把当前光标移动到该行的该字的末尾字符上。</td>
-</tr>
-<tr>
-<td>ctrl+F</td>
-<td>向前滚动一整屏正文。</td>
-</tr>
-<tr>
-<td>ctrl+D</td>
-<td>向下滚动半个屏正文。</td>
-</tr>
-<tr>
-<td>ctrl+B</td>
-<td>向后滚动一整屏正文。</td>
-</tr>
-<tr>
-<td>ctrl+U</td>
-<td>向上滚动半个屏正文。</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>友情提示：<br/> 1.在用 <code>k、j、h、l</code> 四个键时，可以在它们的前面加一个数字，这样在需要多次移动光标时不必多次按移动命令。<br/> 2.记住 <code>k、j、h、l</code>是上下左右，比方向键快一些。</p>
-</blockquote>
-<h3 id="正文常用命令"><a href="#正文常用命令" class="headerlink" title="正文常用命令"></a>正文常用命令</h3><p>在命令模式下，我们可以按一些键（如<code>a A i I o O</code>）来进入插入模式，然后输入一些内容。待输入完成，按<code>Esc</code>退出。</p>
-<h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>a</td>
-<td>在光标的后面开始插入正文。</td>
-</tr>
-<tr>
-<td>A</td>
-<td>在光标所在行的行首插入正文。</td>
-</tr>
-<tr>
-<td>i</td>
-<td>在光标的前面开始插入正文。</td>
-</tr>
-<tr>
-<td>I</td>
-<td>在光标所在行的行首插入正文。</td>
-</tr>
-<tr>
-<td>o</td>
-<td>在光标所在行（当前行）的下一行的行首开始插入正文。</td>
-</tr>
-<tr>
-<td>O</td>
-<td>在光标所在行（当前行）的上一行的行首开始插入正文。</td>
-</tr>
-<tr>
-<td>Esc</td>
-<td>退出插入模式。</td>
-</tr>
-</tbody></table>
-<p>这一部分，建议记住一个<code>i</code>插入就行了，然后用上一节介绍的快捷键移动光标。当然，全会更好。</p>
-<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p>在插入模式下，按<code>Backspace</code>键就是删除。在命令模式下，有如下快捷键：</p>
-<table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>x</td>
-<td>x 删除当前光标所在的字符。<br/>nx 删除n个字符</td>
-</tr>
-<tr>
-<td>dw</td>
-<td>删除当前光标所在的字。<br/>ndw 删除n个字</td>
-</tr>
-<tr>
-<td>dd</td>
-<td>删除当前光标所在行。<br/>ndd删除n行</td>
-</tr>
-</tbody></table>
-<h4 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h4><table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>rx</td>
-<td>用 x 替代当前光标所在的字符。<br/>nrx 替换n个</td>
-</tr>
-</tbody></table>
-<h4 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h4><blockquote>
-<p>这个太有用了！就是撤销，就是上一步。</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>u</td>
-<td>废除最近的命令，恢复被修改或删除的内容。</td>
-</tr>
-<tr>
-<td>U</td>
-<td>把当前行恢复到修改它之前的状态。</td>
-</tr>
-</tbody></table>
-<h4 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h4><blockquote>
-<p>这个也太有用了，类似windows下的<code>ctrl+f</code>的感觉。</p>
-</blockquote>
-<p> 按键 | 功能 |<br>| — | — |<br>| /pattern | 在缓冲区中向下查找指定的字符串 pattern。|<br>| ?pattern | 在缓冲区中向上查找指定的字符串 pattern。|<br>| n | 重复上一次查找命令。|<br>| N | 以相反的查找方向重复上一次查找命令。|</p>
-<h3 id="行编辑命令"><a href="#行编辑命令" class="headerlink" title="行编辑命令"></a>行编辑命令</h3><p>键入<code>:</code>，进入末行模式，并在屏幕底部的<code>:</code>号提示符下输入行编辑命令。</p>
-<table>
-<thead>
-<tr>
-<th>按键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>set nu</td>
-<td>显示正文的行号。</td>
-</tr>
-<tr>
-<td>set nonu</td>
-<td>取消行号。</td>
-</tr>
-<tr>
-<td>1,$p</td>
-<td>显示缓冲区的整个内容。</td>
-</tr>
-<tr>
-<td>r wqb</td>
-<td>将文件 wqb 中的内容读入缓冲区，插入当前光标下。</td>
-</tr>
-<tr>
-<td>1,5w clh</td>
-<td>将正文中 1 到 5 行的内容写到名为 clh 的文件中去。</td>
-</tr>
-<tr>
-<td>2,5d</td>
-<td>将正文中 2 到 5 行删除。</td>
-</tr>
-<tr>
-<td>2,5t8</td>
-<td>将正文中 2 到 5 行复制到第 8 行的后面。</td>
-</tr>
-<tr>
-<td>! ls</td>
-<td>暂时转出 vi 编辑器，执行 shell 命令 ls。</td>
-</tr>
-<tr>
-<td>sh</td>
-<td>暂时转出 vi 编辑器, 执行 shell 命令,键入ctrl+D 或 exit 返回正文。</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="vim使用高级"><a href="#vim使用高级" class="headerlink" title="vim使用高级"></a>vim使用高级</h2><h3 id="vim配置文件"><a href="#vim配置文件" class="headerlink" title="vim配置文件"></a>vim配置文件</h3><p>我们可以通过修改<code>vim</code>的默认配置文件，来修改用<code>vim</code>打开文件时候的默认配置，举一个例子：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim ~/.vimrc</span><br></pre></td></tr></table></figure>
-
-<p>打开配置文件，写入：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> nu</span><br></pre></td></tr></table></figure>
-
-<p>如下图所示，然后保存退出。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-4.png" alt=""></p>
-<p>再次用<code>vim</code>打开<code>hello.txt</code>文件，我们可以看到这次默认带了行号。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim hello.txt</span><br></pre></td></tr></table></figure>
-<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-5.png" alt=""></p>
-<p>因此，我们可以依据它的常用配置文件，来修改成自己喜欢的默认打开样式，喜欢的样式自行百度搜索吧，我举一个例子：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> nocompatible</span><br><span class="line"><span class="built_in">set</span> nu</span><br><span class="line">filetype on </span><br><span class="line"><span class="built_in">set</span> <span class="built_in">history</span>=1000 </span><br><span class="line"><span class="built_in">set</span> background=dark </span><br><span class="line">syntax on </span><br><span class="line"><span class="built_in">set</span> autoindent</span><br><span class="line"><span class="built_in">set</span> smartindent</span><br><span class="line"><span class="built_in">set</span> tabstop=4</span><br><span class="line"><span class="built_in">set</span> shiftwidth=4</span><br><span class="line"><span class="built_in">set</span> showmatch</span><br><span class="line"><span class="built_in">set</span> guioptions-=T</span><br><span class="line"><span class="built_in">set</span> vb t_vb=</span><br><span class="line"><span class="built_in">set</span> ruler</span><br><span class="line"><span class="built_in">set</span> nohls</span><br><span class="line"><span class="built_in">set</span> incsearch</span><br><span class="line"><span class="keyword">if</span> has(<span class="string">"vms"</span>)</span><br><span class="line"><span class="built_in">set</span> nobackup</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="built_in">set</span> backup</span><br><span class="line"></span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>这个配置文件来自：<a href="https://www.cnblogs.com/wuyudong/p/3981410.html" target="_blank" rel="noopener">https://www.cnblogs.com/wuyudong/p/3981410.html</a></p>
-</blockquote>
-<h3 id="vim插件"><a href="#vim插件" class="headerlink" title="vim插件"></a>vim插件</h3><p><code>vim</code>可以安装非常多的插件，来打造成一个强大的<code>IDE</code>，自己百度吧。</p>
-<p>推荐阅读：</p>
+<h2 id="什么是SSH"><a href="#什么是SSH" class="headerlink" title="什么是SSH"></a>什么是<code>SSH</code></h2><p>官方的说法是这样子的：</p>
 <ol>
-<li><a href="http://www.open-open.com/lib/view/open1414227253419.html" target="_blank" rel="noopener">Vim十大必备插件</a></li>
-<li><a href="https://www.cnblogs.com/linuxprobe/p/5926821.html" target="_blank" rel="noopener">10款优秀Vim插件帮你打造完美IDE</a></li>
+<li><code>SSH</code> 为 <code>Secure Shell</code> 的缩写，</li>
+<li><code>SSH</code> 为建立在应用层基础上的安全协议。</li>
+<li><code>SSH</code> 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。利用 <code>SSH</code> 协议可以有效防止远程管理过程中的信息泄露问题。</li>
 </ol>
+<p>我们的理解：</p>
+<ul>
+<li><code>SSH</code> 就是远程的命令行，敲命令的，通过它来使用登陆使用超算机器。</li>
+</ul>
+<p>常用的软件有：</p>
+<ul>
+<li><code>mobaxterm</code></li>
+<li><code>ssh secure shell</code></li>
+<li><code>xshell</code></li>
+<li><code>putty</code></li>
+<li><code>SecureCRT</code></li>
+<li>…</li>
+</ul>
+<hr>
+<h2 id="什么是FTP-SFTP"><a href="#什么是FTP-SFTP" class="headerlink" title="什么是FTP/SFTP"></a>什么是<code>FTP/SFTP</code></h2><p>官方的说法是这样子的：</p>
+<ol>
+<li><code>sftp</code>是<code>Secure File Transfer Protocol</code>的缩写</li>
+<li><code>sftp</code>是安全文件传送协议。可以为传输文件提供一种安全的网络的加密方法。</li>
+<li><code>sftp</code> 与 <code>ftp</code> 有着几乎一样的语法和功能。</li>
+</ol>
+<p>我们的理解：</p>
+<ul>
+<li>就是传文件的工具，用来实现自己的电脑和远程服务器之间文件的上传下载。</li>
+</ul>
+<p>常用的软件有：</p>
+<ul>
+<li><code>mobaxterm</code></li>
+<li><code>Xftp</code></li>
+<li><code>winscp</code></li>
+<li><code>FileZilla</code></li>
+<li>…</li>
+</ul>
+<hr>
+<h2 id="什么是mobaxterm"><a href="#什么是mobaxterm" class="headerlink" title="什么是mobaxterm"></a>什么是<code>mobaxterm</code></h2><p><code>MobaXterm</code> 又名 <code>MobaXVT</code>，是一款增强型终端、X 服务器和 Unix 命令集（GNU/ cygwin）工具箱。</p>
+<ul>
+<li>支持各种连接 SSH，X11，RDP，VNC，FTP，MOSH</li>
+<li>支持 Unix 命令（bash，ls，cat，sed，grep，awk，rsync，…）</li>
+<li>连接 SSH 终端后支持 SFTP 传输文件</li>
+<li>各种丰富的插件（git/dig/aria2…）</li>
+<li>可运行 Windows 或软件</li>
+</ul>
+<p>总之，一句话：<strong>它是一个工具箱，非常强大</strong>。</p>
+<hr>
+<h2 id="为什么选择mobaxterm"><a href="#为什么选择mobaxterm" class="headerlink" title="为什么选择mobaxterm"></a>为什么选择<code>mobaxterm</code></h2><p>使用其他的<code>ssh</code>和<code>sftp</code>工具，经常遇到各种各样稀奇古怪的<code>bug</code>问题，不好解决，但我们发现这个软件竟然都解决了，堪称完美！</p>
+<h3 id="每次都需要输入密码，记不住"><a href="#每次都需要输入密码，记不住" class="headerlink" title="每次都需要输入密码，记不住"></a>每次都需要输入密码，记不住</h3><p>很多ssh工具不提供记录密码的功能，所以每次都需要输入密码。有时候会忘记密码，有时候密码太长记不住，就写在一个<code>txt</code>文本文档里面，不安全。</p>
+<p>但是mobaxterm可以自动记录密码，成功登陆后，选择<code>yes</code>即可，如下图：</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/save-key.png" alt=""></p>
+<h3 id="图形界面打不开"><a href="#图形界面打不开" class="headerlink" title="图形界面打不开"></a>图形界面打不开</h3><p>这是因为有些<code>ssh</code>工具不会自动加载图形界面所需的头文件和库的路径，所以导致error。这个软件会自动加载，如下图：</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/graphic-interface.png" alt=""></p>
+<h3 id="字符串出现乱码了，看不懂"><a href="#字符串出现乱码了，看不懂" class="headerlink" title="字符串出现乱码了，看不懂"></a>字符串出现乱码了，看不懂</h3><p>这是因为有些<code>ssh</code>工具对中文支持的并不好，所以遇到中文的时候就出现乱码了。</p>
+<p>mobaxterm对于中文支持的很好，所以由于出现乱码，进而导致的各类问题都可以避免。</p>
+<h3 id="修改密码时候自动退出"><a href="#修改密码时候自动退出" class="headerlink" title="修改密码时候自动退出"></a>修改密码时候自动退出</h3><p>这是因为有些<code>ssh</code>工具在修改登陆密码时候出现的bug，导致用户无法自己修改密码。只能说<code>mobaxterm</code>又可以完美支持。</p>
+<p>说了这么多好处（其实就是以前遇到的各种坑），下面介绍一下如何安装和使用它的常用功能。</p>
+<hr>
+<h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>非常简单，直接下载解压缩双击即可使用。</p>
+<p>官网：<a href="https://mobaxterm.mobatek.net" target="_blank" rel="noopener">https://mobaxterm.mobatek.net</a></p>
+<p>下载地址：<a href="https://mobaxterm.mobatek.net/download.html" target="_blank" rel="noopener">https://mobaxterm.mobatek.net/download.html</a></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/download-link.png" alt=""></p>
+<p>直接点击免费版。</p>
+<blockquote>
+<p>付费版有兴趣的可以付一下，一般情况下免费版就足够了</p>
+</blockquote>
+<p>然后选择左侧的<code>Portable</code>版本。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/download-link-2.png" alt=""></p>
+<blockquote>
+<p><code>Portable</code>版本下载即用，无需安装；<code>Installer</code>版本是<code>msi</code>文件，需要安装。推荐前者。</p>
+</blockquote>
+<p>然后点击下载zip压缩包。</p>
+<p>用解压缩工具（如winrar 7zip等工具）将下载好的<code>MobaXterm_Portable_v11.0.zip</code>压缩包解压缩。</p>
+<p>我们双击<code>MobaXterm_Personal_11.0.exe</code>，就可以打开它，如图所示：</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/interface.png" alt=""></p>
+<hr>
+<h2 id="ssh登陆使用"><a href="#ssh登陆使用" class="headerlink" title="ssh登陆使用"></a>ssh登陆使用</h2><h3 id="方法1-新建ssh连接"><a href="#方法1-新建ssh连接" class="headerlink" title="方法1-新建ssh连接"></a>方法1-新建<code>ssh</code>连接</h3><center><video src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/mobaxterm-ssh-1080p.mp4" controls="controls" height="400" weight="700" >
+您的浏览器不支持 video 标签。
+</video></center>
+
+<p>我们点击 <code>Session</code> 。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/new-session.png" alt=""></p>
+<p>新建一个 <code>ssh</code> 连接。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/ssh-session.png" alt=""></p>
+<p>输入远程服务器的ip地址（如192.168.2.5)，点击 <code>ok</code>。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/ssh-1.png" alt=""></p>
+<p>然后输入登陆远程服务器所需的帐户名，然后输入密码。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/input-username-and-key.png" alt=""></p>
+<p>如果选择 <code>ok</code> ，就会自动保存密码，下次登陆无需输入，否则下次仍需要输入密码。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/save-key.png" alt=""></p>
+<p>登陆成功：</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/login-success.png" alt=""></p>
+<p>进阶：</p>
+<ul>
+<li>可以在建立<code>ssh session</code>连接的时候，勾选 <code>Specify username</code> ，输入用户名，以后每次就无需输入了。</li>
+<li>可以在建立<code>ssh session</code>连接的时候，选择下方 <code>Bookmark settings</code> 选项卡，然后给这个新建的连接起一个名字，方便识别。</li>
+</ul>
+<hr>
+<h3 id="方法2-打开已有的ssh连接"><a href="#方法2-打开已有的ssh连接" class="headerlink" title="方法2-打开已有的ssh连接"></a>方法2-打开已有的<code>ssh</code>连接</h3><p>以后再次连接，只需要<strong>双击</strong>左侧的任意一个ssh连接即可。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/ssh-3.png" alt=""></p>
+<p>这个ssh连接已经保存了<code>ip</code>地址。</p>
+<ul>
+<li>如果这个ssh连接，没有保存帐户名和密码，那么输入登陆远程服务器的帐户名和密码即可。</li>
+<li>如果这个ssh连接，保存了帐户名，没有保存密码，那么会自动登陆该账户，然后输入密码即可。</li>
+<li>如果这个ssh连接，保存了帐户名和密码，那么直接就可以登陆成功。</li>
+</ul>
+<hr>
+<h3 id="方法3-通过ssh命令建立连接"><a href="#方法3-通过ssh命令建立连接" class="headerlink" title="方法3-通过ssh命令建立连接"></a>方法3-通过ssh命令建立连接</h3><p>首先我们打开本地的命令行终端：</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-session.png" alt=""></p>
+<p>然后使用<code>ssh</code>命令进行系统登陆，举例如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh zhenggang@192.168.2.5</span><br></pre></td></tr></table></figure>
+
+<p>然后输入帐户密码即可。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/ssh-connect.png" alt=""></p>
+<p>ssh命令说明：</p>
+<ul>
+<li><code>ssh</code> 同步命令</li>
+<li><code>zhenggang@192.168.2.5:</code>  格式为：<code>用户名@ip</code><ul>
+<li><code>zhenggang</code>为用户名</li>
+<li><code>192.168.2.5</code>为远程服务器的<code>ip</code>地址</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="sftp数据传输"><a href="#sftp数据传输" class="headerlink" title="sftp数据传输"></a>sftp数据传输</h2><h3 id="方法1-建立ssh连接后直接拖拽"><a href="#方法1-建立ssh连接后直接拖拽" class="headerlink" title="方法1-建立ssh连接后直接拖拽"></a>方法1-建立<code>ssh</code>连接后直接拖拽</h3><p>我们在建立ssh后，可以直接通过拖拽的方式，将本地的文件拖拽到远程服务器。</p>
+<blockquote>
+<p>特别提示：可以将<code>mobaxterm</code>软件的窗口从最大化退出，就可以同时显示文件夹和<code>mobaxterm</code>了，方便拖拽。</p>
+</blockquote>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/copy.png" alt=""></p>
+<blockquote>
+<p>特别提示：如果希望拖拽到的目标目录为<code>ssh</code>连接所在的当前目录，可以勾选下方的 <code>Follow ternimal folder</code> 这样就会自动跟随文件夹的切换了。</p>
+</blockquote>
+<hr>
+<h3 id="方法2-建立sftp连接再拖拽"><a href="#方法2-建立sftp连接再拖拽" class="headerlink" title="方法2-建立sftp连接再拖拽"></a>方法2-建立<code>sftp</code>连接再拖拽</h3><center><video src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/mobaxterm-sftp-1080p.mp4" controls="controls" height="425" weight="720" >
+您的浏览器不支持 video 标签。
+</video></center>
+
+
+<p>建立<code>sftp</code>连接的方式与建立<code>ssh</code>连接的方式非常相似，简述如下：</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/new-session.png" alt=""></p>
+<p>新建一个 <code>sftp</code> 连接。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/ssh-session.png" alt=""></p>
+<p>输入远程服务器的ip地址（如192.168.2.5)，以及帐户名（必须输入），然后点击 <code>ok</code>。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/sftp-1.png" alt=""></p>
+<p>然后输入密码。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/sftp-key.png" alt=""></p>
+<p>同样可以选择保存密码。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/save-key.png" alt=""></p>
+<p>登陆成功，然后我们就可以通过窗口，鼠标拖拽的方式，上传或下载文件了。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/sftp-2.png" alt=""></p>
+<hr>
+<h3 id="方法3-直接使用rsync同步"><a href="#方法3-直接使用rsync同步" class="headerlink" title="方法3-直接使用rsync同步"></a>方法3-直接使用rsync同步</h3><p>此方法无需建立<code>ssh</code>或<code>sftp</code>连接，在本地的命令行终端，使用同步命令<code>rsync</code>，即可实现数据的同步。</p>
+<p>同步到远程服务器即为上传，从远程服务器同步到本地即为下载。</p>
+<p>首先我们打开本地的命令行终端：</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-session.png" alt=""></p>
+<p>然后使用同步命令进行同步，举例如下：</p>
+<p>我们将本地的d盘下的文件夹<code>directory</code>下的<code>1.txt</code>文件，同步到远程服务器，在命令行终端输入：</p>
+<p>1）进入文件夹</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /media/d/directory</span><br></pre></td></tr></table></figure>
+
+<p>2）同步命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rsync -ltvP 1.txt zhenggang@192.168.2.5:/vol-th/home/zhenggang</span><br></pre></td></tr></table></figure>
+
+<p>3）输入远程服务器密码</p>
+<p>rsync命令说明：</p>
+<ul>
+<li><code>rsync</code> 同步命令</li>
+<li><code>-ltvP</code> 同步参数</li>
+<li><code>1.txt</code> 待同步的文件名，也可以是文件夹的名字</li>
+<li><code>zhenggang@192.168.2.5:/vol-th/home/zhenggang</code>  格式为：<code>用户名@ip:目录</code><ul>
+<li><code>zhenggang</code>为用户名</li>
+<li><code>192.168.2.5</code>为远程服务器的<code>ip</code>地址</li>
+<li><code>/vol-th/home/zhenggang</code>为远程服务器的目标目录</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>请依据自己的同步需求自行修改相关参数，切记完全照抄，你会遇到报错的哦</p>
+</blockquote>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/rsync.png" alt=""></p>
+<hr>
+<h2 id="修改账户密码"><a href="#修改账户密码" class="headerlink" title="修改账户密码"></a>修改账户密码</h2><p>修改密码使用的命令叫做 <code>passwd</code> ， 我们只需要输入一次旧密码，再输入两次新密码即可。注意密码不要太简单。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/change-passwd.png" alt=""></p>
+<hr>
+<h2 id="当作linux使用"><a href="#当作linux使用" class="headerlink" title="当作linux使用"></a>当作linux使用</h2><p>mobaxterm相当于一个类linux的子系统，支持各种 Unix 命令（bash，ls，cat，sed，grep，awk，rsync，…），非常好用，熟悉<code>linux</code>的朋友可以用它做一些批量操作。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/linux.png" alt=""></p>
+<hr>
+<h2 id="建立开发编译环境"><a href="#建立开发编译环境" class="headerlink" title="建立开发编译环境"></a>建立开发编译环境</h2><p>比如<code>gcc</code>编译器<code>python</code>环境等，默认是没有的，但是我们可以通过操作来安装它们，并像<code>linux</code>一样使用。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-env-1.png" alt=""></p>
+<p>如下图所示，里面有各种各样的包，可以直接选择并<code>install</code> ，非常简单。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-env-2.png" alt=""></p>
+<p>如果发现本次配置的环境，下次登陆找不到了，可以修改一下slash的位置：</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-env-3.png" alt=""></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/local-env-4.png" alt=""></p>
 ]]></content>
       <categories>
         <category>超算</category>
         <category>超算课程</category>
       </categories>
       <tags>
-        <tag>vim</tag>
+        <tag>ssh</tag>
+        <tag>sftp</tag>
+        <tag>mobaxerm</tag>
       </tags>
   </entry>
   <entry>
@@ -1916,6 +1665,309 @@
         <tag>linux</tag>
         <tag>command</tag>
         <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>超算入门课程5 文本编辑器vim的使用教学</title>
+    <url>/supercomputer-courses-vim/</url>
+    <content><![CDATA[<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-logo.png" alt="vim-logo"></p>
+<div class="note info">
+            <p>如果不会在<code>linux</code>下查看、修改文件（算例输入文件/配置文件/提交脚本），还要从<code>windows</code>下改完了上传，效率太低了！因此，让我们一起用10分钟来学习一下<code>vim</code>编辑器吧，能够大大提高工作效率。</p>
+          </div>
+
+<a id="more"></a>
+
+<h2 id="什么是vi-vim"><a href="#什么是vi-vim" class="headerlink" title="什么是vi/vim"></a>什么是vi/vim</h2><p><code>linux</code>下我们经常需要编辑一些文本文件，比如提交任务的脚本文件，或者打开文件修改一些内容。</p>
+<p>可是经常使用<code>windows</code>的用户第一次面对一个<code>linux</code>的<code>terminal</code>一脸懵，<code>WHAT??</code>，文件在哪？怎么打开？怎么编辑？啥都不知道。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/linux-terminal.png" alt="linux-terminal"></p>
+<p>虽然，常用的linux也是带了一些图形化的文本编辑器的，比如LibreOffice，就类似一个记事本软件或者word软件。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/libreoffice.png" alt="图形文本软件"></p>
+<p>但对于超算平台的用户，最为常用的还是推荐<code>vim</code>文本编辑器。在命令行输入<code>vim</code> 即可打开如下的界面：</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-interface.png" alt="vim-interface"></p>
+<p><code>vi</code> 编辑器是所有 <code>Unix</code> 及 <code>Linux</code> 系统下标准的编辑器，它就相当于windows系统中的记事本一样，它的强大不逊色于任何最新的文本编辑器。它是我们使用Linux系统不能缺少的工具。</p>
+<hr>
+<h2 id="vim使用初级"><a href="#vim使用初级" class="headerlink" title="vim使用初级"></a>vim使用初级</h2><p>比如，我们希望新建一个名为 <code>hello.txt</code> 的文件，里面记录一些内容，只需要：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim hello.txt</span><br></pre></td></tr></table></figure>
+
+<p>此时，我们在当前目录下新建并打开了一个名为 <code>hello.txt</code> 的文件，里面是空的，什么都还没写呢。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-1.png" alt=""></p>
+<p>此时，<code>vim</code> 编辑器处于 <code>command mode</code> ，称作命令行模式吧。</p>
+<p>我们按键盘上的小写字母 <code>i</code>，我们发现最地下出现了<code>-- INSERT --</code>，这表明我们进入了 <code>Insert mode</code>（插入模式），可以开始输入内容了。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-2.png" alt=""></p>
+<p>此时，我们按键盘上的按键，就可以自由的输入了，比如输入一个<code>hello world</code>字符串吧。</p>
+<p>输入完成后，我们按键盘上的 <code>Esc</code> 键，从插入模式退回到命令行模式。</p>
+<p>然后我们用键盘输入 <code>:</code> 字符（就是<code>shift键+;</code>），可以发现最低端出现了一个<code>:</code>，此时我们从命令行模式进入了<code>last line mode</code>（称作末行模式吧）。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-3.png" alt=""></p>
+<p>然后输入字符<code>wq!</code> ，表示<code>w</code>保存+<code>q</code>退出+<code>!</code>强制，我们就把文件保存好了。此时我们用<code>cat</code>命令查看一下文件的内容吧：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat hello.txt</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+
+<p>到此为止，我们就初步学会了<code>vim</code>编辑器的使用。</p>
+<p>小节：</p>
+<p>1) <code>vim</code>的三种模式</p>
+<ul>
+<li>命令模式（command mode）：<ul>
+<li>控制屏幕光标的移动，字符、字或行的删除，移动复制某区段及进入插入模式下，或者到末行模式。</li>
+</ul>
+</li>
+<li>插入模式（Insert mode）<ul>
+<li>只有在插入下，才可以做文字输入，按<code>Esc</code>键可回到命令行模式。</li>
+</ul>
+</li>
+<li>底行模式（last line mode）<ul>
+<li>将文件保存或退出vi；也可以设置编辑环境，如寻找字符串、列出行号……等。</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-mode.png" alt=""></p>
+<p>2) 打开-编辑-退出</p>
+<ul>
+<li>打开文件：<code>vim 文件名</code></li>
+<li>插入内容：按<code>i</code>进入插入模式，插入完成后，按<code>Esc</code>退出插入模式。</li>
+<li>保存文件：按<code>:</code>进入末行模式，输入<code>wq!</code>，然后回车，是强制保存并退出。</li>
+</ul>
+<hr>
+<h2 id="vim使用中级"><a href="#vim使用中级" class="headerlink" title="vim使用中级"></a>vim使用中级</h2><p><code>vim</code>之所以强大，是因为它有非常非常多的快捷键和插件，非常厉害！我们一步一步来，此处介绍一小部分最为常用的快捷键。</p>
+<h3 id="进入与退出"><a href="#进入与退出" class="headerlink" title="进入与退出"></a>进入与退出</h3><ul>
+<li>进入 vi 命令格式：<code>$ vi filename</code></li>
+<li>退出文件：<code>:q!</code> 退出不保存；<code>wq</code> 保存退出</li>
+</ul>
+<h3 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h3><blockquote>
+<p>要是想直接用方向键向下左右我也不拦着哈！</p>
+</blockquote>
+<p>我们可以通过如下快捷键来快速移动光标，熟练之后，你会觉得鼠标弱爆了。非常建议练习个10分钟把下面的掌握一下，收益终身。</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>↑或 k 键</td>
+<td>把当前光标向上移动一行，保持光标的列位置。</td>
+</tr>
+<tr>
+<td>↓或 j 键</td>
+<td>把当前光标向下移动一行，保持光标的列位置。</td>
+</tr>
+<tr>
+<td>→或 l 键</td>
+<td>把当前光标向右移动一个字符。</td>
+</tr>
+<tr>
+<td>←或 h 键</td>
+<td>把当前光标向左移动一个字符。</td>
+</tr>
+<tr>
+<td>$键</td>
+<td>把当前光标移动到该行行末。</td>
+</tr>
+<tr>
+<td>^键</td>
+<td>把当前光标移动到该行行首。</td>
+</tr>
+<tr>
+<td>w 键</td>
+<td>把当前光标移动到该行的下一个字的首字符上。</td>
+</tr>
+<tr>
+<td>b 键</td>
+<td>把当前光标移动到该行的上一个字的首字符上。</td>
+</tr>
+<tr>
+<td>e 键</td>
+<td>把当前光标移动到该行的该字的末尾字符上。</td>
+</tr>
+<tr>
+<td>ctrl+F</td>
+<td>向前滚动一整屏正文。</td>
+</tr>
+<tr>
+<td>ctrl+D</td>
+<td>向下滚动半个屏正文。</td>
+</tr>
+<tr>
+<td>ctrl+B</td>
+<td>向后滚动一整屏正文。</td>
+</tr>
+<tr>
+<td>ctrl+U</td>
+<td>向上滚动半个屏正文。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>友情提示：<br/> 1.在用 <code>k、j、h、l</code> 四个键时，可以在它们的前面加一个数字，这样在需要多次移动光标时不必多次按移动命令。<br/> 2.记住 <code>k、j、h、l</code>是上下左右，比方向键快一些。</p>
+</blockquote>
+<h3 id="正文常用命令"><a href="#正文常用命令" class="headerlink" title="正文常用命令"></a>正文常用命令</h3><p>在命令模式下，我们可以按一些键（如<code>a A i I o O</code>）来进入插入模式，然后输入一些内容。待输入完成，按<code>Esc</code>退出。</p>
+<h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a</td>
+<td>在光标的后面开始插入正文。</td>
+</tr>
+<tr>
+<td>A</td>
+<td>在光标所在行的行首插入正文。</td>
+</tr>
+<tr>
+<td>i</td>
+<td>在光标的前面开始插入正文。</td>
+</tr>
+<tr>
+<td>I</td>
+<td>在光标所在行的行首插入正文。</td>
+</tr>
+<tr>
+<td>o</td>
+<td>在光标所在行（当前行）的下一行的行首开始插入正文。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>在光标所在行（当前行）的上一行的行首开始插入正文。</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>退出插入模式。</td>
+</tr>
+</tbody></table>
+<p>这一部分，建议记住一个<code>i</code>插入就行了，然后用上一节介绍的快捷键移动光标。当然，全会更好。</p>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p>在插入模式下，按<code>Backspace</code>键就是删除。在命令模式下，有如下快捷键：</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x</td>
+<td>x 删除当前光标所在的字符。<br/>nx 删除n个字符</td>
+</tr>
+<tr>
+<td>dw</td>
+<td>删除当前光标所在的字。<br/>ndw 删除n个字</td>
+</tr>
+<tr>
+<td>dd</td>
+<td>删除当前光标所在行。<br/>ndd删除n行</td>
+</tr>
+</tbody></table>
+<h4 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h4><table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rx</td>
+<td>用 x 替代当前光标所在的字符。<br/>nrx 替换n个</td>
+</tr>
+</tbody></table>
+<h4 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h4><blockquote>
+<p>这个太有用了！就是撤销，就是上一步。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u</td>
+<td>废除最近的命令，恢复被修改或删除的内容。</td>
+</tr>
+<tr>
+<td>U</td>
+<td>把当前行恢复到修改它之前的状态。</td>
+</tr>
+</tbody></table>
+<h4 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h4><blockquote>
+<p>这个也太有用了，类似windows下的<code>ctrl+f</code>的感觉。</p>
+</blockquote>
+<p> 按键 | 功能 |<br>| — | — |<br>| /pattern | 在缓冲区中向下查找指定的字符串 pattern。|<br>| ?pattern | 在缓冲区中向上查找指定的字符串 pattern。|<br>| n | 重复上一次查找命令。|<br>| N | 以相反的查找方向重复上一次查找命令。|</p>
+<h3 id="行编辑命令"><a href="#行编辑命令" class="headerlink" title="行编辑命令"></a>行编辑命令</h3><p>键入<code>:</code>，进入末行模式，并在屏幕底部的<code>:</code>号提示符下输入行编辑命令。</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>set nu</td>
+<td>显示正文的行号。</td>
+</tr>
+<tr>
+<td>set nonu</td>
+<td>取消行号。</td>
+</tr>
+<tr>
+<td>1,$p</td>
+<td>显示缓冲区的整个内容。</td>
+</tr>
+<tr>
+<td>r wqb</td>
+<td>将文件 wqb 中的内容读入缓冲区，插入当前光标下。</td>
+</tr>
+<tr>
+<td>1,5w clh</td>
+<td>将正文中 1 到 5 行的内容写到名为 clh 的文件中去。</td>
+</tr>
+<tr>
+<td>2,5d</td>
+<td>将正文中 2 到 5 行删除。</td>
+</tr>
+<tr>
+<td>2,5t8</td>
+<td>将正文中 2 到 5 行复制到第 8 行的后面。</td>
+</tr>
+<tr>
+<td>! ls</td>
+<td>暂时转出 vi 编辑器，执行 shell 命令 ls。</td>
+</tr>
+<tr>
+<td>sh</td>
+<td>暂时转出 vi 编辑器, 执行 shell 命令,键入ctrl+D 或 exit 返回正文。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="vim使用高级"><a href="#vim使用高级" class="headerlink" title="vim使用高级"></a>vim使用高级</h2><h3 id="vim配置文件"><a href="#vim配置文件" class="headerlink" title="vim配置文件"></a>vim配置文件</h3><p>我们可以通过修改<code>vim</code>的默认配置文件，来修改用<code>vim</code>打开文件时候的默认配置，举一个例子：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim ~/.vimrc</span><br></pre></td></tr></table></figure>
+
+<p>打开配置文件，写入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> nu</span><br></pre></td></tr></table></figure>
+
+<p>如下图所示，然后保存退出。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-4.png" alt=""></p>
+<p>再次用<code>vim</code>打开<code>hello.txt</code>文件，我们可以看到这次默认带了行号。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim hello.txt</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/vim/vim-5.png" alt=""></p>
+<p>因此，我们可以依据它的常用配置文件，来修改成自己喜欢的默认打开样式，喜欢的样式自行百度搜索吧，我举一个例子：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> nocompatible</span><br><span class="line"><span class="built_in">set</span> nu</span><br><span class="line">filetype on </span><br><span class="line"><span class="built_in">set</span> <span class="built_in">history</span>=1000 </span><br><span class="line"><span class="built_in">set</span> background=dark </span><br><span class="line">syntax on </span><br><span class="line"><span class="built_in">set</span> autoindent</span><br><span class="line"><span class="built_in">set</span> smartindent</span><br><span class="line"><span class="built_in">set</span> tabstop=4</span><br><span class="line"><span class="built_in">set</span> shiftwidth=4</span><br><span class="line"><span class="built_in">set</span> showmatch</span><br><span class="line"><span class="built_in">set</span> guioptions-=T</span><br><span class="line"><span class="built_in">set</span> vb t_vb=</span><br><span class="line"><span class="built_in">set</span> ruler</span><br><span class="line"><span class="built_in">set</span> nohls</span><br><span class="line"><span class="built_in">set</span> incsearch</span><br><span class="line"><span class="keyword">if</span> has(<span class="string">"vms"</span>)</span><br><span class="line"><span class="built_in">set</span> nobackup</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="built_in">set</span> backup</span><br><span class="line"></span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个配置文件来自：<a href="https://www.cnblogs.com/wuyudong/p/3981410.html" target="_blank" rel="noopener">https://www.cnblogs.com/wuyudong/p/3981410.html</a></p>
+</blockquote>
+<h3 id="vim插件"><a href="#vim插件" class="headerlink" title="vim插件"></a>vim插件</h3><p><code>vim</code>可以安装非常多的插件，来打造成一个强大的<code>IDE</code>，自己百度吧。</p>
+<p>推荐阅读：</p>
+<ol>
+<li><a href="http://www.open-open.com/lib/view/open1414227253419.html" target="_blank" rel="noopener">Vim十大必备插件</a></li>
+<li><a href="https://www.cnblogs.com/linuxprobe/p/5926821.html" target="_blank" rel="noopener">10款优秀Vim插件帮你打造完美IDE</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>超算</category>
+        <category>超算课程</category>
+      </categories>
+      <tags>
+        <tag>vim</tag>
       </tags>
   </entry>
   <entry>
