@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>如何使用WRF</title>
+    <url>/how-to-use-wrf/</url>
+    <content><![CDATA[<h2 id="WRF简介"><a href="#WRF简介" class="headerlink" title="WRF简介"></a>WRF简介</h2><p>官方主页：<a href="https://www.mmm.ucar.edu/weather-research-and-forecasting-model" target="_blank" rel="noopener">https://www.mmm.ucar.edu/weather-research-and-forecasting-model</a></p>
+<p>WRF为美国国家大气研究中心(NCAR)联合其他机构共同开发的中尺度气象模式，可用于天气预报业务和大气科学领域相关科研。</p>
+<p>WRF分为ARW(Advanced Research WRF) 和 NMM(Nonhydrostatic Mesoscale Model)两种。绝大多数气象领域的研究者使用的主要都是ARW版本。</p>
+<ul>
+<li>前处理：WPS （仅real case需要）</li>
+<li>观测资料同化：WRFDA (Data Assimilation)</li>
+<li>Nudging: OBSGRID</li>
+<li>后处理：ARWpost等格式转换、插值及绘图软件</li>
+<li>nco : 针对nc格式文件的处理套件，可方便地进行裁剪、做差、统计分析</li>
+</ul>
+<a id="more"></a>
+
+
+
+<h2 id="调用系统已安装版本"><a href="#调用系统已安装版本" class="headerlink" title="调用系统已安装版本"></a>调用系统已安装版本</h2><p>可以通过 <code>module avail wrf</code> 来搜索系统已经安装的WRF版本，例如<code>3.8</code>,<code>3.9.1</code>,<code>4.0</code>,<code>4.1</code>等，可以直接加载使用。</p>
+<p>系统已经配置了常用的地形数据库，目录为：<code>/THL6/software/WRFDATA/geog</code></p>
+<p>其他文件系统的用户请自行寻找。</p>
+<h2 id="使用方法举例"><a href="#使用方法举例" class="headerlink" title="使用方法举例"></a>使用方法举例</h2><p><strong>1.</strong> 创建测试文件夹</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p <span class="variable">$HOME</span>/workdir/wrf/81km-test</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span>/workdir/wrf/81km-test</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>2.</strong> 上传算例</p>
+<p>利用ARSC(北极地区超级计算中心)及阿拉斯加大学开发的一套benchmark套件（<a href="http://weather.arsc.edu/BenchmarkSuite/）进行WRF相关的测试工作。该套件分为81km" target="_blank" rel="noopener">http://weather.arsc.edu/BenchmarkSuite/）进行WRF相关的测试工作。该套件分为81km</a>, 27km, 9km, 3km等不同分辨率，可适用于不同规模的计算测速。</p>
+<p>将81Km.tar.gz的算例文件（28MB）上传到测试文件夹。</p>
+<p><strong>3.</strong> 解压缩，设置相关环境</p>
+<ul>
+<li>解压缩、拷贝、修改名字</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp -r  /THL6/software/wrf/3.8-emreal-dmpar-icc16-mvapich2/run/ .</span><br><span class="line">tar zxvf 81km.tar.gz </span><br><span class="line">mv 81km/* run/</span><br><span class="line"><span class="built_in">cd</span> run/</span><br><span class="line">mv wrfrst_d01_2009-12-20_00-00-00 wrfrst_d01_2009-12-20_00:00:00</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>加载系统环境</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># module</span></span><br><span class="line">module add Intel_compiler/16.0.3</span><br><span class="line">module add MPI/mvapich2-2.2/intel2016u3</span><br><span class="line">module add netcdf/4.4-icc16-mvapich2 </span><br><span class="line">module add wrf/3.8-emreal-dmpar-icc16-mvapich2</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>4.</strong> 测试算例</p>
+<p>编写提交脚本文件<code>sub.sh</code>，写入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">yhrun -N 1 -n 28 -pTH_HPC1 wrf.exe</span><br></pre></td></tr></table></figure>
+
+
+
+<p>说明：</p>
+<ol>
+<li>-N 节点数</li>
+<li>-n 总核数</li>
+<li>-p 计算分区名</li>
+<li>wrf.exe 可执行程序名称</li>
+</ol>
+<p>备注：</p>
+<ol>
+<li>wrf的前处理过程可以写入脚本，或者在登陆节点执行。</li>
+</ol>
+<p><strong>5.</strong> 查看结果</p>
+<p>查看结果文件即可，运行会生成wrfout输出文件，以及rsl.out.00xx和rsl.error.00xx等log文件，文件末尾数字对应核数，一个核生成一个文件。可查看rsl文件末尾是否有“SUCCESS COMPLETE WRF”提示。</p>
+<h2 id="技术支持"><a href="#技术支持" class="headerlink" title="技术支持"></a>技术支持</h2><p>VIP技术支持： <a href="mailto:zhenggang@nscc-tj.cn">zhenggang@nscc-tj.cn</a></p>
+]]></content>
+      <categories>
+        <category>超算</category>
+        <category>WRF</category>
+      </categories>
+      <tags>
+        <tag>WRF</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何修改系统密码</title>
     <url>/how-to-change-password/</url>
     <content><![CDATA[<h2 id="用户密码管理"><a href="#用户密码管理" class="headerlink" title="用户密码管理"></a>用户密码管理</h2><ol>
@@ -702,6 +774,317 @@
       </tags>
   </entry>
   <entry>
+    <title>超算入门课程4 module命令使用教学</title>
+    <url>/supercomputer-courses-module/</url>
+    <content><![CDATA[<h2 id="1-什么是module"><a href="#1-什么是module" class="headerlink" title="1. 什么是module"></a>1. 什么是module</h2><p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/module/module-logo.png" alt=""></p>
+<p>Environment Modules包通过模块文件动态修改用户的环境。</p>
+<a id="more"></a>
+
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>module avail 或 module av</td>
+<td>查看系统中可用的软件</td>
+</tr>
+<tr>
+<td>module add 或 module load</td>
+<td>加载模块</td>
+</tr>
+<tr>
+<td>module rm 或 unload</td>
+<td>卸载模块</td>
+</tr>
+<tr>
+<td>module list 或 module li</td>
+<td>显示已加载模块</td>
+</tr>
+<tr>
+<td>module purge</td>
+<td>卸载所有模块</td>
+</tr>
+<tr>
+<td>module show</td>
+<td>显示模块配置文件</td>
+</tr>
+<tr>
+<td>module swap 或 module switch</td>
+<td>将模块1 替换为 模块2</td>
+</tr>
+<tr>
+<td>module help</td>
+<td>查看具体软件的信息</td>
+</tr>
+</tbody></table>
+<h2 id="2-module使用初级"><a href="#2-module使用初级" class="headerlink" title="2. module使用初级"></a>2. module使用初级</h2><h3 id="2-1-查看所有模块"><a href="#2-1-查看所有模块" class="headerlink" title="2.1 查看所有模块"></a>2.1 查看所有模块</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module av</span><br><span class="line">------------- /usr/share/Modules/3.2.10/Applications -------------</span><br><span class="line">bedtools2/2.25.0-gcc4.8         </span><br><span class="line">bedtools2/2.26.0-gcc4.8(default)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上面的代码中，行首为<code>$</code>符的行是用户输入的命令，其他行为显示的结果，同下。</p>
+</blockquote>
+<p>说明：</p>
+<ol>
+<li>有2个module模块</li>
+<li>模块名称为<code>bedtools2/2.25.0-gcc4.8</code>和<code>bedtools2/2.26.0-gcc4.8</code></li>
+<li>模块名通常的命令方式为：软件名/版本-[编译器名]-[MPI编译器名]</li>
+<li>在 <code>bedtools2/2.26.0-gcc4.8</code>模块后面有一个<code>default</code>，表示它是<code>bedtools2</code>软件的默认版本，即只写<code>bedtools2</code> 即表示 <code>bedtools2/2.26.0-gcc4.8</code></li>
+</ol>
+<blockquote>
+<p> 在平台上有数百个可用module模块，此处只列2个教学用。</p>
+</blockquote>
+<p><strong>加载</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add bedtools2/2.25.0-gcc4.8</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+
+<p>没有任何报错表明加载成功。</p>
+<h3 id="2-2-查看已加载模块"><a href="#2-2-查看已加载模块" class="headerlink" title="2.2 查看已加载模块"></a>2.2 查看已加载模块</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.25.0-gcc4.8</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-使用已加载模块"><a href="#2-3-使用已加载模块" class="headerlink" title="2.3 使用已加载模块"></a>2.3 使用已加载模块</h3><p>我们看到<code>bedtools2/2.25.0-gcc4.8</code>已经成功加载了，用户可以直接调用<code>bedtools2</code>软件的相关命令了，例如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ bedtools</span><br><span class="line">bedtools: flexible tools <span class="keyword">for</span> genome arithmetic and DNA sequence analysis.</span><br><span class="line">usage:    bedtools &lt;subcommand&gt; [options]</span><br><span class="line"></span><br><span class="line">The bedtools sub-commands include:</span><br><span class="line"></span><br><span class="line">[ Genome arithmetic ]</span><br><span class="line">    intersect     Find overlapping intervals <span class="keyword">in</span> various ways.</span><br><span class="line">    window        Find overlapping intervals within a window around an interval.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>友情提示：在超算中心使用，登陆节点与计算节点是分开的，因此请使用作业调度系统提交任务。</p>
+</blockquote>
+<h3 id="2-4-卸载模块"><a href="#2-4-卸载模块" class="headerlink" title="2.4 卸载模块"></a>2.4 卸载模块</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module rm bedtools2/2.25.0-gcc4.8</span><br><span class="line">$ module li</span><br><span class="line">No Modulefiles Currently Loaded.</span><br></pre></td></tr></table></figure>
+
+<p>到此处，我们学到了：</p>
+<ol>
+<li>如何查看所有的module模块 <code>module av</code></li>
+<li>如何加载一个模块 <code>module add 模块名</code></li>
+<li>如何查看已加载的模块 <code>module li</code></li>
+<li>如何卸载一个模块 <code>module rm 模块名</code></li>
+</ol>
+<hr>
+<h2 id="3-module使用中级"><a href="#3-module使用中级" class="headerlink" title="3. module使用中级"></a>3. module使用中级</h2><h3 id="3-1-显示模块详细信息"><a href="#3-1-显示模块详细信息" class="headerlink" title="3.1 显示模块详细信息"></a>3.1 显示模块详细信息</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module show bedtools2/2.26.0-gcc4.8</span><br><span class="line">-------------------------------------------------------------------</span><br><span class="line">/usr/share/Modules/Applications/bedtools2/2.26.0-gcc4.8:</span><br><span class="line"></span><br><span class="line">module-whatis    bedtools2/2.26.0-gcc4.8</span><br><span class="line">conflict         bedtools2</span><br><span class="line">prepend-path     PATH /THL6/software/bedtools2/2.26.0-gcc4.8/bin</span><br><span class="line">-------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-替换模块"><a href="#3-2-替换模块" class="headerlink" title="3.2 替换模块"></a>3.2 替换模块</h3><p>当我们加载了<code>bedtools2/2.25.0-gcc4.8</code>模块后，希望更改为<code>bedtools2/2.26.0-gcc4.8</code>模块，应该怎么做呢？</p>
+<p>让我们先这样试一试：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.25.0-gcc4.8</span><br><span class="line">$ module rm  bedtools2/2.26.0-gcc4.8</span><br><span class="line">$ module add bedtools2/2.26.0-gcc4.8</span><br><span class="line">bedtools2/2.26.0-gcc4.8(25):ERROR:150: Module <span class="string">'bedtools2/2.26.0-gcc4.8'</span> </span><br><span class="line">    conflicts with the currently loaded module(s) <span class="string">'bedtools2/2.25.0-gcc4.8'</span></span><br><span class="line">bedtools2/2.26.0-gcc4.8(25):ERROR:102: Tcl <span class="built_in">command</span> execution failed: </span><br><span class="line">    conflict   bedtools2</span><br></pre></td></tr></table></figure>
+
+<p>报错了！我们仔细观察这个错误<code>ERROR conflict  bedtools2</code>，想一想这是为什么？</p>
+<p><code>bedtools2</code>软件有2个版本的，我们已经加载了一个了，要不把之前的先卸载了试试？</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.25.0-gcc4.8</span><br><span class="line"></span><br><span class="line">$ module rm bedtools2/2.25.0-gcc4.8</span><br><span class="line">$ module rm bedtools2/2.26.0-gcc4.8</span><br><span class="line"></span><br><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.26.0-gcc4.8</span><br></pre></td></tr></table></figure>
+
+<p>成功了！因此，同类型的软件只能加载一个，加载新的之前要卸载旧的，否则就<code>conflict</code> 冲突了。</p>
+<p>可是，更换版本是一个很常见的操作，有没有更简便的方法呢？有的，请往下看。</p>
+<p>更简单的方法为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.25.0-gcc4.8</span><br><span class="line"></span><br><span class="line">$ module swap bedtools2/2.25.0-gcc4.8 bedtools2/2.26.0-gcc4.8</span><br><span class="line"></span><br><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.26.0-gcc4.8</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>module swap 旧模块名 新模块名</code> 即可实现模块替换。</p>
+<h3 id="3-3-卸载所有模块"><a href="#3-3-卸载所有模块" class="headerlink" title="3.3 卸载所有模块"></a>3.3 卸载所有模块</h3><p>当加载的模块非常多的时候，我们希望一次性都卸载了，命令为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module purge</span><br><span class="line">$ module li</span><br><span class="line">No Modulefiles Currently Loaded.</span><br></pre></td></tr></table></figure>
+
+<p>到此处，我们学到了：</p>
+<ol>
+<li>显示一个module模块的详细信息：<code>module show 模块名</code></li>
+<li>替换一个module模块为新的module模块：<code>module swap 旧模块名 新模块名</code></li>
+<li>一次性卸载所有已加载module模块：<code>module purge</code></li>
+</ol>
+<blockquote>
+<p>注意：我们遇到过一个报错<code>ERROR conflict  bedtools2</code> ，关键词为 <code>conflict</code> 即为版本冲突，它表明 <code>bedtools2</code>  模块已经加载，如果想加载新的，需要先卸载旧的。<br>我们可以用 <code>module li</code> 看看已加载的模块，把对应的冲突模块用<code>module rm</code>卸载后，在加载新的模块。<br>我们也可以用<code>module swap</code> 来直接将旧模块替换为新的模块。</p>
+</blockquote>
+<hr>
+<h2 id="4-module使用高级"><a href="#4-module使用高级" class="headerlink" title="4. module使用高级"></a>4. module使用高级</h2><h3 id="4-1-模块依赖问题-prereq"><a href="#4-1-模块依赖问题-prereq" class="headerlink" title="4.1 模块依赖问题 prereq"></a>4.1 模块依赖问题 prereq</h3><p>我们再次使用<code>module av</code>命令，查看所有可用的module模块，这次我们以<code>espresso</code>软件为例，因为它复杂一点点。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module av </span><br><span class="line">------------- /usr/share/Modules/3.2.10/Applications -------------</span><br><span class="line">espresso/5.4.0-icc16-IMPI5.1</span><br></pre></td></tr></table></figure>
+
+<p>我们再来尝试加载一下<code>espresso/5.4.0-icc16-IMPI5.1</code>，输入命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ module add espresso&#x2F;5.4.0-icc16-IMPI5.1</span><br><span class="line">espresso&#x2F;5.4.0-icc16-IMPI5.1(27):ERROR:151: Module &#39;espresso&#x2F;5.4.0-icc16-IMPI5.1&#39; </span><br><span class="line">    depends on one of the module(s) &#39;Intel_compiler&#x2F;16.0.3&#39;</span><br><span class="line">espresso&#x2F;5.4.0-icc16-IMPI5.1(27):ERROR:102: Tcl command execution failed: </span><br><span class="line">    prereq                Intel_compiler&#x2F;16.0.3</span><br></pre></td></tr></table></figure>
+
+<p>很遗憾，这回有信息提示，竟然是<code>ERROR prereq  Intel_compiler/16.0.3</code>，这次又是为什么呢？</p>
+<p>我们观察这个模块的名称<code>espresso/5.4.0-icc16-IMPI5.1</code>，在第二节中我们提到过module模块的常见命名规则：软件名/版本-[编译器名]-[MPI编译器名]，因此我们分析如下：</p>
+<ul>
+<li>esresso 表示软件的名字</li>
+<li>5.4.0 是软件的版本</li>
+<li>icc16 是intel compiler的版本</li>
+<li>IMPI5.1 是MPI编译器的版本</li>
+</ul>
+<p>详解：</p>
+<blockquote>
+<p>一款并行程序通常需要串行编译器加并行编译器来编译，然后它通过类似<code>mpirun</code>的并行执行命令来运行。如果运行过程中缺少动态库就会报错。因此，我们设置了<code>依赖</code>关系，让加载软件模块的时候，必须预先加载<code>依赖</code>的其它模块（如编译器模块等），然后再加载模块本身，以免报错。</p>
+</blockquote>
+<p>我们仔细观察报错中的内容：<code>prereq  Intel_compiler/16.0.3</code>，它表明<code>espresso</code>这个模块依赖于<code>Intel_compiler</code>这个模块。</p>
+<p>我们决定先加载<code>Intel_compiler</code>，再加载<code>espresso</code>模块：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add Intel_compiler/16.0.3</span><br><span class="line">$ module add espresso/5.4.0-icc16-IMPI5.1</span><br></pre></td></tr></table></figure>
+
+<p>然后我们发现，有报错了，不过报错和之前的很类似。</p>
+<p>我们决定把<code>MPI/Intel/IMPI/5.1.3.210</code>模块也加载上，最终输入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add Intel_compiler/16.0.3</span><br><span class="line">$ module add MPI/Intel/IMPI/5.1.3.210</span><br><span class="line">$ module add espresso/5.4.0-icc16-IMPI5.1</span><br></pre></td></tr></table></figure>
+
+<p>如下图，没有任何报错，就成功了。</p>
+<h3 id="4-2-自定义路径配置"><a href="#4-2-自定义路径配置" class="headerlink" title="4.2 自定义路径配置"></a>4.2 自定义路径配置</h3><p>用户可以通过设置 <code>MODULEPATH</code> 或者通过 <code>module</code> 命令来增加减少搜索路径。</p>
+<p>方法1：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">export</span> MODULEPATH=/path/to/new/directory:<span class="variable">$MODULEPATH</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 增加路径</span></span><br><span class="line">$ module use --append /path/to/new/directory</span><br><span class="line"><span class="comment">## 减少路径</span></span><br><span class="line">$ module unuse --append /path/to/old/directory</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>提别提醒：<code>MODULEPATH</code>等于号后面的值，以及<code>--append</code>后面的参数，都是实际希望增加或减少的搜索路径，不要照抄。</p>
+</blockquote>
+<h3 id="4-3-配置文件编写"><a href="#4-3-配置文件编写" class="headerlink" title="4.3 配置文件编写"></a>4.3 配置文件编写</h3><p>我们先来看一个标准的module配置文件模板</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#%Module1.0#####################################################################</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line"><span class="comment">## modules modulefile</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line"><span class="comment">## modulefiles/modules.  Generated from modules.in by configure.</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line">proc ModulesHelp &#123; &#125; &#123;</span><br><span class="line">                global version prefix</span><br><span class="line"></span><br><span class="line">                puts stderr <span class="string">"\tespresso/5.4.0-icc16-IMPI5.1, link with Intel_compiler/16.0.3,"</span> </span><br><span class="line">                puts stderr <span class="string">"MPI/Intel/IMPI/5.1.3.210"</span></span><br><span class="line">                puts stderr <span class="string">"\n\tAfter loading the module, you can try to use espresso"</span></span><br><span class="line">                puts stderr <span class="string">"\tAdds Intel compilers to your environment variables."</span></span><br><span class="line">                puts stderr <span class="string">"\n\tThis adds <span class="variable">$prefix</span>/* to several of the"</span></span><br><span class="line">                puts stderr <span class="string">"\tenvironment variables."</span></span><br><span class="line">                puts stderr <span class="string">"\n\tVersion <span class="variable">$version</span>\n"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module-whatis   <span class="string">"espresso/5.4.0-icc16-IMPI5.1"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># for Tcl script use only</span></span><br><span class="line"><span class="built_in">set</span>     version         espresso/5.4.0-icc16-IMPI5.1</span><br><span class="line"><span class="built_in">set</span>     prefix          /home/software/espresso/5.4.0-icc16-IMPI5.1</span><br><span class="line"><span class="built_in">set</span>     exec_prefix     <span class="variable">$&#123;prefix&#125;</span></span><br><span class="line"><span class="built_in">set</span>     datarootdir     <span class="variable">$&#123;prefix&#125;</span>/share</span><br><span class="line"><span class="built_in">set</span>     INSTALL_DIR     <span class="variable">$&#123;prefix&#125;</span></span><br><span class="line"></span><br><span class="line">conflict        espresso</span><br><span class="line"></span><br><span class="line">prereq          Intel_compiler/16.0.3</span><br><span class="line">prereq          MPI/Intel/IMPI/5.1.3.210</span><br><span class="line"></span><br><span class="line">prepend-path    PATH           		<span class="variable">$&#123;prefix&#125;</span>/bin</span><br><span class="line">prepend-path    LD_LIBRARY_PATH		<span class="variable">$&#123;prefix&#125;</span>/lib</span><br><span class="line"></span><br><span class="line">prepend-path    LIBRARY_PATH		<span class="variable">$&#123;prefix&#125;</span>/lib</span><br><span class="line">prepend-path    PKG_CONFIG_PATH		<span class="variable">$&#123;prefix&#125;</span>/lib/pkgconfig</span><br><span class="line">prepend-path    C_INCLUDE_PATH		<span class="variable">$&#123;prefix&#125;</span>/include</span><br><span class="line">prepend-path    CXX_INCLUDE_PATH	<span class="variable">$&#123;prefix&#125;</span>/include</span><br><span class="line">prepend-path    MANPATH				<span class="variable">$&#123;datarootdir&#125;</span>/man</span><br></pre></td></tr></table></figure>
+
+<p>用户自己写module模块的时候，可以依照此模板进行修改。</p>
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>proc ModulesHelp</td>
+<td>执行<code>module show 模块名</code>时候的反馈信息</td>
+<td></td>
+</tr>
+<tr>
+<td>set version</td>
+<td>设置版本</td>
+<td></td>
+</tr>
+<tr>
+<td>set prefix</td>
+<td>设置安装目录</td>
+<td>非常关键</td>
+</tr>
+<tr>
+<td>conflict</td>
+<td>设置<code>conflict</code>报错的</td>
+<td>这就是之前遇到<code>error</code>的原因，同下</td>
+</tr>
+<tr>
+<td>prereq</td>
+<td>用来设置依赖哪些模块的</td>
+<td></td>
+</tr>
+<tr>
+<td>prepend-path</td>
+<td>添加一个路径到某个环境变量</td>
+<td></td>
+</tr>
+<tr>
+<td>PATH</td>
+<td>将目录添加到<code>PATH</code>环境变量中</td>
+<td>最常用的环境变量就是<code>PATH</code>和<code>LD_LIBRARY_PATH</code></td>
+</tr>
+<tr>
+<td>LD_LIBRARY_PATH</td>
+<td>将目录添加到<code>LD_LIBRARY_PATH</code>环境变量中</td>
+<td></td>
+</tr>
+<tr>
+<td>LIBRARY_PATH 等</td>
+<td>与上面类似，通常运行软件命令时不需要，编译其他软件时候可能会用到</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="A-安装"><a href="#A-安装" class="headerlink" title="A 安装"></a>A 安装</h3><h4 id="命令安装"><a href="#命令安装" class="headerlink" title="命令安装"></a>命令安装</h4><p>apt-get命令安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install environment-modules</span><br></pre></td></tr></table></figure>
+
+<p>yum命令安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo yum install environment-modules</span><br></pre></td></tr></table></figure>
+
+<h4 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h4><p><strong>下载：</strong></p>
+<p>从<code>https://sourceforge.net/projects/modules/files/</code>下载module源码，如果系统缺少tcl环境，需要额外下载安装<code>tcl</code>环境。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Modules-Tcl</span></span><br><span class="line">https://jaist.dl.sourceforge.net/project/modules/Modules-Tcl/modules-tcl-1.923.tar.gz</span><br><span class="line"><span class="comment"># Modules</span></span><br><span class="line">https://nchc.dl.sourceforge.net/project/modules/Modules/modules-3.2.10/modules-3.2.10.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><strong>编译：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ tar zxvf modules-3.2.10.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> modules-3.2.10</span><br><span class="line">$ ./configure</span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可以使用<code>--prefix</code>指定安装目录。</p>
+</blockquote>
+<p><strong>加载：</strong></p>
+<p>如果使用的不是命令安装方式，而是源码方式编译到非系统默认路径，需要在使用<code>module</code>命令的时候，加载环境变量。</p>
+<p>假如安装路径为 <code>$HOME/software</code> ，那么需要加载环境：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">source</span> <span class="variable">$HOME</span>/software/Modules/init/bash</span><br></pre></td></tr></table></figure>
+
+<p>针对其他shell环境，如<code>csh</code>，可以加载：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">source</span> <span class="variable">$HOME</span>/software/Modules/init/csh</span><br></pre></td></tr></table></figure>
+
+<p>以下命令均针对<code>bash</code>环境。</p>
+<p><strong>修改系统默认搜索路径</strong></p>
+<p>在上面我们介绍了用户设置路径的方法，此处我们介绍如何修改系统默认的module模块搜索路径。</p>
+<p>在安装后的<code>Modules/3.2.10/init</code>目录，打开隐藏文件，增加/删除路径实现配置。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim .modulespath</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>直接输入路径来增加搜索路径；通过<code>#</code>注释行，或直接删除行来减少搜索路径。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  @(#)$Id: 38aa24cc33a5f54a93781d63005a084f74418022 $</span></span><br><span class="line"><span class="comment">#  Module version 3.2.10</span></span><br><span class="line"><span class="comment">#  init/.modulespath.  Generated from .modulespath.in by configure.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  Modulepath initial setup</span></span><br><span class="line"><span class="comment">#  ========================</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  This file defines the initial setup for the module files search path.</span></span><br><span class="line"><span class="comment">#  Comments may be added anywhere, which begin on # and continue until the</span></span><br><span class="line"><span class="comment">#     end of the line</span></span><br><span class="line"><span class="comment">#  Each line containing a single path will be added to the MODULEPATH</span></span><br><span class="line"><span class="comment">#     environment variable. You may add as many as you want - just</span></span><br><span class="line"><span class="comment">#     limited by the maximum variable size of your shell.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">/usr/share/Modules/versions                                <span class="comment"># location of version files</span></span><br><span class="line">/usr/share/Modules/<span class="variable">$MODULE_VERSION</span>/modulefiles     <span class="comment"># Module pkg modulefiles (if versioning)</span></span><br><span class="line"><span class="comment">#/usr/share/Modules/modulefiles    # Module pkg modulefiles (if no versioning)</span></span><br><span class="line">/usr/share/Modules/modulefiles                             <span class="comment"># General module files</span></span><br><span class="line"><span class="comment">#/usr/share/Modules/3.2.10/your_contribs                   # Edit for your requirements</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="B-常用命令列表"><a href="#B-常用命令列表" class="headerlink" title="B 常用命令列表"></a>B 常用命令列表</h3><p>表 Modules 常用命令</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>module avail 或 module av</td>
+<td>查看系统中可用的软件</td>
+</tr>
+<tr>
+<td>module add 或 module load</td>
+<td>加载模块</td>
+</tr>
+<tr>
+<td>module rm 或 unload</td>
+<td>卸载模块</td>
+</tr>
+<tr>
+<td>module list 或 module li</td>
+<td>显示已加载模块</td>
+</tr>
+<tr>
+<td>module purge</td>
+<td>卸载所有模块</td>
+</tr>
+<tr>
+<td>module show</td>
+<td>显示模块配置文件</td>
+</tr>
+<tr>
+<td>module swap 或 module switch</td>
+<td>将模块1 替换为 模块2</td>
+</tr>
+<tr>
+<td>module help</td>
+<td>查看具体软件的信息</td>
+</tr>
+</tbody></table>
+<h3 id="C-遇到报错"><a href="#C-遇到报错" class="headerlink" title="C 遇到报错"></a>C 遇到报错</h3><p>常见报错有2类：</p>
+<p><strong>1. conflict</strong></p>
+<p>对于<code>conflict</code>而言，通常是由于同款软件不能同时加载多个版本，因此建议卸载之前的，再加载新的。提示哪个模块冲突了就卸载哪一个。</p>
+<p>举例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add bedtools2/2.26.0-gcc4.8</span><br><span class="line">bedtools2/2.26.0-gcc4.8(25):ERROR:150: Module <span class="string">'bedtools2/2.26.0-gcc4.8'</span> </span><br><span class="line">    conflicts with the currently loaded module(s) <span class="string">'bedtools2/2.25.0-gcc4.8'</span></span><br><span class="line">bedtools2/2.26.0-gcc4.8(25):ERROR:102: Tcl <span class="built_in">command</span> execution failed: </span><br><span class="line">    conflict   bedtools2</span><br></pre></td></tr></table></figure>
+
+<p>我们要加载的是<code>bedtools2/2.26.0-gcc4.8</code>，但与<code>bedtools2/2.25.0-gcc4.8</code>冲突了，那么：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module rm  bedtools2/2.25.0-gcc4.8</span><br><span class="line">$ module add bedtools2/2.26.0-gcc4.8</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. prereq</strong></p>
+<p>对于<code>prereq</code>而言，通常是加载的模块依赖其他默认，因此必须先加载依赖的模块，在加载该模块。</p>
+<p>举例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add espresso/5.4.0-icc16-IMPI5.1</span><br><span class="line">espresso/5.4.0-icc16-IMPI5.1(27):ERROR:151: Module <span class="string">'espresso/5.4.0-icc16-IMPI5.1'</span> </span><br><span class="line">    depends on one of the module(s) <span class="string">'Intel_compiler/16.0.3'</span></span><br><span class="line">espresso/5.4.0-icc16-IMPI5.1(27):ERROR:102: Tcl <span class="built_in">command</span> execution failed: </span><br><span class="line">    prereq                Intel_compiler/16.0.3</span><br></pre></td></tr></table></figure>
+
+<p>我们需要先加载<code>Intel_compiler/16.0.3</code>，再加载<code>espresso/5.4.0-icc16-IMPI5.1</code>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add Intel_compiler/16.0.3</span><br><span class="line">$ module add espresso/5.4.0-icc16-IMPI5.1</span><br></pre></td></tr></table></figure>
+
+<p>留一个问题，以上两行命令能够加载成功吗？</p>
+]]></content>
+      <categories>
+        <category>超算</category>
+        <category>超算课程</category>
+      </categories>
+      <tags>
+        <tag>module</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>超算入门课程2 ssh和sftp工具的使用之mobaxterm软件教学</title>
     <url>/supercomputer-courses-ssh-sftp-mobaxterm/</url>
     <content><![CDATA[<p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/mobaxterm/mobaxterm-logo.png" alt=""></p>
@@ -917,350 +1300,6 @@
         <tag>ssh</tag>
         <tag>sftp</tag>
         <tag>mobaxerm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>超算入门课程6 slurm作业管理系统使用教学</title>
-    <url>/supercomputer-courses-slurm/</url>
-    <content><![CDATA[<h2 id="1-什么是slurm"><a href="#1-什么是slurm" class="headerlink" title="1. 什么是slurm ?"></a>1. 什么是slurm ?</h2><p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/slurm/slurm-logo.png" alt=""></p>
-<p>官方说明：</p>
-<div class="note info">
-            <p>Slurm 是一个开源、容错、高可伸缩的集群管理和大型小型 Linux 集群作业调度系统。slurm不需要对操作系统内核进行修改，而是相对独立的。 </p>
-          </div>
-
-<a id="more"></a>
-
-<p>用户理解：</p>
-<div class="note info">
-            <p>超算集群不能在登陆节点计算任务，需要提交到计算节点，怎么提交呢？用作业管理系统提交。<code>slurm</code>就是其中一种。</p>
-          </div>
-
-<p>下面介绍如何使用slurm。</p>
-<h2 id="2-slurm使用初级"><a href="#2-slurm使用初级" class="headerlink" title="2. slurm使用初级"></a>2. slurm使用初级</h2><h3 id="查看可用节点-yhi"><a href="#查看可用节点-yhi" class="headerlink" title="查看可用节点 yhi"></a>查看可用节点 yhi</h3><p>查看可用计算节点信息的命令是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhi</span><br><span class="line">PARTITION AVAIL  TIMELIMIT   NODES  STATE  NODELIST</span><br><span class="line">debug        up      30:00     100  drain  cn[1-100]</span><br><span class="line">debug        up      30:00     100  alloc  cn[101-200]</span><br><span class="line">debug        up      30:00     100  idle   cn[200-300]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>上面的代码中，行首为<code>$</code>符的行是用户输入的命令，其他行为显示的结果，同下。</p>
-</blockquote>
-<p>说明：</p>
-<table>
-<thead>
-<tr>
-<th>关键词</th>
-<th>含义</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>PARTITION</td>
-<td>分区名</td>
-<td>-p 分区名来指定分区</td>
-</tr>
-<tr>
-<td>AVAIL</td>
-<td>可用状态</td>
-<td>up 可用<br/>down 不可用</td>
-</tr>
-<tr>
-<td>TIMELIMIT</td>
-<td>该分区的作业最大运行时长限制</td>
-<td>30:00 表示30分钟<br/>2-00:00:00表示2天<br/>infinite表示不限时间</td>
-</tr>
-<tr>
-<td>NODES</td>
-<td>节点的数量</td>
-<td>-N 数字 来指定节点数量</td>
-</tr>
-<tr>
-<td>STATE</td>
-<td>节点的状态</td>
-<td>drain: 排空状态，表示该类结点不再分配到其他<br/>idle: 空闲状态<br/>alloc: 被分配状态</td>
-</tr>
-</tbody></table>
-<p>通过查看系统可用资源情况，我们就知道了要将计算任务提交到那里了，比如例子中的debug计算分区。</p>
-<h3 id="提交作业"><a href="#提交作业" class="headerlink" title="提交作业"></a>提交作业</h3><p>接下来应该就是使用slurm作业管理系统进行作业提交了，常用的提交方式有2种，分别介绍如下：</p>
-<h4 id="yhrun-提交"><a href="#yhrun-提交" class="headerlink" title="yhrun 提交"></a>yhrun 提交</h4><p>在命令行终端直接执行yhrun命令进行作业提交计算：</p>
-<p>天河系统的相应命令是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhrun -N 2 -n 24 -p debug executable [args...]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>疑问：</strong><code>-N</code>与<code>-n</code>两个参数是什么关系？<br/><br><strong>解答：</strong><code>-N</code>是总节点数，<code>-n</code>是总核数。以TH-1A集群为例，一个节点有12个核。<br/><br>当 <code>N*12 &gt;= n</code>时，任务可以成功运行，并且占用了节点的全部核数，推荐使用；<br/><br>当 <code>N*12 &lt; n</code> 时，由于无法满足这种节点数和核数的组合，会提示报错如下：<code>yhbatch: error: Batch job submission failed: Requested node configuration is not available</code></p>
-</blockquote>
-<p>参数说明如下：</p>
-<table>
-<thead>
-<tr>
-<th>关键词</th>
-<th>含义</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>yhrun</td>
-<td>并行执行程序的命令</td>
-<td>类似于通用的<code>mpirun</code>命令</td>
-</tr>
-<tr>
-<td>-N</td>
-<td>总节点数</td>
-<td>-N 2 表示用2个计算节点</td>
-</tr>
-<tr>
-<td>-n</td>
-<td>总核数</td>
-<td>-n 24 表示一共用24个cpu核心，注意是总数，而不是每个节点的核数</td>
-</tr>
-<tr>
-<td>-p</td>
-<td>计算分区</td>
-<td>-p debug 表示用debug计算分区，可以用<code>yhi</code>命令查询可用分区</td>
-</tr>
-<tr>
-<td>executable</td>
-<td>可执行程序名称</td>
-<td>就是你要运行的程序的名字</td>
-</tr>
-<tr>
-<td>[args…]</td>
-<td>执行参数</td>
-<td>有的程序需要加参数，就写在后面</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p><code>yhrun</code>运行的程序，默认会将输出显示到屏幕上，而且当前终端断掉会导致任务退出，因此推荐用下面的<code>yhbatch</code>命令提交任务。</p>
-</blockquote>
-<h4 id="yhbatch提交"><a href="#yhbatch提交" class="headerlink" title="yhbatch提交"></a>yhbatch提交</h4><p>这种方式是最为推荐的方式，先编写一个脚本（别担心，很简单），然后用提交命令提交这个脚本即可。</p>
-<p><strong>1）编写脚本</strong></p>
-<p>使用文本编辑器（例如vim等），创建一个用于提交作业的脚本文件，例如名为<strong>sub.sh</strong>的文件。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim sub.sh</span><br></pre></td></tr></table></figure>
-
-<p>然后写入脚本内容</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">yhrun -N 2 -n 24 -p debug executable [args...]</span><br></pre></td></tr></table></figure>
-
-<p>里面写的内容和<code>yhrun</code>提交方式的内容完全相同。</p>
-<p><strong>2）提交脚本</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhbatch -N 2 -n 24 -p debug sub.sh</span><br><span class="line">Submitted batch job 1454916</span><br></pre></td></tr></table></figure>
-
-<p>成功提交后，返回<code>Submitted batch job 1454916</code>，这一串数字就是该任务的<code>JOBID</code>。</p>
-<blockquote>
-<p><strong>疑问：</strong><code>yhbatch</code>和<code>yhrun</code>都指定了<code>-N -n</code>参数，哪个会起作用呢？<br/><br><strong>解答：</strong>当我们使用<code>yhbatch</code>提交一个任务时，首先会向作业管理系统申请指定分区指定节点数的计算资源（当核数与节点数不匹配时会报错，<code>yhrun</code>的部分已经解释过）<br/>当获得了计算资源后，任务脚本会在计算节点执行。<br/><br>当<code>yhrun运行需要的计算资源</code> <code>&lt;=</code> <code>yhbatch申请的计算资源</code>时，程序可以正常运行；<br/><br>当<code>yhrun运行需要的计算资源</code> <code>&gt;</code> <code>yhbatch申请的计算资源</code>时，程序就会报错退出，在<code>slurm-jobid.out</code>文件中显示类似报错;<br/></p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yhrun: error: Only allocated 1 nodes asked <span class="keyword">for</span> 2</span><br></pre></td></tr></table></figure>
-
-<p>参数说明如下：</p>
-<table>
-<thead>
-<tr>
-<th>关键词</th>
-<th>含义</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>yhbatch</td>
-<td>提交批处理脚本的命令</td>
-<td></td>
-</tr>
-<tr>
-<td>-N</td>
-<td>总节点数</td>
-<td>-N 2 表示用2个计算节点</td>
-</tr>
-<tr>
-<td>-n</td>
-<td>总核数</td>
-<td>-n 24 表示一共用24个cpu核心</td>
-</tr>
-<tr>
-<td>-p</td>
-<td>计算分区</td>
-<td>-p debug 表示用debug计算分区</td>
-</tr>
-<tr>
-<td>sub.sh</td>
-<td>提交脚本名</td>
-<td>可以依据任务不同编写其他名称的脚本文件</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>优势：使用这种方式提交的任务，会自动生成一个名为<code>slurm-jobid.out</code>的文件，其中<code>jobid</code>是slurm分配给这个任务的具体编号数字。里面会有除了程序特殊指定，或用户重定向以外的所有作业的标准输出和错误信息。当计算任务出现错误的时候，我们也是第一时间查看该文件，寻找原因。</p>
-</blockquote>
-<h3 id="查看任务状态"><a href="#查看任务状态" class="headerlink" title="查看任务状态"></a>查看任务状态</h3><p>如果我们想查看一下当前用户的作业状态，可以使用如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhq</span><br><span class="line">JOBID    PARTITION  NAME     USER       ST  TIME      NODES NODELIST(REASON)</span><br><span class="line">1454916  debug      sub.sh   zhenggang  R   00:05:00  2     cn[5-6]</span><br></pre></td></tr></table></figure>
-
-<p>参数说明如下：</p>
-<table>
-<thead>
-<tr>
-<th>关键词</th>
-<th>含义</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>JOBID</td>
-<td>任务编号</td>
-<td>唯一编号，方便追溯</td>
-</tr>
-<tr>
-<td>PARTITION</td>
-<td>计算分区名</td>
-<td>可用<code>yhi</code>查询</td>
-</tr>
-<tr>
-<td>NAME</td>
-<td>任务名</td>
-<td>默认以提交脚本的名称当作任务名</td>
-</tr>
-<tr>
-<td>USER</td>
-<td>用户名</td>
-<td>提交该任务的用户名</td>
-</tr>
-<tr>
-<td>ST</td>
-<td>任务状态</td>
-<td>PD排队<br/>R运行<br/>S挂起<br/>CG正在退出</td>
-</tr>
-<tr>
-<td>TIME</td>
-<td>任务运行时间</td>
-<td>例子中为5分钟</td>
-</tr>
-<tr>
-<td>NODES</td>
-<td>任务作占节点数</td>
-<td>例子中为1个</td>
-</tr>
-<tr>
-<td>NODELIST(REASON)</td>
-<td>节点列表（排队原因）</td>
-<td>如果是排队状态的任务，则会给出排队原因</td>
-</tr>
-</tbody></table>
-<p>备注常见排队原因：</p>
-<blockquote>
-<ul>
-<li>AssociationResourceLimit：关联的资源限制已满 — 账户有使用节点数限制，已经用满了</li>
-<li>Resources：当前可用资源不能满足作业需求 — 系统的可用节点资源不足</li>
-<li>Dependency：作业的依赖关系未满足 — 作业之间有依赖关系，依赖的作业没完成</li>
-<li>PartitionDown：作业所在的分区处于 down 状态 — 分区down，所以节点不可用</li>
-</ul>
-</blockquote>
-<h3 id="任务完成-取消作业"><a href="#任务完成-取消作业" class="headerlink" title="任务完成/取消作业"></a>任务完成/取消作业</h3><p>如果提交作业后，如果正常结束，那么在<code>slurm-jobid.out</code>文件中并不会有任务的报错信息。</p>
-<p>如果任务正在运行，发现需要将它取消，可以这样子：</p>
-<p>1）确定任务编号</p>
-<p>我们用<code>yhq</code>命令查看任务编号，比如为</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhq</span><br><span class="line">JOBID    PARTITION  NAME     USER       ST  TIME      NODES NODELIST(REASON)</span><br><span class="line">1454916  debug      sub.sh   zhenggang  R   00:15:00  2     cn[5-6]</span><br></pre></td></tr></table></figure>
-
-<p>2）取消任务</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhcancel 1454916</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-slurm使用中级"><a href="#2-slurm使用中级" class="headerlink" title="2. slurm使用中级"></a>2. slurm使用中级</h2><p>用户常用的功能，其实大部分是<code>yhrun/yhbatch</code>的其他参数，举例如下：</p>
-<h3 id="设置线程数"><a href="#设置线程数" class="headerlink" title="设置线程数"></a>设置线程数</h3><p>默认情况下，一个MPI进程开启一个线程，当程序为多线程程序的时候，可以手动设置线程数：</p>
-<p>方法一：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">export</span> OMP_NUM_THREADS=4</span><br></pre></td></tr></table></figure>
-
-<p>通过环境变量参数设置线程数为4。</p>
-<p>方法二：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhrun -N 2 -n 8 -c 4 -p debug executable [args...]</span><br></pre></td></tr></table></figure>
-<p>通过<code>yhrun -c 4</code>设置线程数为4。</p>
-<h3 id="设置工作目录"><a href="#设置工作目录" class="headerlink" title="设置工作目录"></a>设置工作目录</h3><p>默认情况下，执行<code>yhbatch</code>命令的目录就是任务的默认目录。</p>
-<p>如果希望修改任务的默认目录，可以使用<code>-D</code>参数。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhbatch -D /path/to/new/directory -N 2 -n24 -p debug sub.sh</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>/path/to/new/directory 表示一个新的目录</p>
-</blockquote>
-<h3 id="指定节点"><a href="#指定节点" class="headerlink" title="指定节点"></a>指定节点</h3><p>我们可以用<code>-w</code>参数来指定任务使用哪些节点，可以用<code>-x</code>参数指定任务不使用哪些节点。</p>
-<p>通常使用<code>-x</code>的场景为，当任务在某个节点报错退出后，如果怀疑该节点有问题，可以先用<code>-x</code>参数过滤掉该节点，重新提交任务。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhbatch -w cn10 -N 2 -n24 -p debug sub.sh</span><br><span class="line">$ yhbatch -x cn11 -N 2 -n24 -p debug sub.sh</span><br></pre></td></tr></table></figure>
-
-<h3 id="指定任务名"><a href="#指定任务名" class="headerlink" title="指定任务名"></a>指定任务名</h3><p>当用户需要提交非常多的相似任务时，通常只会将提交脚本中的参数进行修改，但这样子提交的任务的任务名都相同，不好区分。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">JOBID    PARTITION  NAME     USER       ST  TIME      NODES NODELIST(REASON)</span><br><span class="line">1454916  debug      sub.sh   zhenggang  R   00:15:00  2     cn[5-6]</span><br><span class="line">1454917  debug      sub.sh   zhenggang  R   00:15:00  2     cn[7-8]</span><br><span class="line">1454918  debug      sub.sh   zhenggang  R   00:15:00  2     cn[9-10]</span><br></pre></td></tr></table></figure>
-
-<p>我们可以用<code>-J</code>参数为每一个任务指定任务名，例如：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhbatch -J job1 -N 2 -n24 -p debug sub.sh</span><br><span class="line">Submitted batch job 1454920</span><br><span class="line">$ yhbatch -J job2 -N 2 -n24 -p debug sub.sh</span><br><span class="line">Submitted batch job 1454921</span><br><span class="line">$ yhbatch -J job3 -N 2 -n24 -p debug sub.sh</span><br><span class="line">Submitted batch job 1454922</span><br><span class="line">$ yhq</span><br><span class="line">JOBID    PARTITION  NAME     USER       ST  TIME      NODES NODELIST(REASON)</span><br><span class="line">1454920  debug      job1     zhenggang  R   00:00:05  2     cn[15-16]</span><br><span class="line">1454921  debug      job2     zhenggang  R   00:00:05  2     cn[17-18]</span><br><span class="line">1454922  debug      job3     zhenggang  R   00:00:05  2     cn[19-20]</span><br></pre></td></tr></table></figure>
-
-<h3 id="任务运行时常"><a href="#任务运行时常" class="headerlink" title="任务运行时常"></a>任务运行时常</h3><p>默认情况下，任务会一直运行直到任务结束；在超算集群上，通常的计算分区都有设置最大运行时常，当超出时常后任务会自动退出，<code>slurm-jobid.out</code>文件报错类似：<code>Error: DUE TO TIME LIMIT</code></p>
-<p>用户也可以用<code>-t</code>参数设置该任务的最大运行时常，时间单位为分钟，如设置为10分钟（即为<code>-t 10</code>）：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yhbatch -t 10 -N 2 -n 24 -p debug sub.sh</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-slurm使用高级"><a href="#3-slurm使用高级" class="headerlink" title="3. slurm使用高级"></a>3. slurm使用高级</h2><h3 id="yhalloc方式使用"><a href="#yhalloc方式使用" class="headerlink" title="yhalloc方式使用"></a>yhalloc方式使用</h3><p>除了<code>yhrun</code>和<code>yhbatch</code>，还有一个命令叫做<code>yhalloc</code>，适用于调试程序。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhballoc -N 2 -n 24 -pdebug</span><br><span class="line">yhalloc: Granted job allocation 1455031</span><br><span class="line"></span><br><span class="line">$ yhq</span><br><span class="line">  JOBID PARTITION     NAME     USER  ST       TIME  NODES NODELIST(REASON)</span><br><span class="line">1455031    debug      bash zhenggang  R       0:44      2 cn[31-32]</span><br></pre></td></tr></table></figure>
-
-<p>我们接下来可以：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yhrun -N 2 -n24 -pdebug executable [args...]</span><br></pre></td></tr></table></figure>
-
-<p>任务会在刚刚分配的cn[31-32]节点运行。</p>
-<p>我们也可以用<code>ssh</code>命令切换到计算节点，进行各种操作。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh cn32</span><br><span class="line">Last login: Tue Dec 18 08:58:40 2018 from ln0</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：用yhalloc申请的节点会在当前终端退出时释放掉，因此仅适用于高阶玩家调试用。</p>
-</blockquote>
-<h3 id="设置任务依赖"><a href="#设置任务依赖" class="headerlink" title="设置任务依赖"></a>设置任务依赖</h3><p>有时候任务1与任务2有点关系，我们希望等任务1结束后再运行任务2。</p>
-<p>如果将任务1和任务2都提交了，它们之间没人关系，会再获得计算资源后都运行，这不是我们想要的。</p>
-<p>因此，我们可以正常提交任务1，然后在提交任务2的时候，使用<code>-d jobid</code>参数设置依赖关系，让任务2等待任务1结束后再运行，即便有计算资源也等着。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhbatch -N 2 -n 24 -p debug sub1.sh</span><br><span class="line">Submitted batch job 1454946</span><br><span class="line">$ yhbatch -d 1454946 -N 2 -n 24 -p debug sub2.sh</span><br><span class="line">Submitted batch job 1454947</span><br><span class="line">$ yhq</span><br><span class="line">  JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)</span><br><span class="line">1454947    debug   sub2.sh zhenggang PD       0:00      1 (Dependency)</span><br><span class="line">1454946    debug   sub1.sh zhenggang  R       0:37      1 cn46</span><br></pre></td></tr></table></figure>
-
-<p>我们可以看到先提交的任务<code>1454946</code>已经在<code>R</code>，后提交的任务<code>1454947</code>在<code>PD</code>，原因是<code>Dependency</code>，这意味着它将等待<code>1454946</code>任务结束后才开始运行。</p>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="slurm内置环境变量"><a href="#slurm内置环境变量" class="headerlink" title="slurm内置环境变量"></a>slurm内置环境变量</h3><p>slurm有很多内置的环境变量，可以在提交脚本中使用，来显示各类信息：</p>
-<table>
-<thead>
-<tr>
-<th>内置变量</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>SLURM_NODELIST</td>
-<td>分配的节点列表</td>
-</tr>
-<tr>
-<td>SLURM_NNODES</td>
-<td>分配的任务数</td>
-</tr>
-<tr>
-<td>SLURM_NPROCS</td>
-<td>要加载的任务数</td>
-</tr>
-<tr>
-<td>SLURM_JOBID</td>
-<td>作业的 JobID</td>
-</tr>
-<tr>
-<td>SLURM_TASKS_PER_NODE</td>
-<td>每节点要加载的任务数</td>
-</tr>
-<tr>
-<td>SLURM_JOB_ID</td>
-<td>作业的 JobID</td>
-</tr>
-<tr>
-<td>SLURM_SUBMIT_DIR</td>
-<td>提交作业时的工作目录</td>
-</tr>
-<tr>
-<td>SLURM_JOB_NODELIST</td>
-<td>作业分配的节点列表</td>
-</tr>
-<tr>
-<td>SLURM_JOB_CPUS_PER_NODE</td>
-<td>每个节点上分配给作业的 CPU 数</td>
-</tr>
-<tr>
-<td>SLURM_JOB_NUM_NODES</td>
-<td>作业分配的节点数</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>超算</category>
-        <category>超算课程</category>
-      </categories>
-      <tags>
-        <tag>slurm</tag>
       </tags>
   </entry>
   <entry>
@@ -2008,314 +2047,347 @@
       </tags>
   </entry>
   <entry>
-    <title>超算入门课程4 module命令使用教学</title>
-    <url>/supercomputer-courses-module/</url>
-    <content><![CDATA[<h2 id="1-什么是module"><a href="#1-什么是module" class="headerlink" title="1. 什么是module"></a>1. 什么是module</h2><p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/module/module-logo.png" alt=""></p>
-<p>Environment Modules包通过模块文件动态修改用户的环境。</p>
+    <title>超算入门课程6 slurm作业管理系统使用教学</title>
+    <url>/supercomputer-courses-slurm/</url>
+    <content><![CDATA[<h2 id="1-什么是slurm"><a href="#1-什么是slurm" class="headerlink" title="1. 什么是slurm ?"></a>1. 什么是slurm ?</h2><p><img data-src="https://cdn.jsdelivr.net/gh/mrzhenggang/CDN@master/img/slurm/slurm-logo.png" alt=""></p>
+<p>官方说明：</p>
+<div class="note info">
+            <p>Slurm 是一个开源、容错、高可伸缩的集群管理和大型小型 Linux 集群作业调度系统。slurm不需要对操作系统内核进行修改，而是相对独立的。 </p>
+          </div>
+
 <a id="more"></a>
 
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>module avail 或 module av</td>
-<td>查看系统中可用的软件</td>
-</tr>
-<tr>
-<td>module add 或 module load</td>
-<td>加载模块</td>
-</tr>
-<tr>
-<td>module rm 或 unload</td>
-<td>卸载模块</td>
-</tr>
-<tr>
-<td>module list 或 module li</td>
-<td>显示已加载模块</td>
-</tr>
-<tr>
-<td>module purge</td>
-<td>卸载所有模块</td>
-</tr>
-<tr>
-<td>module show</td>
-<td>显示模块配置文件</td>
-</tr>
-<tr>
-<td>module swap 或 module switch</td>
-<td>将模块1 替换为 模块2</td>
-</tr>
-<tr>
-<td>module help</td>
-<td>查看具体软件的信息</td>
-</tr>
-</tbody></table>
-<h2 id="2-module使用初级"><a href="#2-module使用初级" class="headerlink" title="2. module使用初级"></a>2. module使用初级</h2><h3 id="2-1-查看所有模块"><a href="#2-1-查看所有模块" class="headerlink" title="2.1 查看所有模块"></a>2.1 查看所有模块</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module av</span><br><span class="line">------------- /usr/share/Modules/3.2.10/Applications -------------</span><br><span class="line">bedtools2/2.25.0-gcc4.8         </span><br><span class="line">bedtools2/2.26.0-gcc4.8(default)</span><br></pre></td></tr></table></figure>
+<p>用户理解：</p>
+<div class="note info">
+            <p>超算集群不能在登陆节点计算任务，需要提交到计算节点，怎么提交呢？用作业管理系统提交。<code>slurm</code>就是其中一种。</p>
+          </div>
+
+<p>下面介绍如何使用slurm。</p>
+<h2 id="2-slurm使用初级"><a href="#2-slurm使用初级" class="headerlink" title="2. slurm使用初级"></a>2. slurm使用初级</h2><h3 id="查看可用节点-yhi"><a href="#查看可用节点-yhi" class="headerlink" title="查看可用节点 yhi"></a>查看可用节点 yhi</h3><p>查看可用计算节点信息的命令是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhi</span><br><span class="line">PARTITION AVAIL  TIMELIMIT   NODES  STATE  NODELIST</span><br><span class="line">debug        up      30:00     100  drain  cn[1-100]</span><br><span class="line">debug        up      30:00     100  alloc  cn[101-200]</span><br><span class="line">debug        up      30:00     100  idle   cn[200-300]</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>上面的代码中，行首为<code>$</code>符的行是用户输入的命令，其他行为显示的结果，同下。</p>
 </blockquote>
 <p>说明：</p>
-<ol>
-<li>有2个module模块</li>
-<li>模块名称为<code>bedtools2/2.25.0-gcc4.8</code>和<code>bedtools2/2.26.0-gcc4.8</code></li>
-<li>模块名通常的命令方式为：软件名/版本-[编译器名]-[MPI编译器名]</li>
-<li>在 <code>bedtools2/2.26.0-gcc4.8</code>模块后面有一个<code>default</code>，表示它是<code>bedtools2</code>软件的默认版本，即只写<code>bedtools2</code> 即表示 <code>bedtools2/2.26.0-gcc4.8</code></li>
-</ol>
-<blockquote>
-<p> 在平台上有数百个可用module模块，此处只列2个教学用。</p>
-</blockquote>
-<p><strong>加载</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add bedtools2/2.25.0-gcc4.8</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
-
-<p>没有任何报错表明加载成功。</p>
-<h3 id="2-2-查看已加载模块"><a href="#2-2-查看已加载模块" class="headerlink" title="2.2 查看已加载模块"></a>2.2 查看已加载模块</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.25.0-gcc4.8</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-3-使用已加载模块"><a href="#2-3-使用已加载模块" class="headerlink" title="2.3 使用已加载模块"></a>2.3 使用已加载模块</h3><p>我们看到<code>bedtools2/2.25.0-gcc4.8</code>已经成功加载了，用户可以直接调用<code>bedtools2</code>软件的相关命令了，例如：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ bedtools</span><br><span class="line">bedtools: flexible tools <span class="keyword">for</span> genome arithmetic and DNA sequence analysis.</span><br><span class="line">usage:    bedtools &lt;subcommand&gt; [options]</span><br><span class="line"></span><br><span class="line">The bedtools sub-commands include:</span><br><span class="line"></span><br><span class="line">[ Genome arithmetic ]</span><br><span class="line">    intersect     Find overlapping intervals <span class="keyword">in</span> various ways.</span><br><span class="line">    window        Find overlapping intervals within a window around an interval.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>友情提示：在超算中心使用，登陆节点与计算节点是分开的，因此请使用作业调度系统提交任务。</p>
-</blockquote>
-<h3 id="2-4-卸载模块"><a href="#2-4-卸载模块" class="headerlink" title="2.4 卸载模块"></a>2.4 卸载模块</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module rm bedtools2/2.25.0-gcc4.8</span><br><span class="line">$ module li</span><br><span class="line">No Modulefiles Currently Loaded.</span><br></pre></td></tr></table></figure>
-
-<p>到此处，我们学到了：</p>
-<ol>
-<li>如何查看所有的module模块 <code>module av</code></li>
-<li>如何加载一个模块 <code>module add 模块名</code></li>
-<li>如何查看已加载的模块 <code>module li</code></li>
-<li>如何卸载一个模块 <code>module rm 模块名</code></li>
-</ol>
-<hr>
-<h2 id="3-module使用中级"><a href="#3-module使用中级" class="headerlink" title="3. module使用中级"></a>3. module使用中级</h2><h3 id="3-1-显示模块详细信息"><a href="#3-1-显示模块详细信息" class="headerlink" title="3.1 显示模块详细信息"></a>3.1 显示模块详细信息</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module show bedtools2/2.26.0-gcc4.8</span><br><span class="line">-------------------------------------------------------------------</span><br><span class="line">/usr/share/Modules/Applications/bedtools2/2.26.0-gcc4.8:</span><br><span class="line"></span><br><span class="line">module-whatis    bedtools2/2.26.0-gcc4.8</span><br><span class="line">conflict         bedtools2</span><br><span class="line">prepend-path     PATH /THL6/software/bedtools2/2.26.0-gcc4.8/bin</span><br><span class="line">-------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-2-替换模块"><a href="#3-2-替换模块" class="headerlink" title="3.2 替换模块"></a>3.2 替换模块</h3><p>当我们加载了<code>bedtools2/2.25.0-gcc4.8</code>模块后，希望更改为<code>bedtools2/2.26.0-gcc4.8</code>模块，应该怎么做呢？</p>
-<p>让我们先这样试一试：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.25.0-gcc4.8</span><br><span class="line">$ module rm  bedtools2/2.26.0-gcc4.8</span><br><span class="line">$ module add bedtools2/2.26.0-gcc4.8</span><br><span class="line">bedtools2/2.26.0-gcc4.8(25):ERROR:150: Module <span class="string">'bedtools2/2.26.0-gcc4.8'</span> </span><br><span class="line">    conflicts with the currently loaded module(s) <span class="string">'bedtools2/2.25.0-gcc4.8'</span></span><br><span class="line">bedtools2/2.26.0-gcc4.8(25):ERROR:102: Tcl <span class="built_in">command</span> execution failed: </span><br><span class="line">    conflict   bedtools2</span><br></pre></td></tr></table></figure>
-
-<p>报错了！我们仔细观察这个错误<code>ERROR conflict  bedtools2</code>，想一想这是为什么？</p>
-<p><code>bedtools2</code>软件有2个版本的，我们已经加载了一个了，要不把之前的先卸载了试试？</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.25.0-gcc4.8</span><br><span class="line"></span><br><span class="line">$ module rm bedtools2/2.25.0-gcc4.8</span><br><span class="line">$ module rm bedtools2/2.26.0-gcc4.8</span><br><span class="line"></span><br><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.26.0-gcc4.8</span><br></pre></td></tr></table></figure>
-
-<p>成功了！因此，同类型的软件只能加载一个，加载新的之前要卸载旧的，否则就<code>conflict</code> 冲突了。</p>
-<p>可是，更换版本是一个很常见的操作，有没有更简便的方法呢？有的，请往下看。</p>
-<p>更简单的方法为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.25.0-gcc4.8</span><br><span class="line"></span><br><span class="line">$ module swap bedtools2/2.25.0-gcc4.8 bedtools2/2.26.0-gcc4.8</span><br><span class="line"></span><br><span class="line">$ module li</span><br><span class="line">Currently Loaded Modulefiles:</span><br><span class="line">  1) bedtools2/2.26.0-gcc4.8</span><br></pre></td></tr></table></figure>
-
-<p>使用<code>module swap 旧模块名 新模块名</code> 即可实现模块替换。</p>
-<h3 id="3-3-卸载所有模块"><a href="#3-3-卸载所有模块" class="headerlink" title="3.3 卸载所有模块"></a>3.3 卸载所有模块</h3><p>当加载的模块非常多的时候，我们希望一次性都卸载了，命令为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module purge</span><br><span class="line">$ module li</span><br><span class="line">No Modulefiles Currently Loaded.</span><br></pre></td></tr></table></figure>
-
-<p>到此处，我们学到了：</p>
-<ol>
-<li>显示一个module模块的详细信息：<code>module show 模块名</code></li>
-<li>替换一个module模块为新的module模块：<code>module swap 旧模块名 新模块名</code></li>
-<li>一次性卸载所有已加载module模块：<code>module purge</code></li>
-</ol>
-<blockquote>
-<p>注意：我们遇到过一个报错<code>ERROR conflict  bedtools2</code> ，关键词为 <code>conflict</code> 即为版本冲突，它表明 <code>bedtools2</code>  模块已经加载，如果想加载新的，需要先卸载旧的。<br>我们可以用 <code>module li</code> 看看已加载的模块，把对应的冲突模块用<code>module rm</code>卸载后，在加载新的模块。<br>我们也可以用<code>module swap</code> 来直接将旧模块替换为新的模块。</p>
-</blockquote>
-<hr>
-<h2 id="4-module使用高级"><a href="#4-module使用高级" class="headerlink" title="4. module使用高级"></a>4. module使用高级</h2><h3 id="4-1-模块依赖问题-prereq"><a href="#4-1-模块依赖问题-prereq" class="headerlink" title="4.1 模块依赖问题 prereq"></a>4.1 模块依赖问题 prereq</h3><p>我们再次使用<code>module av</code>命令，查看所有可用的module模块，这次我们以<code>espresso</code>软件为例，因为它复杂一点点。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module av </span><br><span class="line">------------- /usr/share/Modules/3.2.10/Applications -------------</span><br><span class="line">espresso/5.4.0-icc16-IMPI5.1</span><br></pre></td></tr></table></figure>
-
-<p>我们再来尝试加载一下<code>espresso/5.4.0-icc16-IMPI5.1</code>，输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ module add espresso&#x2F;5.4.0-icc16-IMPI5.1</span><br><span class="line">espresso&#x2F;5.4.0-icc16-IMPI5.1(27):ERROR:151: Module &#39;espresso&#x2F;5.4.0-icc16-IMPI5.1&#39; </span><br><span class="line">    depends on one of the module(s) &#39;Intel_compiler&#x2F;16.0.3&#39;</span><br><span class="line">espresso&#x2F;5.4.0-icc16-IMPI5.1(27):ERROR:102: Tcl command execution failed: </span><br><span class="line">    prereq                Intel_compiler&#x2F;16.0.3</span><br></pre></td></tr></table></figure>
-
-<p>很遗憾，这回有信息提示，竟然是<code>ERROR prereq  Intel_compiler/16.0.3</code>，这次又是为什么呢？</p>
-<p>我们观察这个模块的名称<code>espresso/5.4.0-icc16-IMPI5.1</code>，在第二节中我们提到过module模块的常见命名规则：软件名/版本-[编译器名]-[MPI编译器名]，因此我们分析如下：</p>
-<ul>
-<li>esresso 表示软件的名字</li>
-<li>5.4.0 是软件的版本</li>
-<li>icc16 是intel compiler的版本</li>
-<li>IMPI5.1 是MPI编译器的版本</li>
-</ul>
-<p>详解：</p>
-<blockquote>
-<p>一款并行程序通常需要串行编译器加并行编译器来编译，然后它通过类似<code>mpirun</code>的并行执行命令来运行。如果运行过程中缺少动态库就会报错。因此，我们设置了<code>依赖</code>关系，让加载软件模块的时候，必须预先加载<code>依赖</code>的其它模块（如编译器模块等），然后再加载模块本身，以免报错。</p>
-</blockquote>
-<p>我们仔细观察报错中的内容：<code>prereq  Intel_compiler/16.0.3</code>，它表明<code>espresso</code>这个模块依赖于<code>Intel_compiler</code>这个模块。</p>
-<p>我们决定先加载<code>Intel_compiler</code>，再加载<code>espresso</code>模块：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add Intel_compiler/16.0.3</span><br><span class="line">$ module add espresso/5.4.0-icc16-IMPI5.1</span><br></pre></td></tr></table></figure>
-
-<p>然后我们发现，有报错了，不过报错和之前的很类似。</p>
-<p>我们决定把<code>MPI/Intel/IMPI/5.1.3.210</code>模块也加载上，最终输入：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add Intel_compiler/16.0.3</span><br><span class="line">$ module add MPI/Intel/IMPI/5.1.3.210</span><br><span class="line">$ module add espresso/5.4.0-icc16-IMPI5.1</span><br></pre></td></tr></table></figure>
-
-<p>如下图，没有任何报错，就成功了。</p>
-<h3 id="4-2-自定义路径配置"><a href="#4-2-自定义路径配置" class="headerlink" title="4.2 自定义路径配置"></a>4.2 自定义路径配置</h3><p>用户可以通过设置 <code>MODULEPATH</code> 或者通过 <code>module</code> 命令来增加减少搜索路径。</p>
-<p>方法1：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">export</span> MODULEPATH=/path/to/new/directory:<span class="variable">$MODULEPATH</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 增加路径</span></span><br><span class="line">$ module use --append /path/to/new/directory</span><br><span class="line"><span class="comment">## 减少路径</span></span><br><span class="line">$ module unuse --append /path/to/old/directory</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>提别提醒：<code>MODULEPATH</code>等于号后面的值，以及<code>--append</code>后面的参数，都是实际希望增加或减少的搜索路径，不要照抄。</p>
-</blockquote>
-<h3 id="4-3-配置文件编写"><a href="#4-3-配置文件编写" class="headerlink" title="4.3 配置文件编写"></a>4.3 配置文件编写</h3><p>我们先来看一个标准的module配置文件模板</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#%Module1.0#####################################################################</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line"><span class="comment">## modules modulefile</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line"><span class="comment">## modulefiles/modules.  Generated from modules.in by configure.</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line">proc ModulesHelp &#123; &#125; &#123;</span><br><span class="line">                global version prefix</span><br><span class="line"></span><br><span class="line">                puts stderr <span class="string">"\tespresso/5.4.0-icc16-IMPI5.1, link with Intel_compiler/16.0.3,"</span> </span><br><span class="line">                puts stderr <span class="string">"MPI/Intel/IMPI/5.1.3.210"</span></span><br><span class="line">                puts stderr <span class="string">"\n\tAfter loading the module, you can try to use espresso"</span></span><br><span class="line">                puts stderr <span class="string">"\tAdds Intel compilers to your environment variables."</span></span><br><span class="line">                puts stderr <span class="string">"\n\tThis adds <span class="variable">$prefix</span>/* to several of the"</span></span><br><span class="line">                puts stderr <span class="string">"\tenvironment variables."</span></span><br><span class="line">                puts stderr <span class="string">"\n\tVersion <span class="variable">$version</span>\n"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module-whatis   <span class="string">"espresso/5.4.0-icc16-IMPI5.1"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># for Tcl script use only</span></span><br><span class="line"><span class="built_in">set</span>     version         espresso/5.4.0-icc16-IMPI5.1</span><br><span class="line"><span class="built_in">set</span>     prefix          /home/software/espresso/5.4.0-icc16-IMPI5.1</span><br><span class="line"><span class="built_in">set</span>     exec_prefix     <span class="variable">$&#123;prefix&#125;</span></span><br><span class="line"><span class="built_in">set</span>     datarootdir     <span class="variable">$&#123;prefix&#125;</span>/share</span><br><span class="line"><span class="built_in">set</span>     INSTALL_DIR     <span class="variable">$&#123;prefix&#125;</span></span><br><span class="line"></span><br><span class="line">conflict        espresso</span><br><span class="line"></span><br><span class="line">prereq          Intel_compiler/16.0.3</span><br><span class="line">prereq          MPI/Intel/IMPI/5.1.3.210</span><br><span class="line"></span><br><span class="line">prepend-path    PATH           		<span class="variable">$&#123;prefix&#125;</span>/bin</span><br><span class="line">prepend-path    LD_LIBRARY_PATH		<span class="variable">$&#123;prefix&#125;</span>/lib</span><br><span class="line"></span><br><span class="line">prepend-path    LIBRARY_PATH		<span class="variable">$&#123;prefix&#125;</span>/lib</span><br><span class="line">prepend-path    PKG_CONFIG_PATH		<span class="variable">$&#123;prefix&#125;</span>/lib/pkgconfig</span><br><span class="line">prepend-path    C_INCLUDE_PATH		<span class="variable">$&#123;prefix&#125;</span>/include</span><br><span class="line">prepend-path    CXX_INCLUDE_PATH	<span class="variable">$&#123;prefix&#125;</span>/include</span><br><span class="line">prepend-path    MANPATH				<span class="variable">$&#123;datarootdir&#125;</span>/man</span><br></pre></td></tr></table></figure>
-
-<p>用户自己写module模块的时候，可以依照此模板进行修改。</p>
-<p>参数说明：</p>
 <table>
 <thead>
 <tr>
-<th>参数</th>
-<th>说明</th>
+<th>关键词</th>
+<th>含义</th>
 <th>备注</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>proc ModulesHelp</td>
-<td>执行<code>module show 模块名</code>时候的反馈信息</td>
-<td></td>
+<td>PARTITION</td>
+<td>分区名</td>
+<td>-p 分区名来指定分区</td>
 </tr>
 <tr>
-<td>set version</td>
-<td>设置版本</td>
-<td></td>
+<td>AVAIL</td>
+<td>可用状态</td>
+<td>up 可用<br/>down 不可用</td>
 </tr>
 <tr>
-<td>set prefix</td>
-<td>设置安装目录</td>
-<td>非常关键</td>
+<td>TIMELIMIT</td>
+<td>该分区的作业最大运行时长限制</td>
+<td>30:00 表示30分钟<br/>2-00:00:00表示2天<br/>infinite表示不限时间</td>
 </tr>
 <tr>
-<td>conflict</td>
-<td>设置<code>conflict</code>报错的</td>
-<td>这就是之前遇到<code>error</code>的原因，同下</td>
+<td>NODES</td>
+<td>节点的数量</td>
+<td>-N 数字 来指定节点数量</td>
 </tr>
 <tr>
-<td>prereq</td>
-<td>用来设置依赖哪些模块的</td>
-<td></td>
-</tr>
-<tr>
-<td>prepend-path</td>
-<td>添加一个路径到某个环境变量</td>
-<td></td>
-</tr>
-<tr>
-<td>PATH</td>
-<td>将目录添加到<code>PATH</code>环境变量中</td>
-<td>最常用的环境变量就是<code>PATH</code>和<code>LD_LIBRARY_PATH</code></td>
-</tr>
-<tr>
-<td>LD_LIBRARY_PATH</td>
-<td>将目录添加到<code>LD_LIBRARY_PATH</code>环境变量中</td>
-<td></td>
-</tr>
-<tr>
-<td>LIBRARY_PATH 等</td>
-<td>与上面类似，通常运行软件命令时不需要，编译其他软件时候可能会用到</td>
-<td></td>
+<td>STATE</td>
+<td>节点的状态</td>
+<td>drain: 排空状态，表示该类结点不再分配到其他<br/>idle: 空闲状态<br/>alloc: 被分配状态</td>
 </tr>
 </tbody></table>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="A-安装"><a href="#A-安装" class="headerlink" title="A 安装"></a>A 安装</h3><h4 id="命令安装"><a href="#命令安装" class="headerlink" title="命令安装"></a>命令安装</h4><p>apt-get命令安装：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install environment-modules</span><br></pre></td></tr></table></figure>
-
-<p>yum命令安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo yum install environment-modules</span><br></pre></td></tr></table></figure>
-
-<h4 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h4><p><strong>下载：</strong></p>
-<p>从<code>https://sourceforge.net/projects/modules/files/</code>下载module源码，如果系统缺少tcl环境，需要额外下载安装<code>tcl</code>环境。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Modules-Tcl</span></span><br><span class="line">https://jaist.dl.sourceforge.net/project/modules/Modules-Tcl/modules-tcl-1.923.tar.gz</span><br><span class="line"><span class="comment"># Modules</span></span><br><span class="line">https://nchc.dl.sourceforge.net/project/modules/Modules/modules-3.2.10/modules-3.2.10.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p><strong>编译：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ tar zxvf modules-3.2.10.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> modules-3.2.10</span><br><span class="line">$ ./configure</span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
+<p>通过查看系统可用资源情况，我们就知道了要将计算任务提交到那里了，比如例子中的debug计算分区。</p>
+<h3 id="提交作业"><a href="#提交作业" class="headerlink" title="提交作业"></a>提交作业</h3><p>接下来应该就是使用slurm作业管理系统进行作业提交了，常用的提交方式有2种，分别介绍如下：</p>
+<h4 id="yhrun-提交"><a href="#yhrun-提交" class="headerlink" title="yhrun 提交"></a>yhrun 提交</h4><p>在命令行终端直接执行yhrun命令进行作业提交计算：</p>
+<p>天河系统的相应命令是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhrun -N 2 -n 24 -p debug executable [args...]</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>可以使用<code>--prefix</code>指定安装目录。</p>
+<p><strong>疑问：</strong><code>-N</code>与<code>-n</code>两个参数是什么关系？<br/><br><strong>解答：</strong><code>-N</code>是总节点数，<code>-n</code>是总核数。以TH-1A集群为例，一个节点有12个核。<br/><br>当 <code>N*12 &gt;= n</code>时，任务可以成功运行，并且占用了节点的全部核数，推荐使用；<br/><br>当 <code>N*12 &lt; n</code> 时，由于无法满足这种节点数和核数的组合，会提示报错如下：<code>yhbatch: error: Batch job submission failed: Requested node configuration is not available</code></p>
 </blockquote>
-<p><strong>加载：</strong></p>
-<p>如果使用的不是命令安装方式，而是源码方式编译到非系统默认路径，需要在使用<code>module</code>命令的时候，加载环境变量。</p>
-<p>假如安装路径为 <code>$HOME/software</code> ，那么需要加载环境：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">source</span> <span class="variable">$HOME</span>/software/Modules/init/bash</span><br></pre></td></tr></table></figure>
-
-<p>针对其他shell环境，如<code>csh</code>，可以加载：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">source</span> <span class="variable">$HOME</span>/software/Modules/init/csh</span><br></pre></td></tr></table></figure>
-
-<p>以下命令均针对<code>bash</code>环境。</p>
-<p><strong>修改系统默认搜索路径</strong></p>
-<p>在上面我们介绍了用户设置路径的方法，此处我们介绍如何修改系统默认的module模块搜索路径。</p>
-<p>在安装后的<code>Modules/3.2.10/init</code>目录，打开隐藏文件，增加/删除路径实现配置。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim .modulespath</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>直接输入路径来增加搜索路径；通过<code>#</code>注释行，或直接删除行来减少搜索路径。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  @(#)$Id: 38aa24cc33a5f54a93781d63005a084f74418022 $</span></span><br><span class="line"><span class="comment">#  Module version 3.2.10</span></span><br><span class="line"><span class="comment">#  init/.modulespath.  Generated from .modulespath.in by configure.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  Modulepath initial setup</span></span><br><span class="line"><span class="comment">#  ========================</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  This file defines the initial setup for the module files search path.</span></span><br><span class="line"><span class="comment">#  Comments may be added anywhere, which begin on # and continue until the</span></span><br><span class="line"><span class="comment">#     end of the line</span></span><br><span class="line"><span class="comment">#  Each line containing a single path will be added to the MODULEPATH</span></span><br><span class="line"><span class="comment">#     environment variable. You may add as many as you want - just</span></span><br><span class="line"><span class="comment">#     limited by the maximum variable size of your shell.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">/usr/share/Modules/versions                                <span class="comment"># location of version files</span></span><br><span class="line">/usr/share/Modules/<span class="variable">$MODULE_VERSION</span>/modulefiles     <span class="comment"># Module pkg modulefiles (if versioning)</span></span><br><span class="line"><span class="comment">#/usr/share/Modules/modulefiles    # Module pkg modulefiles (if no versioning)</span></span><br><span class="line">/usr/share/Modules/modulefiles                             <span class="comment"># General module files</span></span><br><span class="line"><span class="comment">#/usr/share/Modules/3.2.10/your_contribs                   # Edit for your requirements</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="B-常用命令列表"><a href="#B-常用命令列表" class="headerlink" title="B 常用命令列表"></a>B 常用命令列表</h3><p>表 Modules 常用命令</p>
+<p>参数说明如下：</p>
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>作用</th>
+<th>关键词</th>
+<th>含义</th>
+<th>备注</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>module avail 或 module av</td>
-<td>查看系统中可用的软件</td>
+<td>yhrun</td>
+<td>并行执行程序的命令</td>
+<td>类似于通用的<code>mpirun</code>命令</td>
 </tr>
 <tr>
-<td>module add 或 module load</td>
-<td>加载模块</td>
+<td>-N</td>
+<td>总节点数</td>
+<td>-N 2 表示用2个计算节点</td>
 </tr>
 <tr>
-<td>module rm 或 unload</td>
-<td>卸载模块</td>
+<td>-n</td>
+<td>总核数</td>
+<td>-n 24 表示一共用24个cpu核心，注意是总数，而不是每个节点的核数</td>
 </tr>
 <tr>
-<td>module list 或 module li</td>
-<td>显示已加载模块</td>
+<td>-p</td>
+<td>计算分区</td>
+<td>-p debug 表示用debug计算分区，可以用<code>yhi</code>命令查询可用分区</td>
 </tr>
 <tr>
-<td>module purge</td>
-<td>卸载所有模块</td>
+<td>executable</td>
+<td>可执行程序名称</td>
+<td>就是你要运行的程序的名字</td>
 </tr>
 <tr>
-<td>module show</td>
-<td>显示模块配置文件</td>
-</tr>
-<tr>
-<td>module swap 或 module switch</td>
-<td>将模块1 替换为 模块2</td>
-</tr>
-<tr>
-<td>module help</td>
-<td>查看具体软件的信息</td>
+<td>[args…]</td>
+<td>执行参数</td>
+<td>有的程序需要加参数，就写在后面</td>
 </tr>
 </tbody></table>
-<h3 id="C-遇到报错"><a href="#C-遇到报错" class="headerlink" title="C 遇到报错"></a>C 遇到报错</h3><p>常见报错有2类：</p>
-<p><strong>1. conflict</strong></p>
-<p>对于<code>conflict</code>而言，通常是由于同款软件不能同时加载多个版本，因此建议卸载之前的，再加载新的。提示哪个模块冲突了就卸载哪一个。</p>
-<p>举例：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add bedtools2/2.26.0-gcc4.8</span><br><span class="line">bedtools2/2.26.0-gcc4.8(25):ERROR:150: Module <span class="string">'bedtools2/2.26.0-gcc4.8'</span> </span><br><span class="line">    conflicts with the currently loaded module(s) <span class="string">'bedtools2/2.25.0-gcc4.8'</span></span><br><span class="line">bedtools2/2.26.0-gcc4.8(25):ERROR:102: Tcl <span class="built_in">command</span> execution failed: </span><br><span class="line">    conflict   bedtools2</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>yhrun</code>运行的程序，默认会将输出显示到屏幕上，而且当前终端断掉会导致任务退出，因此推荐用下面的<code>yhbatch</code>命令提交任务。</p>
+</blockquote>
+<h4 id="yhbatch提交"><a href="#yhbatch提交" class="headerlink" title="yhbatch提交"></a>yhbatch提交</h4><p>这种方式是最为推荐的方式，先编写一个脚本（别担心，很简单），然后用提交命令提交这个脚本即可。</p>
+<p><strong>1）编写脚本</strong></p>
+<p>使用文本编辑器（例如vim等），创建一个用于提交作业的脚本文件，例如名为<strong>sub.sh</strong>的文件。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim sub.sh</span><br></pre></td></tr></table></figure>
 
-<p>我们要加载的是<code>bedtools2/2.26.0-gcc4.8</code>，但与<code>bedtools2/2.25.0-gcc4.8</code>冲突了，那么：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module rm  bedtools2/2.25.0-gcc4.8</span><br><span class="line">$ module add bedtools2/2.26.0-gcc4.8</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+<p>然后写入脚本内容</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">yhrun -N 2 -n 24 -p debug executable [args...]</span><br></pre></td></tr></table></figure>
 
-<p><strong>2. prereq</strong></p>
-<p>对于<code>prereq</code>而言，通常是加载的模块依赖其他默认，因此必须先加载依赖的模块，在加载该模块。</p>
-<p>举例：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add espresso/5.4.0-icc16-IMPI5.1</span><br><span class="line">espresso/5.4.0-icc16-IMPI5.1(27):ERROR:151: Module <span class="string">'espresso/5.4.0-icc16-IMPI5.1'</span> </span><br><span class="line">    depends on one of the module(s) <span class="string">'Intel_compiler/16.0.3'</span></span><br><span class="line">espresso/5.4.0-icc16-IMPI5.1(27):ERROR:102: Tcl <span class="built_in">command</span> execution failed: </span><br><span class="line">    prereq                Intel_compiler/16.0.3</span><br></pre></td></tr></table></figure>
+<p>里面写的内容和<code>yhrun</code>提交方式的内容完全相同。</p>
+<p><strong>2）提交脚本</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhbatch -N 2 -n 24 -p debug sub.sh</span><br><span class="line">Submitted batch job 1454916</span><br></pre></td></tr></table></figure>
 
-<p>我们需要先加载<code>Intel_compiler/16.0.3</code>，再加载<code>espresso/5.4.0-icc16-IMPI5.1</code>。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ module add Intel_compiler/16.0.3</span><br><span class="line">$ module add espresso/5.4.0-icc16-IMPI5.1</span><br></pre></td></tr></table></figure>
+<p>成功提交后，返回<code>Submitted batch job 1454916</code>，这一串数字就是该任务的<code>JOBID</code>。</p>
+<blockquote>
+<p><strong>疑问：</strong><code>yhbatch</code>和<code>yhrun</code>都指定了<code>-N -n</code>参数，哪个会起作用呢？<br/><br><strong>解答：</strong>当我们使用<code>yhbatch</code>提交一个任务时，首先会向作业管理系统申请指定分区指定节点数的计算资源（当核数与节点数不匹配时会报错，<code>yhrun</code>的部分已经解释过）<br/>当获得了计算资源后，任务脚本会在计算节点执行。<br/><br>当<code>yhrun运行需要的计算资源</code> <code>&lt;=</code> <code>yhbatch申请的计算资源</code>时，程序可以正常运行；<br/><br>当<code>yhrun运行需要的计算资源</code> <code>&gt;</code> <code>yhbatch申请的计算资源</code>时，程序就会报错退出，在<code>slurm-jobid.out</code>文件中显示类似报错;<br/></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yhrun: error: Only allocated 1 nodes asked <span class="keyword">for</span> 2</span><br></pre></td></tr></table></figure>
 
-<p>留一个问题，以上两行命令能够加载成功吗？</p>
+<p>参数说明如下：</p>
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>含义</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>yhbatch</td>
+<td>提交批处理脚本的命令</td>
+<td></td>
+</tr>
+<tr>
+<td>-N</td>
+<td>总节点数</td>
+<td>-N 2 表示用2个计算节点</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>总核数</td>
+<td>-n 24 表示一共用24个cpu核心</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>计算分区</td>
+<td>-p debug 表示用debug计算分区</td>
+</tr>
+<tr>
+<td>sub.sh</td>
+<td>提交脚本名</td>
+<td>可以依据任务不同编写其他名称的脚本文件</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>优势：使用这种方式提交的任务，会自动生成一个名为<code>slurm-jobid.out</code>的文件，其中<code>jobid</code>是slurm分配给这个任务的具体编号数字。里面会有除了程序特殊指定，或用户重定向以外的所有作业的标准输出和错误信息。当计算任务出现错误的时候，我们也是第一时间查看该文件，寻找原因。</p>
+</blockquote>
+<h3 id="查看任务状态"><a href="#查看任务状态" class="headerlink" title="查看任务状态"></a>查看任务状态</h3><p>如果我们想查看一下当前用户的作业状态，可以使用如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhq</span><br><span class="line">JOBID    PARTITION  NAME     USER       ST  TIME      NODES NODELIST(REASON)</span><br><span class="line">1454916  debug      sub.sh   zhenggang  R   00:05:00  2     cn[5-6]</span><br></pre></td></tr></table></figure>
+
+<p>参数说明如下：</p>
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>含义</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JOBID</td>
+<td>任务编号</td>
+<td>唯一编号，方便追溯</td>
+</tr>
+<tr>
+<td>PARTITION</td>
+<td>计算分区名</td>
+<td>可用<code>yhi</code>查询</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>任务名</td>
+<td>默认以提交脚本的名称当作任务名</td>
+</tr>
+<tr>
+<td>USER</td>
+<td>用户名</td>
+<td>提交该任务的用户名</td>
+</tr>
+<tr>
+<td>ST</td>
+<td>任务状态</td>
+<td>PD排队<br/>R运行<br/>S挂起<br/>CG正在退出</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>任务运行时间</td>
+<td>例子中为5分钟</td>
+</tr>
+<tr>
+<td>NODES</td>
+<td>任务作占节点数</td>
+<td>例子中为1个</td>
+</tr>
+<tr>
+<td>NODELIST(REASON)</td>
+<td>节点列表（排队原因）</td>
+<td>如果是排队状态的任务，则会给出排队原因</td>
+</tr>
+</tbody></table>
+<p>备注常见排队原因：</p>
+<blockquote>
+<ul>
+<li>AssociationResourceLimit：关联的资源限制已满 — 账户有使用节点数限制，已经用满了</li>
+<li>Resources：当前可用资源不能满足作业需求 — 系统的可用节点资源不足</li>
+<li>Dependency：作业的依赖关系未满足 — 作业之间有依赖关系，依赖的作业没完成</li>
+<li>PartitionDown：作业所在的分区处于 down 状态 — 分区down，所以节点不可用</li>
+</ul>
+</blockquote>
+<h3 id="任务完成-取消作业"><a href="#任务完成-取消作业" class="headerlink" title="任务完成/取消作业"></a>任务完成/取消作业</h3><p>如果提交作业后，如果正常结束，那么在<code>slurm-jobid.out</code>文件中并不会有任务的报错信息。</p>
+<p>如果任务正在运行，发现需要将它取消，可以这样子：</p>
+<p>1）确定任务编号</p>
+<p>我们用<code>yhq</code>命令查看任务编号，比如为</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhq</span><br><span class="line">JOBID    PARTITION  NAME     USER       ST  TIME      NODES NODELIST(REASON)</span><br><span class="line">1454916  debug      sub.sh   zhenggang  R   00:15:00  2     cn[5-6]</span><br></pre></td></tr></table></figure>
+
+<p>2）取消任务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhcancel 1454916</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-slurm使用中级"><a href="#2-slurm使用中级" class="headerlink" title="2. slurm使用中级"></a>2. slurm使用中级</h2><p>用户常用的功能，其实大部分是<code>yhrun/yhbatch</code>的其他参数，举例如下：</p>
+<h3 id="设置线程数"><a href="#设置线程数" class="headerlink" title="设置线程数"></a>设置线程数</h3><p>默认情况下，一个MPI进程开启一个线程，当程序为多线程程序的时候，可以手动设置线程数：</p>
+<p>方法一：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">export</span> OMP_NUM_THREADS=4</span><br></pre></td></tr></table></figure>
+
+<p>通过环境变量参数设置线程数为4。</p>
+<p>方法二：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhrun -N 2 -n 8 -c 4 -p debug executable [args...]</span><br></pre></td></tr></table></figure>
+<p>通过<code>yhrun -c 4</code>设置线程数为4。</p>
+<h3 id="设置工作目录"><a href="#设置工作目录" class="headerlink" title="设置工作目录"></a>设置工作目录</h3><p>默认情况下，执行<code>yhbatch</code>命令的目录就是任务的默认目录。</p>
+<p>如果希望修改任务的默认目录，可以使用<code>-D</code>参数。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhbatch -D /path/to/new/directory -N 2 -n24 -p debug sub.sh</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>/path/to/new/directory 表示一个新的目录</p>
+</blockquote>
+<h3 id="指定节点"><a href="#指定节点" class="headerlink" title="指定节点"></a>指定节点</h3><p>我们可以用<code>-w</code>参数来指定任务使用哪些节点，可以用<code>-x</code>参数指定任务不使用哪些节点。</p>
+<p>通常使用<code>-x</code>的场景为，当任务在某个节点报错退出后，如果怀疑该节点有问题，可以先用<code>-x</code>参数过滤掉该节点，重新提交任务。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhbatch -w cn10 -N 2 -n24 -p debug sub.sh</span><br><span class="line">$ yhbatch -x cn11 -N 2 -n24 -p debug sub.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="指定任务名"><a href="#指定任务名" class="headerlink" title="指定任务名"></a>指定任务名</h3><p>当用户需要提交非常多的相似任务时，通常只会将提交脚本中的参数进行修改，但这样子提交的任务的任务名都相同，不好区分。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">JOBID    PARTITION  NAME     USER       ST  TIME      NODES NODELIST(REASON)</span><br><span class="line">1454916  debug      sub.sh   zhenggang  R   00:15:00  2     cn[5-6]</span><br><span class="line">1454917  debug      sub.sh   zhenggang  R   00:15:00  2     cn[7-8]</span><br><span class="line">1454918  debug      sub.sh   zhenggang  R   00:15:00  2     cn[9-10]</span><br></pre></td></tr></table></figure>
+
+<p>我们可以用<code>-J</code>参数为每一个任务指定任务名，例如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhbatch -J job1 -N 2 -n24 -p debug sub.sh</span><br><span class="line">Submitted batch job 1454920</span><br><span class="line">$ yhbatch -J job2 -N 2 -n24 -p debug sub.sh</span><br><span class="line">Submitted batch job 1454921</span><br><span class="line">$ yhbatch -J job3 -N 2 -n24 -p debug sub.sh</span><br><span class="line">Submitted batch job 1454922</span><br><span class="line">$ yhq</span><br><span class="line">JOBID    PARTITION  NAME     USER       ST  TIME      NODES NODELIST(REASON)</span><br><span class="line">1454920  debug      job1     zhenggang  R   00:00:05  2     cn[15-16]</span><br><span class="line">1454921  debug      job2     zhenggang  R   00:00:05  2     cn[17-18]</span><br><span class="line">1454922  debug      job3     zhenggang  R   00:00:05  2     cn[19-20]</span><br></pre></td></tr></table></figure>
+
+<h3 id="任务运行时常"><a href="#任务运行时常" class="headerlink" title="任务运行时常"></a>任务运行时常</h3><p>默认情况下，任务会一直运行直到任务结束；在超算集群上，通常的计算分区都有设置最大运行时常，当超出时常后任务会自动退出，<code>slurm-jobid.out</code>文件报错类似：<code>Error: DUE TO TIME LIMIT</code></p>
+<p>用户也可以用<code>-t</code>参数设置该任务的最大运行时常，时间单位为分钟，如设置为10分钟（即为<code>-t 10</code>）：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yhbatch -t 10 -N 2 -n 24 -p debug sub.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-slurm使用高级"><a href="#3-slurm使用高级" class="headerlink" title="3. slurm使用高级"></a>3. slurm使用高级</h2><h3 id="yhalloc方式使用"><a href="#yhalloc方式使用" class="headerlink" title="yhalloc方式使用"></a>yhalloc方式使用</h3><p>除了<code>yhrun</code>和<code>yhbatch</code>，还有一个命令叫做<code>yhalloc</code>，适用于调试程序。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhballoc -N 2 -n 24 -pdebug</span><br><span class="line">yhalloc: Granted job allocation 1455031</span><br><span class="line"></span><br><span class="line">$ yhq</span><br><span class="line">  JOBID PARTITION     NAME     USER  ST       TIME  NODES NODELIST(REASON)</span><br><span class="line">1455031    debug      bash zhenggang  R       0:44      2 cn[31-32]</span><br></pre></td></tr></table></figure>
+
+<p>我们接下来可以：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yhrun -N 2 -n24 -pdebug executable [args...]</span><br></pre></td></tr></table></figure>
+
+<p>任务会在刚刚分配的cn[31-32]节点运行。</p>
+<p>我们也可以用<code>ssh</code>命令切换到计算节点，进行各种操作。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh cn32</span><br><span class="line">Last login: Tue Dec 18 08:58:40 2018 from ln0</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：用yhalloc申请的节点会在当前终端退出时释放掉，因此仅适用于高阶玩家调试用。</p>
+</blockquote>
+<h3 id="设置任务依赖"><a href="#设置任务依赖" class="headerlink" title="设置任务依赖"></a>设置任务依赖</h3><p>有时候任务1与任务2有点关系，我们希望等任务1结束后再运行任务2。</p>
+<p>如果将任务1和任务2都提交了，它们之间没人关系，会再获得计算资源后都运行，这不是我们想要的。</p>
+<p>因此，我们可以正常提交任务1，然后在提交任务2的时候，使用<code>-d jobid</code>参数设置依赖关系，让任务2等待任务1结束后再运行，即便有计算资源也等着。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yhbatch -N 2 -n 24 -p debug sub1.sh</span><br><span class="line">Submitted batch job 1454946</span><br><span class="line">$ yhbatch -d 1454946 -N 2 -n 24 -p debug sub2.sh</span><br><span class="line">Submitted batch job 1454947</span><br><span class="line">$ yhq</span><br><span class="line">  JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)</span><br><span class="line">1454947    debug   sub2.sh zhenggang PD       0:00      1 (Dependency)</span><br><span class="line">1454946    debug   sub1.sh zhenggang  R       0:37      1 cn46</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到先提交的任务<code>1454946</code>已经在<code>R</code>，后提交的任务<code>1454947</code>在<code>PD</code>，原因是<code>Dependency</code>，这意味着它将等待<code>1454946</code>任务结束后才开始运行。</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="slurm内置环境变量"><a href="#slurm内置环境变量" class="headerlink" title="slurm内置环境变量"></a>slurm内置环境变量</h3><p>slurm有很多内置的环境变量，可以在提交脚本中使用，来显示各类信息：</p>
+<table>
+<thead>
+<tr>
+<th>内置变量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SLURM_NODELIST</td>
+<td>分配的节点列表</td>
+</tr>
+<tr>
+<td>SLURM_NNODES</td>
+<td>分配的任务数</td>
+</tr>
+<tr>
+<td>SLURM_NPROCS</td>
+<td>要加载的任务数</td>
+</tr>
+<tr>
+<td>SLURM_JOBID</td>
+<td>作业的 JobID</td>
+</tr>
+<tr>
+<td>SLURM_TASKS_PER_NODE</td>
+<td>每节点要加载的任务数</td>
+</tr>
+<tr>
+<td>SLURM_JOB_ID</td>
+<td>作业的 JobID</td>
+</tr>
+<tr>
+<td>SLURM_SUBMIT_DIR</td>
+<td>提交作业时的工作目录</td>
+</tr>
+<tr>
+<td>SLURM_JOB_NODELIST</td>
+<td>作业分配的节点列表</td>
+</tr>
+<tr>
+<td>SLURM_JOB_CPUS_PER_NODE</td>
+<td>每个节点上分配给作业的 CPU 数</td>
+</tr>
+<tr>
+<td>SLURM_JOB_NUM_NODES</td>
+<td>作业分配的节点数</td>
+</tr>
+</tbody></table>
 ]]></content>
       <categories>
         <category>超算</category>
         <category>超算课程</category>
       </categories>
       <tags>
-        <tag>module</tag>
+        <tag>slurm</tag>
       </tags>
   </entry>
   <entry>
